@@ -1,0 +1,23 @@
+.boards {
+  padding: 35px;
+
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    &-item {
+      margin-bottom: 40px;
+    }
+  }
+
+  &__add-new {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+  }
+
+  &__add-text {
+    margin-left: 10px;
+  }
+}
