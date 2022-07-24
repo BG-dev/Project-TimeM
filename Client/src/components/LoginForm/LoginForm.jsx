@@ -22,14 +22,17 @@ function LoginForm() {
 
   const loginHandler = async (values) => {
     dispatch({ type: "LOGIN_START" });
+    const userData = {
+      username: values.username.toLowerCase(),
+      password: values.password,
+    };
     try {
-      const res = await axios.post("/api/auth/login", { ...values });
-      console.log(res);
+      const res = await axios.post("/api/auth/login", userData);
       dispatch({ type: "LOGIN_SUCCESS", payload: res.data.token });
+      navigate("/");
     } catch (error) {
-      dispatch({ type: "LOGIN_FAILURE", payload: error.response.data });
+      dispatch({ type: "LOGIN_FAILURE", payload: error.response.data.message });
     }
-    navigate("/");
   };
 
   return (
@@ -41,8 +44,8 @@ function LoginForm() {
           password: "",
         }}
         validationSchema={signInSchema}
-        onSubmit={(values, actions) => {
-          loginHandler(values);
+        onSubmit={async (values, actions) => {
+          await loginHandler(values);
           actions.setFieldValue("password", "");
         }}
       >

@@ -5,7 +5,6 @@ import axios from "axios";
 import * as Yup from "yup";
 
 import "./RegisterForm.scss";
-// import { log } from "winston";
 
 function RegisterForm() {
   const navigate = useNavigate();
@@ -29,8 +28,8 @@ function RegisterForm() {
     setLoading(true);
     try {
       const newUserData = {
-        username: values.username,
-        email: values.email,
+        username: values.username.toLowerCase(),
+        email: values.email.toLowerCase(),
         password: values.password,
       };
       await axios.post("/api/auth/register", newUserData);
@@ -53,8 +52,8 @@ function RegisterForm() {
           passwordRepeat: "",
         }}
         validationSchema={signUpSchema}
-        onSubmit={(values, actions) => {
-          registerHandler(values);
+        onSubmit={async (values, actions) => {
+          await registerHandler(values);
           actions.setFieldValue("password", "");
           actions.setFieldValue("passwordRepeat", "");
         }}
