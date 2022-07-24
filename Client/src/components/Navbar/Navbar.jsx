@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
 import { ReactComponent as HomeImage } from "../../images/home.svg";
 import { ReactComponent as ProfileImage } from "../../images/profile.svg";
 import { ReactComponent as BoardImage } from "../../images/board.svg";
@@ -9,10 +10,12 @@ import "./Navbar.scss";
 
 function Navbar() {
   const navigate = useNavigate();
+  const { dispatch } = useContext(AuthContext);
 
   const logoutHandler = (event) => {
     event.preventDefault();
-    navigate("/");
+    dispatch({ type: "LOGOUT" });
+    navigate("/login");
   };
 
   return (

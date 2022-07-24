@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -9,6 +9,7 @@ import "./RegisterForm.scss";
 
 function RegisterForm() {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const signUpSchema = Yup.object().shape({
     username: Yup.string()
@@ -25,16 +26,18 @@ function RegisterForm() {
   });
 
   const registerHandler = async (values) => {
+    setLoading(true);
     try {
       const newUserData = {
         username: values.username,
         email: values.email,
         password: values.password,
       };
-      const res = await axios.post("/api/auth/register", newUserData);
-      console.log(res);
+      await axios.post("/api/auth/register", newUserData);
+      setLoading(false);
       navigate("/login");
     } catch (error) {
+      setLoading(false);
       console.log(error);
     }
   };
@@ -110,7 +113,7 @@ function RegisterForm() {
               />
             </div>
             <div className="auth__form-control">
-              <button className="btn" type="submit">
+              <button className="btn" type="submit" disabled={loading}>
                 Sign Up
               </button>
               <span className="auth__form-text">Already have an account?</span>
