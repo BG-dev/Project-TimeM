@@ -1,6 +1,7 @@
 import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { NavLink, useNavigate } from "react-router-dom";
+import axios from "axios";
 import * as Yup from "yup";
 
 import "./RegisterForm.scss";
@@ -25,8 +26,13 @@ function RegisterForm() {
 
   const registerHandler = async (values) => {
     try {
-      console.log(values);
-      // await request("/api/auth/register", "POST", { ...values });
+      const newUserData = {
+        username: values.username,
+        email: values.email,
+        password: values.password,
+      };
+      const res = await axios.post("/api/auth/register", newUserData);
+      console.log(res);
       navigate("/login");
     } catch (error) {
       console.log(error);

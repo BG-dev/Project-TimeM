@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
+import axios from "axios";
+import { AuthContext } from "../../context/AuthContext";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { NavLink, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
@@ -7,6 +9,7 @@ import "./LoginForm.scss";
 
 function LoginForm() {
   const navigate = useNavigate();
+  const { loading, dispatch } = useContext(AuthContext);
 
   const signInSchema = Yup.object().shape({
     username: Yup.string()
@@ -18,15 +21,15 @@ function LoginForm() {
   });
 
   const loginHandler = async (values) => {
+    dispatch({ type: "LOGIN_START" });
     try {
-      if (!values.username || !values.password)
-        throw new Error("Username or password is empty");
-      // const data = await request("/api/auth/login", "POST", { ...values });
-
-      navigate("/profile");
+      const res = await axios.post("/api/auth/login", { ...values });
+      console.log(res);
+      dispatch({ type: "LOGIN_SUCCESS", payload: res.data.token });
     } catch (error) {
-      console.log(error.message);
+      dispatch({ type: "LOGIN_FAILURE", payload: error.response.data });
     }
+    navigate("/");
   };
 
   return (
@@ -74,7 +77,7 @@ function LoginForm() {
               />
             </div>
             <div className="auth__form-control">
-              <button className="btn" type="submit">
+              <button className="btn" type="submit" disabled={loading}>
                 Sign In
               </button>
               <NavLink to="/register" className="btn">
