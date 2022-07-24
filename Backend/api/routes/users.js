@@ -1,5 +1,4 @@
 const express = require("express");
-const { v4: uuidv4 } = require("uuid");
 const { findUserById } = require("../../service/userService");
 
 const router = express.Router();
