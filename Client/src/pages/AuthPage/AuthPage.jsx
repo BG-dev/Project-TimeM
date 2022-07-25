@@ -4,15 +4,10 @@ import { LoginForm, RegisterForm } from "../../components";
 
 import "./AuthPage.scss";
 
-function AuthPage() {
+function AuthPage({ children }) {
   return (
     <div className="auth-wrapper">
-      <div className="auth">
-        <Routes>
-          <Route path="/login" element={<LoginForm />} />
-          <Route path="/register" element={<RegisterForm />} />
-        </Routes>
-      </div>
+      <div className="auth">{children}</div>
     </div>
   );
 }
