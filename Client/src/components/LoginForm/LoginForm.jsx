@@ -27,8 +27,8 @@ function LoginForm() {
       password: values.password,
     };
     try {
-      const res = await axios.post("/api/auth/login", userData);
-      dispatch({ type: "LOGIN_SUCCESS", payload: res.data.token });
+      const response = await axios.post("/api/auth/login", userData);
+      dispatch({ type: "LOGIN_SUCCESS", payload: response.data.token });
       navigate("/");
     } catch (error) {
       dispatch({ type: "LOGIN_FAILURE", payload: error.response.data.message });
