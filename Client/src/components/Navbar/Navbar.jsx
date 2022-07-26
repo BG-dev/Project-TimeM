@@ -20,8 +20,13 @@ function Navbar() {
 
   return (
     <nav className="nav">
-      <div className="nav__list-wrapper">
-        <h2 className="nav__list-title">Account</h2>
+      <div className="nav__logo">
+        <h1 className="nav__logo-text">TimeM</h1>
+      </div>
+      <div className="nav__user">
+        <h2 className="user__username">Admin</h2>
+      </div>
+      <div className="nav__menu">
         <ul className="nav__list">
           <li className="nav__list-item">
             <NavLink className="nav__list-link" to="/">

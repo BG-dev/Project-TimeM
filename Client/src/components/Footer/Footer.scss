@@ -1,0 +1,11 @@
+@import "../../scss/variables";
+
+.footer {
+  width: 100%;
+  flex: 0 0 auto;
+  background-color: $blue;
+
+  &__text {
+    padding: 7px 0;
+  }
+}

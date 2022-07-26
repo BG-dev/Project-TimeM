@@ -2,11 +2,18 @@
 @import "normalize";
 
 .container {
-  position: absolute;
   display: flex;
-  height: 100%;
-  width: 100%;
   background-color: $light-gray;
+
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    // width: 100%;
+  }
+
+  .content {
+    flex: 1 0 auto;
+  }
 }
 
 span {
