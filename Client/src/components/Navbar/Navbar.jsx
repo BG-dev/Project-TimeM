@@ -1,16 +1,12 @@
 import React, { useContext } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
-import { ReactComponent as HomeImage } from "../../images/home.svg";
-import { ReactComponent as ProfileImage } from "../../images/profile.svg";
-import { ReactComponent as BoardImage } from "../../images/board.svg";
-import { ReactComponent as LogoutImage } from "../../images/logout.svg";
 
 import "./Navbar.scss";
 
 function Navbar() {
   const navigate = useNavigate();
-  const { dispatch } = useContext(AuthContext);
+  const { username, dispatch } = useContext(AuthContext);
 
   const logoutHandler = (event) => {
     event.preventDefault();
@@ -20,39 +16,51 @@ function Navbar() {
 
   return (
     <nav className="nav">
+      <i className='bx bx-chevron-right toggle'></i>
       <div className="nav__logo">
-        <h1 className="nav__logo-text">TimeM</h1>
+        <h1 className="nav__logo-header">TimeM</h1>
       </div>
-      <div className="nav__user">
-        <h2 className="user__username">Admin</h2>
+      <div className="user">
+        <div className="image user__avatar"></div>
+        <span className="user__username text">{username}</span>
       </div>
-      <div className="nav__menu">
-        <ul className="nav__list">
-          <li className="nav__list-item">
-            <NavLink className="nav__list-link" to="/">
-              <HomeImage className="nav__list-img" />
-              <span className="nav__list-text">Home</span>
-            </NavLink>
+      <div className="menu-bar">
+        <div className="menu">
+          <ul className="menu__links">
+            <li className="menu__link">
+              <NavLink to="/">
+                <i className='bx bxs-home icon'></i>
+                <span className="menu__link-text text">Home</span>
+              </NavLink>
+            </li>
+            <li className="menu__link">
+              <NavLink to="/profile">
+                <i className='bx bxs-user-circle icon'></i>
+                <span className="menu__link-text text">Profile</span>
+              </NavLink>
+            </li>
+            <li className="menu__link">
+              <NavLink to="/boards">
+                <i className='bx bx-table icon' ></i>
+                <span className="menu__link-text text">Boards</span>
+              </NavLink>
+            </li>
+            <li className="menu__link">
+              <NavLink to="/boards">
+                <i className='bx bx-task icon' ></i>
+                <span className="menu__link-text text">Tasks</span>
+              </NavLink>
+            </li>
+          </ul>
+        </div>
+        <div className="bottom-content">
+          <li className="menu__link">
+              <a href="#" onClick={logoutHandler}>
+                <i className='bx bx-exit icon' ></i>
+                <span className="menu__link-text text">Logout</span>
+              </a>
           </li>
-          <li className="nav__list-item">
-            <NavLink className="nav__list-link" to="/profile">
-              <ProfileImage className="nav__list-img" />
-              <span className="nav__list-text">Profile</span>
-            </NavLink>
-          </li>
-          <li className="nav__list-item">
-            <NavLink className="nav__list-link" to="/boards">
-              <BoardImage className="nav__list-img" />
-              <span className="nav__list-text">Boards</span>
-            </NavLink>
-          </li>
-          <li className="nav__list-item">
-            <a href="/" className="nav__list-link" onClick={logoutHandler}>
-              <LogoutImage className="nav__list-img" />
-              <span className="nav__list-text">Logout</span>
-            </a>
-          </li>
-        </ul>
+        </div>
       </div>
     </nav>
   );

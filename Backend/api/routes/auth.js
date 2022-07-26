@@ -31,6 +31,7 @@ router.post("/login", async (req, res, next) => {
     logger.info(message);
     res.status(201).send({
       token,
+      username: user.username,
       message,
     });
   } catch (error) {

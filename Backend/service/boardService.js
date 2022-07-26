@@ -9,10 +9,8 @@ const {
   deleteElementFromArrayById,
 } = require("./arrayService");
 const { writeDataToJsonFile } = require("./commandHelper");
-const boards = require("../integration/databases/boards.json");
 const cards = require("../integration/databases/cards.json");
 
-const BOARDS_FILE = "boards.json";
 const CARDS_FILE = "cards.json";
 
 async function getBoardById(id) {
@@ -42,19 +40,6 @@ async function deleteBoard(boardId) {
   await deleteBoardFromTrello(boardId);
   deleteBoardFromFile(boardId);
   deleteBoardCardsFromFile(boardId);
-}
-
-// function addBoardToFile(board) {
-//   if (!board) throw new Error("Board is undefined");
-
-//   const updatedBoards = [...boards, board];
-//   writeDataToJsonFile(updatedBoards, BOARDS_FILE);
-// }
-
-function getBoardsFromFile() {
-  if (!boards || boards.length === 0) throw new Error("Boards list is empty");
-
-  return boards;
 }
 
 function getBoardFromFileById(id) {

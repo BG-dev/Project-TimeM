@@ -28,7 +28,7 @@ function LoginForm() {
     };
     try {
       const response = await axios.post("/api/auth/login", userData);
-      dispatch({ type: "LOGIN_SUCCESS", payload: response.data.token });
+      dispatch({ type: "LOGIN_SUCCESS", payload: {token: response.data.token, username: response.data.username}});
       navigate("/");
     } catch (error) {
       dispatch({ type: "LOGIN_FAILURE", payload: error.response.data.message });
