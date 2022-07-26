@@ -2,18 +2,21 @@
 @import "normalize";
 
 .container {
-  display: flex;
+  position: relative;
+  left: 240px;
+  height: 100vh;
+  width: calc(100% - 240px);
+  transition: all 0.5s ease;
   background-color: $light-gray;
 
-  .wrapper {
-    display: flex;
-    flex-direction: column;
-    // width: 100%;
-  }
-
   .content {
-    flex: 1 0 auto;
+    min-height: calc(100% - 30px);
   }
+}
+
+.nav.close ~ .container{
+  left: 80px;
+  width: calc(100% - 80px);
 }
 
 span {

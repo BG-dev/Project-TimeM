@@ -1,12 +1,13 @@
 @import "../../scss/variables";
 
 .nav {
-  position: relative;
+  position: fixed;
   width: 240px;
   background-color: #ffffff;
   height: 100vh;
   padding: 10px 14px;
   transition: all 0.5s ease;
+  z-index: 100;
 
   .toggle{
     position: absolute;
@@ -33,6 +34,7 @@
       color: #000000;
       font-weight: 200;
       font-size: 40px;
+      transition: all 0.3s ease;
     }
   }
 

@@ -10,9 +10,9 @@ function App() {
   const { isLoggedIn } = useAuth();
 
   return (
-    <div className="container">
+    <>
       {isLoggedIn && <Navbar />}
-      <div className="wrapper">
+      <div className="container">
         <div className="content">
           <Routes>
             <Route element={<PublicRoute />}>
@@ -41,7 +41,7 @@ function App() {
         </div>
         <Footer />
       </div>
-    </div>
+    </>
   );
 }
 
