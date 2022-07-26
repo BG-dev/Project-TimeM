@@ -21,6 +21,11 @@
     justify-content: center;
     font-size: 23px;
     transition: all 0.3s ease;
+    cursor: pointer;
+
+    &:hover{
+      background-color: darken($color: $blue, $amount: 7%);
+    }
   }
 
   &__logo{
