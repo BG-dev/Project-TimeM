@@ -24,7 +24,7 @@ function Navbar() {
         }}
       ></i>
       <div className="nav__logo">
-        <h1 className="nav__logo-header">TimeM</h1>
+        <h2 className="nav__logo-header">TimeM</h2>
       </div>
       <div className="user">
         <div className="image user__avatar">

@@ -11,36 +11,42 @@ function App() {
 
   return (
     <>
-      {isLoggedIn && <Navbar />}
-      <div className="container">
-        <div className="content">
-          <Routes>
-            <Route element={<PublicRoute />}>
-              <Route
-                path="/login"
-                element={
-                  <AuthPage>
-                    <LoginForm />
-                  </AuthPage>
-                }
-              />
-              <Route
-                path="/register"
-                element={
-                  <AuthPage>
-                    <RegisterForm />
-                  </AuthPage>
-                }
-              />
-            </Route>
-            <Route element={<ProtectedRoute />}>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/profile" element={<ProfilePage />} />
-            </Route>
-          </Routes>
-        </div>
-        <Footer />
-      </div>
+      {isLoggedIn && (
+        <>
+          <Navbar />
+          <div className="container">
+            <div className="content">
+              <Routes>
+                <Route element={<ProtectedRoute />}>
+                  <Route path="/" element={<HomePage />} />
+                  <Route path="/profile" element={<ProfilePage />} />
+                </Route>
+              </Routes>
+            </div>
+            <Footer />
+          </div>
+        </>
+      )}
+      <Routes>
+        <Route element={<PublicRoute />}>
+          <Route
+            path="/login"
+            element={
+              <AuthPage>
+                <LoginForm />
+              </AuthPage>
+            }
+          />
+          <Route
+            path="/register"
+            element={
+              <AuthPage>
+                <RegisterForm />
+              </AuthPage>
+            }
+          />
+        </Route>
+      </Routes>
     </>
   );
 }

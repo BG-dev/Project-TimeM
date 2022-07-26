@@ -1,11 +1,14 @@
 @import "../../scss/variables";
 
 .footer {
+  display: flex;
+  justify-content: center;
   width: 100%;
-  flex: 0 0 auto;
-  background-color: $blue;
+  background-color: #FFFFFF;
 
   &__text {
-    padding: 7px 0;
+    font-weight: 400;
+    padding: 10px 0;
+    color: #000000;
   }
 }
