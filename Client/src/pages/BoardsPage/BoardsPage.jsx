@@ -2,9 +2,9 @@ import React from "react";
 import { BoardCard } from "../../components";
 import { Link } from "react-router-dom";
 
-import "./Boards.scss";
+import "./BoardsPage.scss";
 
-function Boards() {
+function BoardsPage() {
   const boards = [];
   // const [boards, setBoards] = useState(null);
 
@@ -25,4 +25,4 @@ function Boards() {
   );
 }
 
-export default Boards;
+export default BoardsPage;

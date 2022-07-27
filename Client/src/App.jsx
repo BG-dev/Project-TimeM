@@ -4,7 +4,13 @@ import { Navbar } from "./components";
 import { useAuth } from "./hooks/auth.hook";
 import { LoginForm, RegisterForm, Footer } from "./components";
 import { ProtectedRoute, PublicRoute, ContainerRoute } from "./routes";
-import { ProfilePage, HomePage, AuthPage, Boards } from "./pages";
+import {
+  ProfilePage,
+  HomePage,
+  AuthPage,
+  BoardsPage,
+  TasksPage,
+} from "./pages";
 
 function App() {
   const { isLoggedIn } = useAuth();
@@ -17,7 +23,8 @@ function App() {
           <Route element={<ProtectedRoute />}>
             <Route path="/" element={<HomePage />} />
             <Route path="/profile" element={<ProfilePage />} />
-            <Route path="/boards" element={<Boards />} />
+            <Route path="/boards" element={<BoardsPage />} />
+            <Route path="/tasks" element={<TasksPage />} />
           </Route>
         </Route>
         <Route element={<PublicRoute />}>
