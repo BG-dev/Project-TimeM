@@ -1,0 +1,16 @@
+.home {
+  .header {
+    &__title {
+      font-size: 65px;
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    &__description {
+      display: block;
+      font-size: 25px;
+      color: #000000;
+      text-align: center;
+    }
+  }
+}

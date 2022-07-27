@@ -3,31 +3,23 @@ import { Routes, Route } from "react-router-dom";
 import { Navbar } from "./components";
 import { useAuth } from "./hooks/auth.hook";
 import { LoginForm, RegisterForm, Footer } from "./components";
-import { ProtectedRoute, PublicRoute } from "./routes";
-import { ProfilePage, HomePage, AuthPage } from "./pages";
+import { ProtectedRoute, PublicRoute, ContainerRoute } from "./routes";
+import { ProfilePage, HomePage, AuthPage, Boards } from "./pages";
 
 function App() {
   const { isLoggedIn } = useAuth();
 
   return (
     <>
-      {isLoggedIn && (
-        <>
-          <Navbar />
-          <div className="container">
-            <div className="content">
-              <Routes>
-                <Route element={<ProtectedRoute />}>
-                  <Route path="/" element={<HomePage />} />
-                  <Route path="/profile" element={<ProfilePage />} />
-                </Route>
-              </Routes>
-            </div>
-            <Footer />
-          </div>
-        </>
-      )}
+      {isLoggedIn && <Navbar />}
       <Routes>
+        <Route element={<ContainerRoute />}>
+          <Route element={<ProtectedRoute />}>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/boards" element={<Boards />} />
+          </Route>
+        </Route>
         <Route element={<PublicRoute />}>
           <Route
             path="/login"

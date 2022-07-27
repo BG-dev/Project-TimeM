@@ -11,10 +11,11 @@
 
   .content {
     min-height: calc(100% - 40px);
+    padding: 10px 20px;
   }
 }
 
-.nav.close ~ .container{
+.nav.close ~ .container {
   left: 80px;
   width: calc(100% - 80px);
 }
