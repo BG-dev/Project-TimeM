@@ -17,9 +17,10 @@ const boardSchema = new Schema(
     },
     creator: {
       type: mongoose.SchemaTypes.ObjectId,
+      ref: "User",
       required: true,
     },
-    users: [{ type: mongoose.SchemaTypes.ObjectId, ref: "User" }],
+    users: [{ type: mongoose.SchemaTypes.ObjectId, ref: "User", default: [] }],
   },
   {
     timestamps: true,

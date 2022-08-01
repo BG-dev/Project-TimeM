@@ -17,6 +17,7 @@ const userSchema = new Schema(
       required: true,
     },
     contacts: [{ type: mongoose.SchemaTypes.ObjectId, ref: "User" }],
+    boards: [{ type: mongoose.SchemaTypes.ObjectId, ref: "Board" }],
   },
   {
     timestamps: true,

@@ -1,7 +1,13 @@
 const express = require("express");
-const { findUserById } = require("../../service/userService");
+const { getAllUsers } = require("../../integration/userIntegration");
+const { findUserById } = require("../../controllers/userController");
 
 const router = express.Router();
+
+router.get("/getUsers", (req, res) => {
+  const users = getAllUsers();
+  res.send(users);
+});
 
 router.get("/:id", (req, res) => {
   const userId = req.params.id;

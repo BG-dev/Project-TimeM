@@ -1,16 +1,9 @@
 const express = require("express");
-const { authUser, authRole } = require("../middlewares/auth");
-const {
-  addCard,
-  updateCard,
-  deleteCard,
-  getCardsByListId,
-} = require("../../service/cardService");
 const logger = require("../middlewares/logger");
 
 const router = express.Router();
 
-router.get("/:id", authUser, async (req, res, next) => {
+router.get("/:id", async (req, res, next) => {
   try {
     const id = req.params.id;
     if (!id) throw new Error("list id is undefined");
@@ -26,7 +19,7 @@ router.get("/:id", authUser, async (req, res, next) => {
   }
 });
 
-router.post("/", authUser, authRole("admin"), async (req, res, next) => {
+router.post("/", async (req, res, next) => {
   try {
     const cardData = req.body.card;
     if (!cardData) throw new Error("card is undefined");
@@ -40,7 +33,7 @@ router.post("/", authUser, authRole("admin"), async (req, res, next) => {
   }
 });
 
-router.put("/:id", authUser, authRole("admin"), async (req, res, next) => {
+router.put("/:id", async (req, res, next) => {
   try {
     const id = req.params.id;
     const card = req.body.card;
@@ -55,7 +48,7 @@ router.put("/:id", authUser, authRole("admin"), async (req, res, next) => {
   }
 });
 
-router.delete("/:id", authUser, authRole("admin"), async (req, res, next) => {
+router.delete("/:id", async (req, res, next) => {
   try {
     const id = req.params.id;
     if (!id) throw new Error("id is undefined");

@@ -1,26 +1,16 @@
-const User = require("../integration/models/User");
+const User = require("./models/User");
 
-const findUser = async (user) =>
+const findUserBy = async (userData) =>
   await User.findOne({
-    $or: [
-      {
-        username: user.username,
-      },
-      {
-        email: user.email,
-      },
-    ],
+    ...userData,
   });
 
-const findUserByUsername = async (username) =>
-  await User.findOne({
-    username,
-  });
+const addUser = async (userData) => await User.create({ ...userData });
 
-const createUser = async (newUser) => await User.create({ ...newUser });
+const getAllUsers = async () => await User.find();
 
 module.exports = {
-  findUser,
-  findUserByUsername,
-  createUser,
+  findUserBy,
+  addUser,
+  getAllUsers,
 };

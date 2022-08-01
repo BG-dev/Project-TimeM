@@ -12,9 +12,8 @@ import { AuthContext } from "../../context/AuthContext";
 function BoardsPage() {
   const [boards, setBoards] = useState([]);
   const { token } = useContext(AuthContext);
-
+  console.log(token);
   useEffect(() => {
-    console.log(token);
     axios
       .get("/boards", {
         headers: { authorization: `Bearer ${token}` },
