@@ -8,6 +8,7 @@ const {
   getListsByBoardId,
 } = require("../../service/boardService");
 const { addBoard, getBoards } = require("../../integration/boardIntegration");
+const verifyJWT = require("../middlewares/verifyJWT");
 
 const router = express.Router();
 
@@ -27,7 +28,7 @@ router.get("/:id", authUser, async (req, res, next) => {
   }
 });
 
-router.get("/", authUser, async (req, res, next) => {
+router.get("/", verifyJWT, async (req, res, next) => {
   try {
     const boards = await getBoards();
 
@@ -58,7 +59,7 @@ router.get("/:id/lists", authUser, async (req, res, next) => {
   }
 });
 
-router.post("/", authUser, authRole("admin"), async (req, res, next) => {
+router.post("/", verifyJWT, async (req, res, next) => {
   try {
     const boardData = req.body.board;
     if (!boardData) throw new Error("board data is undefined");
@@ -72,7 +73,7 @@ router.post("/", authUser, authRole("admin"), async (req, res, next) => {
   }
 });
 
-router.put("/:id", authUser, authRole("admin"), async (req, res) => {
+router.put("/:id", authUser, authRole("admin"), async (req, res, next) => {
   try {
     const id = req.params.id;
     const board = req.body.board;
@@ -87,7 +88,7 @@ router.put("/:id", authUser, authRole("admin"), async (req, res) => {
   }
 });
 
-router.delete("/:id", authUser, authRole("admin"), async (req, res) => {
+router.delete("/:id", authUser, authRole("admin"), async (req, res, next) => {
   try {
     const id = req.params.id;
     if (!id) throw new Error("id is undefined");

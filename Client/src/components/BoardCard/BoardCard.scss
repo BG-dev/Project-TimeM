@@ -1,28 +1,27 @@
 @import "../../scss/variables";
 
-$card-radius: 15px;
+$card-radius: 20px;
 
 .board-card {
   display: flex;
   flex-direction: column;
   width: 325px;
-  height: 100%;
+  height: 270px;
   border-radius: $card-radius;
   background-color: #ffffff;
-  box-shadow: 0 1px 10px #a9a9a9;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
 
-  // .color-image {
-  //   height: 150px;
-  //   background-color: $pink;
-  // }
+  .text {
+    color: $new-black;
+  }
 
   &__info {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    font-weight: 100;
+    font-weight: 300;
     p {
-      font-size: 14px;
+      font-size: 16px;
     }
   }
 
@@ -47,7 +46,7 @@ $card-radius: 15px;
 
   &__title {
     display: block;
-    font-size: 30px;
+    font-size: 28px;
     font-weight: bold;
     margin-bottom: 12px;
   }
@@ -59,10 +58,5 @@ $card-radius: 15px;
     justify-content: space-between;
     padding: 12px;
     overflow-wrap: break-word;
-  }
-
-  &-action {
-    display: flex;
-    align-items: center;
   }
 }

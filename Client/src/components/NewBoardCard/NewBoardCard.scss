@@ -1,0 +1,30 @@
+@import "../../scss/variables";
+
+.new-board-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 325px;
+  height: 270px;
+  border: 2px dashed #222222;
+  border-radius: 20px;
+  cursor: pointer;
+
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .icon {
+    font-size: 120px;
+    color: $new-black;
+  }
+
+  .text {
+    color: $new-black;
+    font-size: 28px;
+    font-weight: bold;
+  }
+}

@@ -54,7 +54,7 @@ function Navbar() {
               </NavLink>
             </li>
             <li className="menu__link">
-              <NavLink to="/boards">
+              <NavLink to="/tasks">
                 <i className="bx bx-task icon"></i>
                 <span className="menu__link-text text">Tasks</span>
               </NavLink>
@@ -62,6 +62,12 @@ function Navbar() {
           </ul>
         </div>
         <div className="bottom-content">
+          <li className="menu__link">
+            <NavLink to="/settings">
+              <i className="bx bx-cog icon"></i>
+              <span className="menu__link-text text">Settings</span>
+            </NavLink>
+          </li>
           <li className="menu__link">
             <a href="#" onClick={logoutHandler}>
               <i className="bx bx-exit icon"></i>

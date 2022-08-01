@@ -5,5 +5,15 @@ import Board from "./Board";
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
 import Footer from "./Footer";
+import NewBoardCard from "./NewBoardCard";
 
-export { Navbar, BoardCard, Badge, Board, LoginForm, RegisterForm, Footer };
+export {
+  Navbar,
+  BoardCard,
+  Badge,
+  Board,
+  LoginForm,
+  RegisterForm,
+  Footer,
+  NewBoardCard,
+};
