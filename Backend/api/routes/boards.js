@@ -4,6 +4,7 @@ const {
   createBoard,
   updateBoard,
   deleteBoard,
+  getUserBoards,
 } = require("../../controllers/boardController");
 
 const verifyJWT = require("../middlewares/verifyJWT");
@@ -26,6 +27,22 @@ const router = express.Router();
 //     next(error);
 //   }
 // });
+
+router.get("/getUserBoards", verifyJWT, async (req, res, next) => {
+  try {
+    const userId = req.user.id;
+    const boards = await getUserBoards(userId);
+
+    const message = "Boards successfully got";
+    logger.info(message);
+    res.status(200).send({
+      boards,
+      message,
+    });
+  } catch (error) {
+    next(error);
+  }
+});
 
 router.get("/getAllBoards", verifyJWT, async (req, res, next) => {
   try {

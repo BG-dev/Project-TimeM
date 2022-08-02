@@ -43,10 +43,16 @@ const deleteBoardInUserDB = async (boardId, userId) => {
 
 const getAllUsersDB = async () => await User.find();
 
+const getUserBoardsDB = async (userId) => {
+  const user = await User.findById(userId).populate("boards");
+  return user.boards;
+};
+
 module.exports = {
   findUserByDB,
   addUserDB,
   getAllUsersDB,
   addBoardToUserDB,
   deleteBoardInUserDB,
+  getUserBoardsDB,
 };
