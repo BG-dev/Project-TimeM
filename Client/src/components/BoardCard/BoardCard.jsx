@@ -1,11 +1,11 @@
 import React from "react";
-import colors from "../../service/colors";
 import useDate from "../../hooks/date.hook";
 
 import "./BoardCard.scss";
 
 function BoardCard({ board }) {
-  const color = colors[board.color];
+  console.log(board);
+  const color = board.color.value;
   const date = useDate(board.createdAt);
 
   return (

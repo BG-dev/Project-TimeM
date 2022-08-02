@@ -7,6 +7,7 @@ import RegisterForm from "./RegisterForm";
 import Footer from "./Footer";
 import NewBoardCard from "./NewBoardCard";
 import Modal from "./Modal";
+import AddNewBoardForm from "./AddNewBoardForm";
 
 export {
   Navbar,
@@ -18,4 +19,5 @@ export {
   Footer,
   NewBoardCard,
   Modal,
+  AddNewBoardForm,
 };

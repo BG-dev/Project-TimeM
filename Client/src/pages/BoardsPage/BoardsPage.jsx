@@ -1,5 +1,10 @@
 import React from "react";
-import { BoardCard, NewBoardCard, Modal } from "../../components";
+import {
+  BoardCard,
+  NewBoardCard,
+  Modal,
+  AddNewBoardForm,
+} from "../../components";
 import { Link } from "react-router-dom";
 
 import "./BoardsPage.scss";
@@ -13,10 +18,9 @@ function BoardsPage() {
   const [boards, setBoards] = useState([]);
   const [isModalActive, setIsModalActive] = useState(false);
   const { token } = useContext(AuthContext);
-  console.log(token);
   useEffect(() => {
     axios
-      .get("/boards", {
+      .get("/boards/getUserBoards", {
         headers: { authorization: `Bearer ${token}` },
       })
       .then((response) => setBoards(response.data.boards))
@@ -25,7 +29,9 @@ function BoardsPage() {
 
   return (
     <>
-      <Modal active={isModalActive} setActive={setIsModalActive}></Modal>
+      <Modal active={isModalActive} setActive={setIsModalActive}>
+        <AddNewBoardForm />
+      </Modal>
       <div className="boards">
         <ul className="boards__list">
           <NewBoardCard setActive={setIsModalActive} />
