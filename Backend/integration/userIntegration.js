@@ -1,16 +1,34 @@
 const User = require("./models/User");
 
-const findUserBy = async (userData) =>
+const findUserByDB = async (userData) =>
   await User.findOne({
     ...userData,
   });
 
-const addUser = async (userData) => await User.create({ ...userData });
+const addUserDB = async (userData) => await User.create({ ...userData });
 
-const getAllUsers = async () => await User.find();
+const addBoardToUserDB = async (boardId, userId) => {
+  if (!boardId) throw new Error("Board id is undefined");
+  if (!userId) throw new Error("User id is undefined");
+
+  await User.findByIdAndUpdate(
+    userId,
+    {
+      $push: {
+        boards: boardId,
+      },
+    },
+    {
+      upsert: true,
+    }
+  );
+};
+
+const getAllUsersDB = async () => await User.find();
 
 module.exports = {
-  findUserBy,
-  addUser,
-  getAllUsers,
+  findUserByDB,
+  addUserDB,
+  getAllUsersDB,
+  addBoardToUserDB,
 };

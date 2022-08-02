@@ -1,10 +1,14 @@
 const Board = require("./models/Board");
 
-const addBoard = async (boardData) => await Board.create({ ...boardData });
+const addBoardDB = async (boardData) => await Board.create({ ...boardData });
 
-const getAllBoards = async () => await Board.find();
+const updateBoardDB = async (boardId, boardData) =>
+  await Board.findByIdAndUpdate(boardId, boardData);
+
+const getAllBoardsDB = async () => await Board.find();
 
 module.exports = {
-  addBoard,
-  getAllBoards,
+  addBoardDB,
+  updateBoardDB,
+  getAllBoardsDB,
 };

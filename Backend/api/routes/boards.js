@@ -1,7 +1,12 @@
 const express = require("express");
 const logger = require("../middlewares/logger");
-const { createBoard, getBoards } = require("../../controllers/boardController");
+const {
+  createBoard,
+  updateBoard,
+} = require("../../controllers/boardController");
+
 const verifyJWT = require("../middlewares/verifyJWT");
+const { getAllBoardsDB } = require("../../integration/boardIntegration");
 
 const router = express.Router();
 
@@ -23,7 +28,7 @@ const router = express.Router();
 
 router.get("/getAllBoards", verifyJWT, async (req, res, next) => {
   try {
-    const boards = await getBoards();
+    const boards = await getAllBoardsDB();
 
     const message = "Boards successfully got";
     logger.info(message);
@@ -52,20 +57,20 @@ router.post("/", verifyJWT, async (req, res, next) => {
   }
 });
 
-// router.put("/:id", verifyJWT, async (req, res, next) => {
-//   try {
-//     const id = req.params.id;
-//     const board = req.body.board;
-//     if (!board || !id) throw new Error("data is undefined");
+router.put("/:id", verifyJWT, async (req, res, next) => {
+  try {
+    const boardId = req.params.id;
+    const board = req.body;
+    if (!board || !boardId) throw new Error("data is undefined");
 
-//     await updateBoard(id, board);
-//     const message = "Board successfully updated in the database";
-//     logger.info(message);
-//     res.status(200).send({ message });
-//   } catch (error) {
-//     next(error);
-//   }
-// });
+    await updateBoard(boardId, board);
+    const message = "Board successfully updated in the database";
+    logger.info(message);
+    res.status(200).send({ message });
+  } catch (error) {
+    next(error);
+  }
+});
 
 // router.delete("/:id", verifyJWT, async (req, res, next) => {
 //   try {

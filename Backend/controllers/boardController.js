@@ -1,19 +1,24 @@
-const { addBoard, getAllBoards } = require("../integration/boardIntegration");
+const {
+  addBoardDB,
+  updateBoardDB,
+} = require("../integration/boardIntegration");
+const { addBoardToUserDB } = require("../integration/userIntegration");
 // const { validateBoard } = require("../service/validators/boardValidator");
 
 async function createBoard(newBoardData) {
   // const { error } = validateBoard(newBoardData);
   // if (error) throw new Error(error.details[0].message);
-  await addBoard(newBoardData);
+  const newBoard = await addBoardDB(newBoardData);
+  await addBoardToUserDB(newBoard._id, newBoard.creator);
 }
 
-async function getBoards() {
-  const boards = await getAllBoards();
-
-  return boards;
+async function updateBoard(boardId, newBoardData) {
+  // const { error } = validateBoard(newBoardData);
+  // if (error) throw new Error(error.details[0].message);
+  await updateBoardDB(boardId, newBoardData);
 }
 
 module.exports = {
   createBoard,
-  getBoards,
+  updateBoard,
 };
