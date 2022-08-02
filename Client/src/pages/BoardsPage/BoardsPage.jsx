@@ -1,5 +1,5 @@
 import React from "react";
-import { BoardCard, NewBoardCard } from "../../components";
+import { BoardCard, NewBoardCard, Modal } from "../../components";
 import { Link } from "react-router-dom";
 
 import "./BoardsPage.scss";
@@ -11,6 +11,7 @@ import { AuthContext } from "../../context/AuthContext";
 
 function BoardsPage() {
   const [boards, setBoards] = useState([]);
+  const [isModalActive, setIsModalActive] = useState(false);
   const { token } = useContext(AuthContext);
   console.log(token);
   useEffect(() => {
@@ -23,19 +24,22 @@ function BoardsPage() {
   }, []);
 
   return (
-    <div className="boards">
-      <ul className="boards__list">
-        <NewBoardCard />
-        {boards &&
-          boards.map((board) => (
-            <li className="boards__list-item" key={board._id}>
-              <Link to={`/boards/${board._id}`}>
-                <BoardCard board={board} />
-              </Link>
-            </li>
-          ))}
-      </ul>
-    </div>
+    <>
+      <Modal active={isModalActive} setActive={setIsModalActive}></Modal>
+      <div className="boards">
+        <ul className="boards__list">
+          <NewBoardCard setActive={setIsModalActive} />
+          {boards &&
+            boards.map((board) => (
+              <li className="boards__list-item" key={board._id}>
+                <Link to={`/boards/${board._id}`}>
+                  <BoardCard board={board} />
+                </Link>
+              </li>
+            ))}
+        </ul>
+      </div>
+    </>
   );
 }
 

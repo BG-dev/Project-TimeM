@@ -2,9 +2,9 @@ import React from "react";
 
 import "./NewBoardCard.scss";
 
-function NewBoardCard() {
+function NewBoardCard({ setActive }) {
   return (
-    <div className="new-board-card">
+    <div className="new-board-card" onClick={() => setActive(true)}>
       <div className="wrapper">
         <i className="bx bx-plus-circle icon"></i>
         <span className="text">Add Board</span>
