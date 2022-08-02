@@ -3,6 +3,7 @@ const logger = require("../middlewares/logger");
 const {
   createBoard,
   updateBoard,
+  deleteBoard,
 } = require("../../controllers/boardController");
 
 const verifyJWT = require("../middlewares/verifyJWT");
@@ -72,18 +73,19 @@ router.put("/:id", verifyJWT, async (req, res, next) => {
   }
 });
 
-// router.delete("/:id", verifyJWT, async (req, res, next) => {
-//   try {
-//     const id = req.params.id;
-//     if (!id) throw new Error("id is undefined");
+router.delete("/:id", verifyJWT, async (req, res, next) => {
+  try {
+    const boardId = req.params.id;
+    const userId = req.user.id;
+    if (!boardId) throw new Error("id is undefined");
 
-//     deleteBoard(id);
-//     const message = "Board has been deleted";
-//     logger.info(message);
-//     res.status(200).send({ message });
-//   } catch (error) {
-//     next(error);
-//   }
-// });
+    await deleteBoard(boardId, userId);
+    const message = "Board has been deleted";
+    logger.info(message);
+    res.status(200).send({ message });
+  } catch (error) {
+    next(error);
+  }
+});
 
 module.exports = router;

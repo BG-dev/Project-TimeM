@@ -24,6 +24,23 @@ const addBoardToUserDB = async (boardId, userId) => {
   );
 };
 
+const deleteBoardInUserDB = async (boardId, userId) => {
+  if (!boardId) throw new Error("Board id is undefined");
+  if (!userId) throw new Error("User id is undefined");
+
+  await User.findByIdAndUpdate(
+    userId,
+    {
+      $pull: {
+        boards: boardId,
+      },
+    },
+    {
+      upsert: true,
+    }
+  );
+};
+
 const getAllUsersDB = async () => await User.find();
 
 module.exports = {
@@ -31,4 +48,5 @@ module.exports = {
   addUserDB,
   getAllUsersDB,
   addBoardToUserDB,
+  deleteBoardInUserDB,
 };

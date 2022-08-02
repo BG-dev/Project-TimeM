@@ -1,8 +1,12 @@
 const {
   addBoardDB,
   updateBoardDB,
+  deleteBoardDB,
 } = require("../integration/boardIntegration");
-const { addBoardToUserDB } = require("../integration/userIntegration");
+const {
+  addBoardToUserDB,
+  deleteBoardInUserDB,
+} = require("../integration/userIntegration");
 // const { validateBoard } = require("../service/validators/boardValidator");
 
 async function createBoard(newBoardData) {
@@ -18,7 +22,13 @@ async function updateBoard(boardId, newBoardData) {
   await updateBoardDB(boardId, newBoardData);
 }
 
+async function deleteBoard(boardId, userId) {
+  await deleteBoardDB(boardId);
+  await deleteBoardInUserDB(boardId, userId);
+}
+
 module.exports = {
   createBoard,
   updateBoard,
+  deleteBoard,
 };
