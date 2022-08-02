@@ -44,7 +44,12 @@ const deleteBoardInUserDB = async (boardId, userId) => {
 const getAllUsersDB = async () => await User.find();
 
 const getUserBoardsDB = async (userId) => {
-  const user = await User.findById(userId).populate("boards");
+  const user = await User.findById(userId).populate({
+    path: "boards",
+    populate: {
+      path: "creator",
+    },
+  });
   return user.boards;
 };
 

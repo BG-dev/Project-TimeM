@@ -19,7 +19,7 @@ function BoardCard({ board }) {
         <div className="board-card__info">
           <div className="board-card__author">
             <div className="board-card__avatar"></div>
-            <p className="text">{board.author}</p>
+            <p className="text">{board.creator.username}</p>
           </div>
           <p className="board-card__date text">{date}</p>
         </div>
