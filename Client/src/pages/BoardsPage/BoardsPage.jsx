@@ -6,31 +6,30 @@ import {
   AddNewBoardForm,
 } from "../../components";
 import { Link } from "react-router-dom";
-
 import "./BoardsPage.scss";
 import { useEffect } from "react";
-import axios from "axios";
 import { useState } from "react";
-import { useContext } from "react";
-import { AuthContext } from "../../context/AuthContext";
+import useRequest from "../../hooks/request.hook";
 
 function BoardsPage() {
-  const [boards, setBoards] = useState([]);
   const [isModalActive, setIsModalActive] = useState(false);
-  const { token } = useContext(AuthContext);
+
+  const {
+    loading,
+    data: { boards },
+    request,
+  } = useRequest("get", "boards/getUserBoards");
   useEffect(() => {
-    axios
-      .get("/boards/getUserBoards", {
-        headers: { authorization: `Bearer ${token}` },
-      })
-      .then((response) => setBoards(response.data.boards))
-      .catch((error) => console.log(error));
+    request();
   }, []);
 
   return (
     <>
       <Modal active={isModalActive} setActive={setIsModalActive}>
-        <AddNewBoardForm />
+        <AddNewBoardForm
+          getBoardsRequest={request}
+          setActiveModal={setIsModalActive}
+        />
       </Modal>
       <div className="boards">
         <ul className="boards__list">

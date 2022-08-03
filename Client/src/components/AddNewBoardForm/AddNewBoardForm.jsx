@@ -1,35 +1,35 @@
 import React from "react";
-import "./AddNewBoardForm";
+import "./AddNewBoardForm.scss";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { useState } from "react";
+import useRequest from "../../hooks/request.hook";
 
-function AddNewBoardForm() {
-  const [loading, setLoading] = useState(false);
+function AddNewBoardForm({ getBoardsRequest, setActiveModal }) {
+  const { loading, request } = useRequest("post", "/boards");
 
   const addBoardHandler = async (values) => {
-    try {
-      const newBoardData = {
-        username: values.username.toLowerCase(),
-        email: values.email.toLowerCase(),
-        password: values.password,
-      };
-      await axios.post("/api/auth/register", newBoardData);
-      setLoading(false);
-    } catch (error) {
-      setLoading(false);
-      console.log(error);
-    }
+    const boardData = {
+      name: values.name,
+      description: values.description,
+      color: {
+        name: "red",
+        value: "#dc143c",
+      },
+    };
+    await request(boardData);
   };
   return (
-    <>
-      <h2 className="form__title">Create new board</h2>
+    <div className="custom-form">
+      <h2 className="custom-form__title">Create new board</h2>
       <Formik
         initialValues={{
           name: "",
           description: "",
         }}
-        onSubmit={async (values) => {
+        onSubmit={async (values, { resetForm }) => {
           await addBoardHandler(values);
+          resetForm();
+          setActiveModal(false);
+          getBoardsRequest();
         }}
       >
         {() => (
@@ -43,7 +43,7 @@ function AddNewBoardForm() {
                 name="name"
               />
             </div>
-            <div className="add-board-container">
+            <div className="add-board__form-container">
               <label htmlFor="email">Description</label>
               <Field
                 type="text"
@@ -65,7 +65,7 @@ function AddNewBoardForm() {
           </Form>
         )}
       </Formik>
-    </>
+    </div>
   );
 }
 
