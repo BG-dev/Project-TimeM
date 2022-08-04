@@ -1,0 +1,21 @@
+@import "../../scss/variables";
+
+.selector {
+  height: 50px;
+  margin: 10px 0;
+
+  &__colors {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__color {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+
+  &__color.active {
+    border: 2px solid $new-black;
+  }
+}

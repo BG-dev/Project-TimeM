@@ -2,17 +2,20 @@ import React from "react";
 import "./AddNewBoardForm.scss";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import useRequest from "../../hooks/request.hook";
+import ColorSelector from "../ColorSelector";
+import colors from "../../service/colors";
+import { useState } from "react";
 
 function AddNewBoardForm({ getBoardsRequest, setActiveModal }) {
   const { loading, request } = useRequest("post", "/boards");
+  const [acitveColor, setActiveColor] = useState(0);
 
   const addBoardHandler = async (values) => {
     const boardData = {
       name: values.name,
       description: values.description,
       color: {
-        name: "red",
-        value: "#dc143c",
+        ...colors[acitveColor],
       },
     };
     await request(boardData);
@@ -57,6 +60,11 @@ function AddNewBoardForm({ getBoardsRequest, setActiveModal }) {
                 name="description"
               />
             </div>
+            <ColorSelector
+              activeColor={acitveColor}
+              setActiveColor={setActiveColor}
+              colors={colors}
+            />
             <div className="add-board-control">
               <button className="btn" type="submit" disabled={loading}>
                 Create
