@@ -3,12 +3,10 @@
 
   &__list {
     display: flex;
+    justify-content: flex-start;
     flex-wrap: wrap;
-    justify-content: space-between;
-
-    &-item {
-      margin-bottom: 40px;
-    }
+    flex-direction: row;
+    gap: 50px;
   }
 
   &__add-new {
