@@ -112,7 +112,11 @@ function RegisterForm() {
               />
             </div>
             <div className="auth__form-control">
-              <button className="btn" type="submit" disabled={loading}>
+              <button
+                className="btn btn-primary"
+                type="submit"
+                disabled={loading}
+              >
                 Sign Up
               </button>
               <span className="auth__form-text">Already have an account?</span>

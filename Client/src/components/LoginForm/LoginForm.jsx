@@ -28,7 +28,13 @@ function LoginForm() {
     };
     try {
       const response = await axios.post("/api/auth/login", userData);
-      dispatch({ type: "LOGIN_SUCCESS", payload: {token: response.data.token, username: response.data.username}});
+      dispatch({
+        type: "LOGIN_SUCCESS",
+        payload: {
+          token: response.data.token,
+          username: response.data.username,
+        },
+      });
       navigate("/");
     } catch (error) {
       dispatch({ type: "LOGIN_FAILURE", payload: error.response.data.message });
@@ -80,10 +86,14 @@ function LoginForm() {
               />
             </div>
             <div className="auth__form-control">
-              <button className="btn" type="submit" disabled={loading}>
+              <button
+                className="btn btn-primary"
+                type="submit"
+                disabled={loading}
+              >
                 Sign In
               </button>
-              <NavLink to="/register" className="btn">
+              <NavLink to="/register" className="btn btn-primary">
                 Create new account
               </NavLink>
               <NavLink to="/register" className="auth__form-link">

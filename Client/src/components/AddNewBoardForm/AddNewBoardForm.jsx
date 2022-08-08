@@ -66,7 +66,11 @@ function AddNewBoardForm({ getBoardsRequest, setActiveModal }) {
               colors={colors}
             />
             <div className="add-board-control">
-              <button className="btn" type="submit" disabled={loading}>
+              <button
+                className="btn btn-primary"
+                type="submit"
+                disabled={loading}
+              >
                 Create
               </button>
             </div>
