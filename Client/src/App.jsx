@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Routes, Route } from "react-router-dom";
-import { Navbar } from "./components";
 import { useAuth } from "./hooks/auth.hook";
-import { LoginForm, RegisterForm, Footer } from "./components";
+import { useRequest } from "./hooks/request.hook";
+import { Navbar } from "./components";
+import { AuthContext } from "./context/AuthContext";
+import { LoginForm, RegisterForm } from "./components";
 import { ProtectedRoute, PublicRoute, ContainerRoute } from "./routes";
 import {
   ProfilePage,
@@ -11,8 +13,19 @@ import {
   BoardsPage,
   TasksPage,
 } from "./pages";
+import { useEffect } from "react";
 
 function App() {
+  const { dispatch } = useContext(AuthContext);
+  const { data, request } = useRequest("get", "/api/auth/isAuthUser");
+
+  useEffect(() => {
+    request();
+  }, []);
+
+  useEffect(() => {
+    if (data.isLoggedIn === false) dispatch({ type: "LOGOUT" });
+  }, [data]);
   const { isLoggedIn } = useAuth();
 
   return (
