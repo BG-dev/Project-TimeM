@@ -12,15 +12,16 @@ import {
   AuthPage,
   BoardsPage,
   TasksPage,
+  BoardPage,
 } from "./pages";
 import { useEffect } from "react";
 
 function App() {
   const { dispatch } = useContext(AuthContext);
-  const { data, request } = useRequest("get", "/api/auth/isAuthUser");
+  const { data, request } = useRequest();
 
   useEffect(() => {
-    request();
+    request("get", "/api/auth/isAuthUser");
   }, []);
 
   useEffect(() => {
@@ -38,6 +39,7 @@ function App() {
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/boards" element={<BoardsPage />} />
             <Route path="/tasks" element={<TasksPage />} />
+            <Route path="/board/:id" element={<BoardPage />} />
           </Route>
         </Route>
         <Route element={<PublicRoute />}>

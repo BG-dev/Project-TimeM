@@ -7,6 +7,8 @@ const updateBoardDB = async (boardId, boardData) =>
 
 const deleteBoardDB = async (boardId) => await Board.findByIdAndDelete(boardId);
 
+const getBoardById = async (boardId) => await Board.findById(boardId);
+
 const getAllBoardsDB = async () => await Board.find();
 
 module.exports = {
@@ -14,4 +16,5 @@ module.exports = {
   updateBoardDB,
   deleteBoardDB,
   getAllBoardsDB,
+  getBoardById,
 };

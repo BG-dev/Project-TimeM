@@ -3,13 +3,13 @@ import React, { useContext } from "react";
 import axios from "axios";
 import { useState } from "react";
 
-export const useRequest = (method, url) => {
+export const useRequest = () => {
   const { token } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [data, setData] = useState({});
 
-  const request = async (body = false) => {
+  const request = async (method, url, body = false) => {
     setLoading(true);
     try {
       const response = await axios({

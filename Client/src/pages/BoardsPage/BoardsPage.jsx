@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   BoardCard,
   NewBoardCard,
@@ -7,20 +7,17 @@ import {
 } from "../../components";
 import { Link } from "react-router-dom";
 import "./BoardsPage.scss";
-import { useEffect } from "react";
-import { useState } from "react";
 import useRequest from "../../hooks/request.hook";
 
 function BoardsPage() {
   const [isModalActive, setIsModalActive] = useState(false);
 
   const {
-    loading,
     data: { boards },
     request,
-  } = useRequest("get", "boards/getUserBoards");
+  } = useRequest();
   useEffect(() => {
-    request();
+    request("get", "boards/getUserBoards");
   }, []);
 
   return (
@@ -37,7 +34,7 @@ function BoardsPage() {
           {boards &&
             boards.map((board) => (
               <li className="boards__list-item" key={board._id}>
-                <Link to={`/boards/${board._id}`}>
+                <Link to={`/board/${board._id}`}>
                   <BoardCard board={board} />
                 </Link>
               </li>

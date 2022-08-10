@@ -8,25 +8,28 @@ const {
 } = require("../../controllers/boardController");
 
 const verifyJWT = require("../middlewares/verifyJWT");
-const { getAllBoardsDB } = require("../../integration/boardIntegration");
+const {
+  getAllBoardsDB,
+  getBoardById,
+} = require("../../integration/boardIntegration");
 
 const router = express.Router();
 
-// router.get("/:id", verifyJWT, async (req, res, next) => {
-//   try {
-//     const id = req.params.id;
-//     const board = await getBoardById(id);
+router.get("/getboard/:id", verifyJWT, async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const board = await getBoardById(id);
 
-//     const message = "Board successfully got";
-//     logger.info(message);
-//     res.status(200).send({
-//       board,
-//       message,
-//     });
-//   } catch (error) {
-//     next(error);
-//   }
-// });
+    const message = "Board successfully got";
+    logger.info(message);
+    res.status(200).send({
+      board,
+      message,
+    });
+  } catch (error) {
+    next(error);
+  }
+});
 
 router.get("/getUserBoards", verifyJWT, async (req, res, next) => {
   try {

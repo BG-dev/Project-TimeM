@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 const bodyparser = require("body-parser");
 const boardsRoutes = require("./routes/boards");
 const usersRoutes = require("./routes/users");
-const cardsRoutes = require("./routes/cards");
+const tasksRoutes = require("./routes/tasks");
 const authRoutes = require("./routes/auth");
 const logger = require("./middlewares/logger");
 const { logError, sendError } = require("./middlewares/errorHandler");
@@ -21,7 +21,7 @@ app.use(bodyparser.json());
 app.use(helmet());
 
 app.use("/boards", boardsRoutes);
-app.use("/cards", cardsRoutes);
+app.use("/tasks", tasksRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/users", usersRoutes);
 

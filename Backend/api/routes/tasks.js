@@ -1,5 +1,12 @@
 const express = require("express");
 const logger = require("../middlewares/logger");
+const {
+  createTask,
+  updateTask,
+  deleteTask,
+  getBoardTasks,
+} = require("../../controllers/taskController");
+const verifyJWT = require("../middlewares/verifyJWT");
 
 const router = express.Router();
 
@@ -19,13 +26,28 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
-router.post("/", async (req, res, next) => {
+router.get("/getBoardTasks/:id", verifyJWT, async (req, res, next) => {
   try {
-    const cardData = req.body.card;
-    if (!cardData) throw new Error("card is undefined");
+    const boardId = req.params.id;
+    const tasks = await getBoardTasks(boardId);
+    const message = "Tasks successfully got";
+    logger.info(message);
+    tasks,
+      res.status(200).send({
+        tasks,
+        message,
+      });
+  } catch (error) {
+    next(error);
+  }
+});
 
-    await addCard(cardData);
-    const message = "Card successfully added to the database";
+router.post("/", verifyJWT, async (req, res, next) => {
+  try {
+    const taskData = { ...req.body, user: req.user.id };
+    if (!taskData) throw new Error("task is undefined");
+    await createTask(taskData);
+    const message = "Task successfully added to the database";
     logger.info(message);
     res.status(200).send({ message });
   } catch (error) {
