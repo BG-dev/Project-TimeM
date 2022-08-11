@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import useRequest from "../../hooks/request.hook";
 import { useParams } from "react-router-dom";
 import "./BoardPage.scss";
-import StatusList from "../../components/StatusList/StatusList";
+import TasksList from "../../components/TasksList";
 
 function BoardPage() {
   const { id } = useParams();
@@ -24,7 +24,7 @@ function BoardPage() {
     if (board) getBoardTasksRequest("get", `/tasks/getboardtasks/${board._id}`);
   }, [board]);
 
-  return <StatusList tasks={tasks} />;
+  return <TasksList status={"TO DO"} tasks={tasks} />;
 }
 
 export default BoardPage;

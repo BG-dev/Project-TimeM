@@ -8,6 +8,7 @@ import NewBoardCard from "./NewBoardCard";
 import Modal from "./Modal";
 import AddNewBoardForm from "./AddNewBoardForm";
 import ColorSelector from "./ColorSelector";
+import TasksList from "./TasksList";
 
 export {
   Navbar,
@@ -20,4 +21,5 @@ export {
   Modal,
   AddNewBoardForm,
   ColorSelector,
+  TasksList,
 };
