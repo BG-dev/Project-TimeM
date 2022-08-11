@@ -1,0 +1,12 @@
+@import "../../scss/variables";
+
+.task{
+    width: 100%;
+    padding: 12px 10px;
+    border-radius: 12px;
+    background-color: $dark-gray;
+    &-text{
+        color: #FFFFFF;
+        font-size: 17px;
+    }
+}

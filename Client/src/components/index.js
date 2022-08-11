@@ -1,5 +1,5 @@
-import Navbar from "./Navbar";
 import BoardCard from "./BoardCard";
+import Navbar from "./Navbar";
 import Board from "./Board";
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
@@ -9,6 +9,7 @@ import Modal from "./Modal";
 import AddNewBoardForm from "./AddNewBoardForm";
 import ColorSelector from "./ColorSelector";
 import TasksList from "./TasksList";
+import TaskCard from "./TaskCard";
 
 export {
   Navbar,
@@ -22,4 +23,5 @@ export {
   AddNewBoardForm,
   ColorSelector,
   TasksList,
+  TaskCard,
 };

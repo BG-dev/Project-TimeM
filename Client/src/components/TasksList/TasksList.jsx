@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import TaskCard from "../TaskCard";
 import "./TasksList.scss";
 
 function TasksList({ status, tasks }) {
@@ -7,7 +8,7 @@ function TasksList({ status, tasks }) {
     <div className="tasks">
       <span className="tasks-list__title">{status}</span>
       <ul className="tasks-list">
-        {tasks && tasks.map((task) => <p>{task.text}</p>)}
+        {tasks && tasks.map((task) => <TaskCard task={task} />)}
       </ul>
     </div>
   );
