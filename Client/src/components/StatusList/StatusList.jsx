@@ -2,11 +2,11 @@ import React from "react";
 import { useState } from "react";
 import "./StatusList.scss";
 
-function StatusList() {
-  const [tasks, setTasks] = useState({});
+function StatusList({ tasks }) {
   return (
     <div className="status-list">
-      {tasks && tasks.map((task) => <p>{task}</p>)}
+      <span className="status-list__title">TO DO</span>
+      {tasks && tasks.map((task) => <p>{task.text}</p>)}
     </div>
   );
 }
