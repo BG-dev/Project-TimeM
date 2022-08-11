@@ -5,6 +5,21 @@ import "./BoardPage.scss";
 import TasksList from "../../components/TasksList";
 
 function BoardPage() {
+  const statuses = [
+    {
+      name: "TO DO",
+      status: "todo",
+    },
+    {
+      name: "DOING",
+      status: "doing",
+    },
+    {
+      name: "DONE",
+      status: "done",
+    },
+  ];
+
   const { id } = useParams();
   const {
     data: { board },
@@ -15,6 +30,8 @@ function BoardPage() {
     data: { tasks },
     request: getBoardTasksRequest,
   } = useRequest();
+
+  const splitTasksByStatus = (tasks) => {};
 
   useEffect(() => {
     getBoardRequest("get", `/boards/getboard/${id}`);

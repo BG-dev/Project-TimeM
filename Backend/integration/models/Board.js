@@ -21,6 +21,7 @@ const boardSchema = new Schema(
       required: true,
     },
     users: [{ type: mongoose.SchemaTypes.ObjectId, ref: "User", default: [] }],
+    lists: [{ type: String, default: ["To Do", "Doing", "Done"] }],
   },
   {
     timestamps: true,

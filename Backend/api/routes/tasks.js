@@ -2,8 +2,6 @@ const express = require("express");
 const logger = require("../middlewares/logger");
 const {
   createTask,
-  updateTask,
-  deleteTask,
   getBoardTasks,
 } = require("../../controllers/taskController");
 const verifyJWT = require("../middlewares/verifyJWT");

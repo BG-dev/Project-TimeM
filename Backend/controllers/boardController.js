@@ -2,12 +2,14 @@ const {
   addBoardDB,
   updateBoardDB,
   deleteBoardDB,
+  getBoardByIdDB,
 } = require("../integration/boardIntegration");
 const {
   addBoardToUserDB,
   deleteBoardInUserDB,
   getUserBoardsDB,
 } = require("../integration/userIntegration");
+const { getBoardTasksDB } = require("../integration/taskIntegration");
 // const { validateBoard } = require("../service/validators/boardValidator");
 
 async function createBoard(newBoardData) {
@@ -31,6 +33,14 @@ async function deleteBoard(boardId, userId) {
 async function getUserBoards(userId) {
   const boards = await getUserBoardsDB(userId);
   return boards;
+}
+
+async function getBoardById(boardId) {
+  const boardData = await getBoardById(boardId);
+  const tasks = await getBoardTasksDB(boardId);
+
+  const taskLists = [];
+  tasks.forEach((task) => {});
 }
 
 module.exports = {
