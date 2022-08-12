@@ -5,13 +5,11 @@ const {
   updateBoard,
   deleteBoard,
   getUserBoards,
+  getBoardById,
 } = require("../../controllers/boardController");
 
 const verifyJWT = require("../middlewares/verifyJWT");
-const {
-  getAllBoardsDB,
-  getBoardById,
-} = require("../../integration/boardIntegration");
+const { getAllBoardsDB } = require("../../integration/boardIntegration");
 
 const router = express.Router();
 

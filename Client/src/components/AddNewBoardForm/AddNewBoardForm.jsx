@@ -7,7 +7,7 @@ import colors from "../../service/colors";
 import { useState } from "react";
 
 function AddNewBoardForm({ getBoardsRequest, setActiveModal }) {
-  const { loading, request } = useRequest("post", "/boards");
+  const { loading, request } = useRequest();
   const [acitveColor, setActiveColor] = useState(0);
 
   const addBoardHandler = async (values) => {
@@ -18,7 +18,7 @@ function AddNewBoardForm({ getBoardsRequest, setActiveModal }) {
         ...colors[acitveColor],
       },
     };
-    await request(boardData);
+    await request("post", "/boards", boardData);
   };
   return (
     <div className="custom-form">
@@ -32,7 +32,7 @@ function AddNewBoardForm({ getBoardsRequest, setActiveModal }) {
           await addBoardHandler(values);
           resetForm();
           setActiveModal(false);
-          getBoardsRequest();
+          getBoardsRequest("get", "boards/getUserBoards");
         }}
       >
         {() => (

@@ -36,11 +36,18 @@ async function getUserBoards(userId) {
 }
 
 async function getBoardById(boardId) {
-  const boardData = await getBoardById(boardId);
+  const boardData = (await getBoardByIdDB(boardId)).toJSON();
   const tasks = await getBoardTasksDB(boardId);
-
   const taskLists = [];
-  tasks.forEach((task) => {});
+  boardData.lists.forEach((list) => {
+    filteredTasks = tasks.filter((task) => task.status === list);
+    taskLists.push({
+      status: list,
+      tasks: filteredTasks,
+    });
+  });
+  boardData.tasks = taskLists;
+  return boardData;
 }
 
 module.exports = {
@@ -48,4 +55,5 @@ module.exports = {
   updateBoard,
   deleteBoard,
   getUserBoards,
+  getBoardById,
 };
