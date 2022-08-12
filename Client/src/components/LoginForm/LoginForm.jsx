@@ -6,6 +6,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 
 import "./LoginForm.scss";
+import authApi from "../../api/authApi";
 
 function LoginForm() {
   const navigate = useNavigate();
@@ -27,17 +28,17 @@ function LoginForm() {
       password: values.password,
     };
     try {
-      const response = await axios.post("/api/auth/login", userData);
+      const response = await authApi.login(userData);
       dispatch({
         type: "LOGIN_SUCCESS",
         payload: {
-          token: response.data.token,
-          username: response.data.username,
+          token: response.token,
+          username: response.username,
         },
       });
       navigate("/");
     } catch (error) {
-      dispatch({ type: "LOGIN_FAILURE", payload: error.response.data.message });
+      dispatch({ type: "LOGIN_FAILURE", payload: error.response.message });
     }
   };
 

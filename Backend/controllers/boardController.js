@@ -17,6 +17,7 @@ async function createBoard(newBoardData) {
   // if (error) throw new Error(error.details[0].message);
   const newBoard = await addBoardDB(newBoardData);
   await addBoardToUserDB(newBoard._id, newBoard.creator);
+  return newBoard;
 }
 
 async function updateBoard(boardId, newBoardData) {

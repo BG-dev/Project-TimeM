@@ -5,6 +5,7 @@ import axios from "axios";
 import * as Yup from "yup";
 
 import "./RegisterForm.scss";
+import authApi from "../../api/authApi";
 
 function RegisterForm() {
   const navigate = useNavigate();
@@ -24,7 +25,7 @@ function RegisterForm() {
       .oneOf([Yup.ref("password"), null], "Passwords must match"),
   });
 
-  const registerHandler = async (values) => {
+  const signUpHandler = async (values) => {
     setLoading(true);
     try {
       const newUserData = {
@@ -32,12 +33,12 @@ function RegisterForm() {
         email: values.email.toLowerCase(),
         password: values.password,
       };
-      await axios.post("/api/auth/register", newUserData);
-      setLoading(false);
+      await authApi.signup(newUserData);
       navigate("/login");
     } catch (error) {
-      setLoading(false);
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -53,7 +54,7 @@ function RegisterForm() {
         }}
         validationSchema={signUpSchema}
         onSubmit={async (values, actions) => {
-          await registerHandler(values);
+          await signUpHandler(values);
           actions.setFieldValue("password", "");
           actions.setFieldValue("passwordRepeat", "");
         }}

@@ -5,26 +5,35 @@ import {
   Modal,
   AddNewBoardForm,
 } from "../../components";
+import boardApi from "../../api/boardApi";
 import { Link } from "react-router-dom";
 import "./BoardsPage.scss";
-import useRequest from "../../hooks/request.hook";
 
 function BoardsPage() {
   const [isModalActive, setIsModalActive] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [boards, setBoards] = useState([]);
 
-  const {
-    data: { boards },
-    request,
-  } = useRequest();
   useEffect(() => {
-    request("get", "boards/getUserBoards");
+    async function getBoards() {
+      setLoading(true);
+      try {
+        const response = await boardApi.getAll();
+        setBoards(response.boards);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    getBoards();
   }, []);
 
   return (
     <>
       <Modal active={isModalActive} setActive={setIsModalActive}>
         <AddNewBoardForm
-          getBoardsRequest={request}
+          setBoards={setBoards}
           setActiveModal={setIsModalActive}
         />
       </Modal>

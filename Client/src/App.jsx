@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import { Routes, Route } from "react-router-dom";
 import { useAuth } from "./hooks/auth.hook";
-import { useRequest } from "./hooks/request.hook";
 import { Navbar } from "./components";
 import { AuthContext } from "./context/AuthContext";
 import { LoginForm, RegisterForm } from "./components";
@@ -15,18 +14,23 @@ import {
   BoardPage,
 } from "./pages";
 import { useEffect } from "react";
+import authApi from "./api/authApi";
 
 function App() {
   const { dispatch } = useContext(AuthContext);
-  const { data, request } = useRequest();
 
   useEffect(() => {
-    request("get", "/api/auth/isAuthUser");
+    async function verify() {
+      try {
+        const response = await authApi.verify();
+        if (!response.isLoggedIn) dispatch({ type: "LOGOUT" });
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    verify();
   }, []);
 
-  useEffect(() => {
-    if (data.isLoggedIn === false) dispatch({ type: "LOGOUT" });
-  }, [data]);
   const { isLoggedIn } = useAuth();
 
   return (

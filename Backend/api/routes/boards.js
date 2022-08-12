@@ -67,10 +67,13 @@ router.post("/", verifyJWT, async (req, res, next) => {
       creator: req.user.id,
     };
     if (!boardData) throw new Error("board data is undefined");
-    await createBoard(boardData);
+    const board = await createBoard(boardData);
     const message = "Board successfully added to the database";
     logger.info(message);
-    res.status(200).send({ message });
+    res.status(200).send({
+      board,
+      message,
+    });
   } catch (error) {
     next(error);
   }

@@ -1,16 +1,16 @@
 import React from "react";
 import "./AddNewBoardForm.scss";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import useRequest from "../../hooks/request.hook";
 import ColorSelector from "../ColorSelector";
 import colors from "../../service/colors";
 import { useState } from "react";
+import boardApi from "../../api/boardApi";
 
-function AddNewBoardForm({ getBoardsRequest, setActiveModal }) {
-  const { loading, request } = useRequest();
+function AddNewBoardForm({ setBoards, setActiveModal }) {
+  const [loading, setLoading] = useState(false);
   const [acitveColor, setActiveColor] = useState(0);
 
-  const addBoardHandler = async (values) => {
+  const createBoard = async (values) => {
     const boardData = {
       name: values.name,
       description: values.description,
@@ -18,8 +18,18 @@ function AddNewBoardForm({ getBoardsRequest, setActiveModal }) {
         ...colors[acitveColor],
       },
     };
-    await request("post", "/boards", boardData);
+    setLoading(true);
+    try {
+      const response = await boardApi.create(boardData);
+      const board = response.board;
+      setBoards((prev) => [...prev, board]);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
   };
+
   return (
     <div className="custom-form">
       <h2 className="custom-form__title">Create new board</h2>
@@ -29,10 +39,9 @@ function AddNewBoardForm({ getBoardsRequest, setActiveModal }) {
           description: "",
         }}
         onSubmit={async (values, { resetForm }) => {
-          await addBoardHandler(values);
+          await createBoard(values);
           resetForm();
           setActiveModal(false);
-          getBoardsRequest("get", "boards/getUserBoards");
         }}
       >
         {() => (

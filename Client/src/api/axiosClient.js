@@ -1,7 +1,7 @@
 import axios from "axios";
 import queryString from "query-string";
 
-const getToken = () => localStorage.getItem("token");
+const getToken = () => JSON.parse(localStorage.getItem("token"));
 
 const axiosClient = axios.create({
   paramsSerializer: (params) => queryString.stringify({ params }),

@@ -1,6 +1,5 @@
 import BoardCard from "./BoardCard";
 import Navbar from "./Navbar";
-import Board from "./Board";
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
 import Footer from "./Footer";
@@ -14,7 +13,6 @@ import TaskCard from "./TaskCard";
 export {
   Navbar,
   BoardCard,
-  Board,
   LoginForm,
   RegisterForm,
   Footer,
