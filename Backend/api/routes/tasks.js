@@ -24,22 +24,6 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
-router.get("/getBoardTasks/:id", verifyJWT, async (req, res, next) => {
-  try {
-    const boardId = req.params.id;
-    const tasks = await getBoardTasks(boardId);
-    const message = "Tasks successfully got";
-    logger.info(message);
-    tasks,
-      res.status(200).send({
-        tasks,
-        message,
-      });
-  } catch (error) {
-    next(error);
-  }
-});
-
 router.post("/", verifyJWT, async (req, res, next) => {
   try {
     const taskData = { ...req.body, user: req.user.id };
