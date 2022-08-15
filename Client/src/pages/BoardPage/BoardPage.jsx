@@ -27,7 +27,6 @@ function BoardPage() {
     }
     getBoard();
   }, []);
-  console.log(tasks);
 
   return (
     <div className="board">

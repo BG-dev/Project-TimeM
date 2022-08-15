@@ -55,7 +55,7 @@
   .icon,
   .text {
     color: $dark-gray;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
   }
 
   .image {
@@ -107,7 +107,7 @@
         display: flex;
         align-items: center;
         border-radius: 6px;
-        transition: all 0.4s ease;
+        transition: all 0.2s ease;
 
         &:hover {
           background-color: $blue;
