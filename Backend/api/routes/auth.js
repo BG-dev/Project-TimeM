@@ -1,5 +1,5 @@
 const express = require("express");
-const { createUser, loginUser } = require("../../controllers/authController");
+const authController = require("../../controllers/auth");
 const logger = require("../middlewares/logger");
 const verifyJWT = require("../middlewares/verifyJWT");
 
@@ -12,7 +12,7 @@ router.get("/isAuthUser", verifyJWT, (req, res) => {
 router.post("/register", async (req, res, next) => {
   try {
     const user = req.body;
-    const newUser = await createUser(user);
+    const newUser = await authController.create(user);
     const message = `User ${newUser.username} was created`;
     logger.info(message);
     res.status(201).send({ message });
@@ -24,7 +24,7 @@ router.post("/register", async (req, res, next) => {
 router.post("/login", async (req, res, next) => {
   try {
     const user = req.body;
-    const token = await loginUser(user);
+    const token = await authController.login(user);
     const message = `User ${user.username} was logged in`;
     logger.info(message);
     res.status(201).send({

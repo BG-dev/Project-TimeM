@@ -1,13 +1,13 @@
 const express = require("express");
-const { getAllUsersDB } = require("../../integration/userIntegration");
+const userController = require("../../controllers/user");
 const verifyJWT = require("../middlewares/verifyJWT");
 const logger = require("../middlewares/logger");
 
 const router = express.Router();
 
-router.get("/getAllUsers", verifyJWT, async (req, res, next) => {
+router.get("/getAll", verifyJWT, async (req, res, next) => {
   try {
-    const users = await getAllUsersDB();
+    const users = await userController.getAll();
 
     const message = "Users successfully got";
     logger.info(message);

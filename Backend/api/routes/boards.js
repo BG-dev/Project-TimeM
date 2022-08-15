@@ -1,22 +1,14 @@
 const express = require("express");
 const logger = require("../middlewares/logger");
-const {
-  createBoard,
-  updateBoard,
-  deleteBoard,
-  getUserBoards,
-  getBoardById,
-} = require("../../controllers/boardController");
-
+const boardController = require("../../controllers/board");
 const verifyJWT = require("../middlewares/verifyJWT");
-const { getAllBoardsDB } = require("../../integration/boardIntegration");
 
 const router = express.Router();
 
-router.get("/getboard/:id", verifyJWT, async (req, res, next) => {
+router.get("/board/:id", verifyJWT, async (req, res, next) => {
   try {
     const id = req.params.id;
-    const board = await getBoardById(id);
+    const board = await boardController.getOne(id);
 
     const message = "Board successfully got";
     logger.info(message);
@@ -29,25 +21,10 @@ router.get("/getboard/:id", verifyJWT, async (req, res, next) => {
   }
 });
 
-router.get("/getUserBoards", verifyJWT, async (req, res, next) => {
+router.get("/userboards", verifyJWT, async (req, res, next) => {
   try {
     const userId = req.user.id;
-    const boards = await getUserBoards(userId);
-
-    const message = "Boards successfully got";
-    logger.info(message);
-    res.status(200).send({
-      boards,
-      message,
-    });
-  } catch (error) {
-    next(error);
-  }
-});
-
-router.get("/getAllBoards", verifyJWT, async (req, res, next) => {
-  try {
-    const boards = await getAllBoardsDB();
+    const boards = await boardController.getUserBoards(userId);
 
     const message = "Boards successfully got";
     logger.info(message);
@@ -67,7 +44,7 @@ router.post("/", verifyJWT, async (req, res, next) => {
       creator: req.user.id,
     };
     if (!boardData) throw new Error("board data is undefined");
-    const board = await createBoard(boardData);
+    const board = await boardController.create(boardData);
     const message = "Board successfully added to the database";
     logger.info(message);
     res.status(200).send({
@@ -85,10 +62,13 @@ router.put("/:id", verifyJWT, async (req, res, next) => {
     const board = req.body;
     if (!board || !boardId) throw new Error("data is undefined");
 
-    await updateBoard(boardId, board);
+    const updatedBoard = await boardController.update(boardId, board);
     const message = "Board successfully updated in the database";
     logger.info(message);
-    res.status(200).send({ message });
+    res.status(200).send({
+      updatedBoard,
+      message,
+    });
   } catch (error) {
     next(error);
   }
@@ -100,7 +80,7 @@ router.delete("/:id", verifyJWT, async (req, res, next) => {
     const userId = req.user.id;
     if (!boardId) throw new Error("id is undefined");
 
-    await deleteBoard(boardId, userId);
+    await boardController.delete(boardId, userId);
     const message = "Board has been deleted";
     logger.info(message);
     res.status(200).send({ message });
