@@ -1,0 +1,29 @@
+@import "../../scss/variables";
+
+.new-task-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 12px 10px;
+  border: 2px dashed #222222;
+  border-radius: 12px;
+  cursor: pointer;
+
+  .wrapper {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .icon {
+    font-size: 17px;
+    color: $new-black;
+  }
+
+  .text {
+    color: $new-black;
+    font-size: 17px;
+    font-weight: bold;
+  }
+}

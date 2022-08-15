@@ -9,6 +9,8 @@ import AddNewBoardForm from "./AddNewBoardForm";
 import ColorSelector from "./ColorSelector";
 import TasksList from "./TasksList";
 import TaskCard from "./TaskCard";
+import NewTaskCard from "./NewTaskCard";
+import AddNewTaskForm from "./AddNewTaskForm";
 
 export {
   Navbar,
@@ -22,4 +24,6 @@ export {
   ColorSelector,
   TasksList,
   TaskCard,
+  NewTaskCard,
+  AddNewTaskForm,
 };
