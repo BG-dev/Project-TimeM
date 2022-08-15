@@ -18,7 +18,7 @@ function BoardsPage() {
     async function getBoards() {
       setLoading(true);
       try {
-        const response = await boardApi.getAll();
+        const response = await boardApi.getUserBoards();
         setBoards(response.boards);
       } catch (error) {
         console.log(error);
