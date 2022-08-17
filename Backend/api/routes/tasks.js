@@ -37,16 +37,31 @@ router.post("/", verifyJWT, async (req, res, next) => {
   }
 });
 
-router.put("/:id", async (req, res, next) => {
+router.put("/update/:id", async (req, res, next) => {
   try {
     const id = req.params.id;
     const taskData = req.body;
     if (!taskData || !id) throw new Error("data is undefined");
     const task = await taskController.update(id, taskData);
-    const message = "Card successfully updated in the database";
+    const message = "Task successfully updated in the database";
     logger.info(message);
     res.status(200).send({
       task,
+      message,
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.put("/updateposition", async (req, res, next) => {
+  try {
+    const taskData = req.body;
+    if (!taskData) throw new Error("data is undefined");
+    await taskController.updatePosition(taskData);
+    const message = "Task successfully updated in the database";
+    logger.info(message);
+    res.status(200).send({
       message,
     });
   } catch (error) {

@@ -11,6 +11,10 @@ const taskSchema = new Schema(
       type: String,
       require: true,
     },
+    position: {
+      type: Number,
+      require: true,
+    },
     user: {
       type: mongoose.SchemaTypes.ObjectId,
       ref: "User",

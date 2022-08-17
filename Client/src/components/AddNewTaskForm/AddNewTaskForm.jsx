@@ -4,22 +4,23 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useState } from "react";
 import taskApi from "../../api/taskApi";
 
-function AddNewTaskForm({ setTasks, setActiveModal, status, boardId, tasks }) {
+function AddNewTaskForm({ setActiveModal, status, boardId, lists }) {
   const [loading, setLoading] = useState(false);
 
   const addTask = (task) => {
-    let newTasks = [...tasks];
+    let newTasks = [...lists];
     newTasks.forEach((list) => {
       if (list.status === status) list.tasks.push(task);
     });
-    setTasks(newTasks);
   };
 
   const createTask = async (values) => {
-    const taskData = {
+    const position = lists.find((list) => list.status === status).tasks.length;
+    let taskData = {
       text: values.text,
       status: status,
       board: boardId,
+      position: position,
     };
     setLoading(true);
     try {

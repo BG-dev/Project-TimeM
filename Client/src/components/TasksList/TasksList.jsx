@@ -3,17 +3,44 @@ import NewTaskCard from "../NewTaskCard";
 import TaskCard from "../TaskCard";
 import "./TasksList.scss";
 
-function TasksList({ status, tasks, setModalActive, setNewTaskStatus }) {
+function TasksList({
+  list,
+  tasks,
+  setModalActive,
+  setNewTaskStatus,
+  onDragOverHandler,
+  onDragLeaveHandler,
+  onDragStartHandler,
+  onDragEndHandler,
+  onDropHandler,
+  onDropTaskHandler,
+}) {
   return (
-    <div className="tasks">
-      <span className="tasks-list__title">{status}</span>
+    <div
+      onDragOver={(e) => onDragOverHandler(e)}
+      onDrop={(e) => onDropTaskHandler(e, list)}
+      className="tasks"
+    >
+      <span className="tasks-list__title">{list.status}</span>
       <ul className="tasks-list">
-        {tasks && tasks.map((task) => <TaskCard key={task._id} task={task} />)}
+        {tasks &&
+          tasks.map((task) => (
+            <TaskCard
+              key={task._id}
+              task={task}
+              list={list}
+              onDragOverHandler={onDragOverHandler}
+              onDragLeaveHandler={onDragLeaveHandler}
+              onDragStartHandler={onDragStartHandler}
+              onDragEndHandler={onDragEndHandler}
+              onDropHandler={onDropHandler}
+            />
+          ))}
         {
           <NewTaskCard
             setModalActive={setModalActive}
             setNewTaskStatus={setNewTaskStatus}
-            status={status}
+            status={list.status}
           />
         }
       </ul>

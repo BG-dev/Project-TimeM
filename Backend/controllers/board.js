@@ -25,7 +25,9 @@ exports.getOne = async (boardId) => {
   const tasks = await taskIntegration.getBoardTasks(boardId);
   const taskLists = [];
   boardData.lists.forEach((list) => {
-    filteredTasks = tasks.filter((task) => task.status === list);
+    filteredTasks = tasks
+      .filter((task) => task.status === list)
+      .sort((a, b) => a.position - b.position);
     taskLists.push({
       status: list,
       tasks: filteredTasks,
