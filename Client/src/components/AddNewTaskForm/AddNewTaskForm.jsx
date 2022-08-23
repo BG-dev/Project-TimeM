@@ -59,11 +59,7 @@ function AddNewTaskForm({ setActiveModal, status, boardId, lists }) {
               />
             </div>
             <div className="add-task-control">
-              <button
-                className="btn btn-primary"
-                type="submit"
-                disabled={loading}
-              >
+              <button className="btn btn-blue" type="submit" disabled={loading}>
                 Create
               </button>
             </div>

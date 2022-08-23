@@ -16,7 +16,6 @@ exports.updatePosition = async (data) => {
     });
   }
   destinationTasks.forEach(async (task, index) => {
-    console.log(task, index);
     await taskIntegration.updatePosition(task._id, {
       status: destinationStatus,
       position: index,

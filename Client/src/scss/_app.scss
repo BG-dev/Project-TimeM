@@ -1,6 +1,7 @@
 @import "variables";
 @import "normalize";
 @import "forms";
+@import "fonts";
 
 .container {
   position: relative;
@@ -22,7 +23,7 @@
 }
 
 span {
-  color: $dark-gray;
+  color: $new-black;
   font-weight: normal;
   font-size: 20px;
 }

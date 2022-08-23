@@ -87,14 +87,10 @@ function LoginForm() {
               />
             </div>
             <div className="auth__form-control">
-              <button
-                className="btn btn-primary"
-                type="submit"
-                disabled={loading}
-              >
+              <button className="btn btn-blue" type="submit" disabled={loading}>
                 Sign In
               </button>
-              <NavLink to="/register" className="btn btn-primary">
+              <NavLink to="/register" className="btn btn-blue">
                 Create new account
               </NavLink>
               <NavLink to="/register" className="auth__form-link">

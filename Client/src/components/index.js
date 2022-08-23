@@ -11,6 +11,8 @@ import TasksList from "./TasksList";
 import TaskCard from "./TaskCard";
 import NewTaskCard from "./NewTaskCard";
 import AddNewTaskForm from "./AddNewTaskForm";
+import BoardHeader from "./BoardHeader";
+import ConfirmForm from "./ConfirmForm";
 
 export {
   Navbar,
@@ -26,4 +28,6 @@ export {
   TaskCard,
   NewTaskCard,
   AddNewTaskForm,
+  BoardHeader,
+  ConfirmForm,
 };

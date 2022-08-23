@@ -1,5 +1,11 @@
+.board {
+  &__title {
+    font-size: 60px;
+  }
+}
+
 .lists {
   display: flex;
   justify-content: center;
-  gap: 50px;
+  gap: 20px;
 }

@@ -13,13 +13,14 @@ $card-radius: 20px;
 
   .text {
     color: $new-black;
+    font-weight: normal;
   }
 
   &__info {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    font-weight: 300;
+
     p {
       font-size: 16px;
     }

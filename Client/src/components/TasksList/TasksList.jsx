@@ -21,7 +21,9 @@ function TasksList({
       onDrop={(e) => onDropTaskHandler(e, list)}
       className="tasks"
     >
-      <span className="tasks-list__title">{list.status}</span>
+      <div className="tasks-list__top">
+        <span className="tasks-list__title">{list.status}</span>
+      </div>
       <ul className="tasks-list">
         {tasks &&
           tasks.map((task) => (

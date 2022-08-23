@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import "./BoardPage.scss";
-import { TasksList, Modal, AddNewTaskForm } from "../../components";
+import {
+  TasksList,
+  Modal,
+  AddNewTaskForm,
+  BoardHeader,
+} from "../../components";
 import boardApi from "../../api/boardApi";
 import taskApi from "../../api/taskApi";
 
@@ -110,6 +115,10 @@ function BoardPage() {
 
   return (
     <div className="board">
+      <div className="board__top">
+        <span className="board__title">{boardName}</span>
+        <BoardHeader />
+      </div>
       <Modal active={isModalActive} setActive={setIsModalActive}>
         <AddNewTaskForm
           setActiveModal={setIsModalActive}

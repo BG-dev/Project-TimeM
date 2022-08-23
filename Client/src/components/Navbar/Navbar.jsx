@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
+import { ConfirmForm, Modal } from "../../components";
 
 import "./Navbar.scss";
 
@@ -8,6 +9,7 @@ function Navbar() {
   const navigate = useNavigate();
   const { username, dispatch } = useContext(AuthContext);
   const [isOpenNavbar, setIsOpenNavbar] = useState(true);
+  const [isLogoutModalActive, setIsLogoutModalActive] = useState(false);
 
   const logoutHandler = (event) => {
     event.preventDefault();
@@ -17,6 +19,13 @@ function Navbar() {
 
   return (
     <nav className={`nav ${isOpenNavbar ? "" : "close"}`}>
+      <Modal active={isLogoutModalActive} setActive={setIsLogoutModalActive}>
+        <ConfirmForm
+          text={"Do you want to logout?"}
+          confirmHandler={logoutHandler}
+          setActive={setIsLogoutModalActive}
+        />
+      </Modal>
       <i
         className="bx bx-chevron-left toggle"
         onClick={() => {
@@ -69,7 +78,7 @@ function Navbar() {
             </NavLink>
           </li>
           <li className="menu__link">
-            <a href="#" onClick={logoutHandler}>
+            <a href="#" onClick={() => setIsLogoutModalActive(true)}>
               <i className="bx bx-exit icon"></i>
               <span className="menu__link-text text">Logout</span>
             </a>

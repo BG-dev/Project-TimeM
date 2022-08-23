@@ -7,6 +7,7 @@
   height: 100vh;
   padding: 10px 14px;
   transition: all 0.5s ease;
+  border-right: 1px solid $gray;
   z-index: 100;
 
   .toggle {
@@ -41,6 +42,7 @@
   .text {
     font-weight: 200;
     font-size: 23px;
+    font-weight: normal;
     white-space: nowrap;
   }
 
