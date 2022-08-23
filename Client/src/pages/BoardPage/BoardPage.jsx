@@ -1,18 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import "./BoardPage.scss";
 import {
   TasksList,
   Modal,
   AddNewTaskForm,
   BoardHeader,
+  ConfirmForm,
 } from "../../components";
 import boardApi from "../../api/boardApi";
 import taskApi from "../../api/taskApi";
 
 function BoardPage() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [isModalActive, setIsModalActive] = useState(false);
+  const [isDeleteModalActive, setIsDeleteModalActive] = useState(false);
   const [newTaskStatus, setNewTaskStatus] = useState(null);
   const [boardName, setBoardName] = useState(null);
   const [lists, setLists] = useState(null);
@@ -97,6 +100,13 @@ function BoardPage() {
     setLists(updatedLists);
   }
 
+  async function deleteBoard(event) {
+    event.preventDefault();
+    await boardApi.delete(id);
+    setIsDeleteModalActive(false);
+    navigate("/boards");
+  }
+
   useEffect(() => {
     async function getBoard() {
       setLoading(true);
@@ -117,7 +127,7 @@ function BoardPage() {
     <div className="board">
       <div className="board__top">
         <span className="board__title">{boardName}</span>
-        <BoardHeader />
+        <BoardHeader setIsDeleteModalActive={setIsDeleteModalActive} />
       </div>
       <Modal active={isModalActive} setActive={setIsModalActive}>
         <AddNewTaskForm
@@ -125,6 +135,13 @@ function BoardPage() {
           lists={lists}
           status={newTaskStatus}
           boardId={id}
+        />
+      </Modal>
+      <Modal active={isDeleteModalActive} setActive={setIsDeleteModalActive}>
+        <ConfirmForm
+          text={"Do you want to delete this board?"}
+          confirmHandler={deleteBoard}
+          setActive={setIsDeleteModalActive}
         />
       </Modal>
       <div className="lists">
