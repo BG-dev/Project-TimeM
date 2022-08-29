@@ -6,12 +6,7 @@
   font-family: "Roboto", sans-serif;
   font-weight: normal;
   border: none;
-  border-radius: 8px;
-  box-shadow: 0px 1px 2px $new-black;
-
-  &:active {
-    box-shadow: 0px 1px 3px $new-black;
-  }
+  border-radius: 12px;
 
   &-blue {
     background-color: $blue;
@@ -32,7 +27,7 @@
 input {
   height: 35px;
   border-radius: 3px;
-  border: 1px solid #d3d3d3;
+  border: 1px solid $dark-gray;
   font-size: 14px;
   padding: 7px;
 }

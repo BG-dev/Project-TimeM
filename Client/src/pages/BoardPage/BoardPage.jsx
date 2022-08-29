@@ -127,7 +127,15 @@ function BoardPage() {
     <div className="board">
       <div className="board__top">
         <span className="board__title">{boardName}</span>
-        <BoardHeader setIsDeleteModalActive={setIsDeleteModalActive} />
+        <div className="board__menu">
+          <button className="btn btn-blue">Edit</button>
+          <button
+            className="btn btn-red"
+            onClick={() => setIsDeleteModalActive((prev) => !prev)}
+          >
+            Delete
+          </button>
+        </div>
       </div>
       <Modal active={isModalActive} setActive={setIsModalActive}>
         <AddNewTaskForm

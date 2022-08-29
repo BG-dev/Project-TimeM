@@ -9,7 +9,7 @@
   height: 100vh;
   width: calc(100% - 240px);
   transition: all 0.5s ease;
-  background-color: $light-gray;
+  background-color: $gray;
 
   .content {
     min-height: calc(100% - 40px);
@@ -23,7 +23,7 @@
 }
 
 span {
-  color: $new-black;
+  color: $dark-gray;
   font-weight: normal;
   font-size: 20px;
 }
@@ -34,11 +34,11 @@ p {
 }
 
 label {
-  color: #000000;
+  color: $dark-gray;
   font-size: 13px;
-  font-weight: 100;
+  font-weight: normal;
 }
 
 h2 {
-  color: #000000;
+  color: $dark-gray;
 }

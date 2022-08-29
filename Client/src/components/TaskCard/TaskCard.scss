@@ -4,11 +4,11 @@
   width: 100%;
   padding: 12px 10px;
   border-radius: 12px;
-  background-color: $dark-gray;
+  background-color: $gray;
   &-text {
-    color: #ffffff;
+    color: $dark-gray;
     font-size: 17px;
+    font-weight: bold;
     display: flex;
-    justify-content: center;
   }
 }
