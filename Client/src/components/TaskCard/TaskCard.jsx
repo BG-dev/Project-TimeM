@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
+import DropdownMenu from "../DropdownMenu/DropdownMenu";
+import taskApi from "../../api/taskApi";
 import "./TaskCard.scss";
 
 function TaskCard({
@@ -10,6 +12,19 @@ function TaskCard({
   onDragEndHandler,
   onDropHandler,
 }) {
+  const [isActiveDropdownMenu, setIsActiveDropdownMenu] = useState(false);
+
+  const deleteTask = async () => {
+    await taskApi.delete(task._id);
+  };
+
+  const options = [
+    {
+      text: "Delete",
+      action: deleteTask,
+    },
+  ];
+
   return (
     <div
       draggable={true}
@@ -20,7 +35,14 @@ function TaskCard({
       onDrop={(e) => onDropHandler(e, list, task)}
       className="task"
     >
-      <span className="task-text">{task && task.text}</span>
+      <div className="task__top">
+        <span className="task-text">{task && task.text}</span>
+        <DropdownMenu
+          active={isActiveDropdownMenu}
+          setActive={setIsActiveDropdownMenu}
+          options={options}
+        />
+      </div>
     </div>
   );
 }

@@ -12,6 +12,7 @@ import TaskCard from "./TaskCard";
 import NewTaskCard from "./NewTaskCard";
 import AddNewTaskForm from "./AddNewTaskForm";
 import ConfirmForm from "./ConfirmForm";
+import DropdownMenu from "./DropdownMenu";
 
 export {
   Navbar,
@@ -28,4 +29,5 @@ export {
   NewTaskCard,
   AddNewTaskForm,
   ConfirmForm,
+  DropdownMenu,
 };

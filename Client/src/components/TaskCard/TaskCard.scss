@@ -5,6 +5,18 @@
   padding: 12px 10px;
   border-radius: 12px;
   background-color: $gray;
+
+  &__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    .icon {
+      color: $dark-gray;
+      font-size: 25px;
+    }
+  }
+
   &-text {
     color: $dark-gray;
     font-size: 17px;
