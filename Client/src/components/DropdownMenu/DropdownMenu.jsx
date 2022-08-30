@@ -1,22 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import "./DropdownMenu.scss";
 
-function DropdownMenu({ active, setActive, options }) {
-  console.log(options);
+function DropdownMenu({ options }) {
+  const [active, setActive] = useState(false);
+
   return (
     <div className="dropdown">
       <i
         className="bx bx-dots-horizontal-rounded icon"
-        onClick={() => setActive(true)}
+        onClick={() => setActive((prev) => !prev)}
       ></i>
-      <div
-        className={active ? "dropdown__menu active" : "dropdown__menu"}
-        onClick={() => setActive(false)}
-      >
-        <div
-          className="dropdown__content"
-          onClick={(event) => event.stopPropagation()}
-        >
+      {active && (
+        <div className="dropdown__menu">
           <ul className="dropdown__list">
             {options &&
               options.map((option, index) => (
@@ -25,12 +20,13 @@ function DropdownMenu({ active, setActive, options }) {
                   className="dropdown__item"
                   onClick={() => option.action()}
                 >
-                  {option.text}
+                  <i className={`bx icon ${option.icon}`}></i>
+                  <span className="dropdown__item-text">{option.text}</span>
                 </li>
               ))}
           </ul>
         </div>
-      </div>
+      )}
     </div>
   );
 }
