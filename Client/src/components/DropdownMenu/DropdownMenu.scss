@@ -2,21 +2,8 @@
 
 .dropdown {
   position: relative;
-  // &__menu {
-  //   width: 100vw;
-  //   height: 100vh;
-  //   position: fixed;
-  //   top: 0;
-  //   left: 0;
-  //   display: flex;
-  //   align-items: center;
-  //   justify-content: center;
-  //   opacity: 0;
-  //   pointer-events: none;
-  //   transition: all 0.5s ease;
-  // }
 
-  .icon{
+  .icon {
     z-index: 10;
   }
 
@@ -24,32 +11,31 @@
     position: absolute;
     z-index: 100;
     top: 40px;
-    // left: -70px;
     left: calc(100% - 200px);
     height: 100px;
     min-width: 200px;
     padding: 10px;
     border-radius: 15px;
     background-color: #ffffff;
-    border: 1px solid $middle-gray;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
     overflow: hidden;
   }
 
-  &__list{
+  &__list {
     display: flex;
     flex-direction: column;
   }
-  
-  &__item{
+
+  &__item {
     display: flex;
     align-items: center;
     gap: 8px;
     padding: 5px 0;
-    color: $dark-gray;
     font-weight: 100;
 
-    icon{
-      font-weight: 100;
+    span,
+    .icon {
+      color: $dark-gray;
     }
   }
 }
