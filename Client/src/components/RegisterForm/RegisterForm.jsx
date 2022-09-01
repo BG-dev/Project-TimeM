@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { NavLink, useNavigate } from "react-router-dom";
-import axios from "axios";
+import { CustomField } from "../../components";
 import * as Yup from "yup";
 
 import "./RegisterForm.scss";
@@ -66,6 +66,7 @@ function RegisterForm() {
               <Field
                 type="text"
                 id="username"
+                component={CustomField}
                 name="username"
                 placeholder="Username"
               />
@@ -77,7 +78,13 @@ function RegisterForm() {
             </div>
             <div className="auth__form-container">
               <label htmlFor="email">Email</label>
-              <Field type="email" id="email" name="email" placeholder="Email" />
+              <Field
+                type="email"
+                id="email"
+                component={CustomField}
+                name="email"
+                placeholder="Email"
+              />
               <ErrorMessage
                 className="auth__form-error"
                 component="span"
@@ -89,6 +96,7 @@ function RegisterForm() {
               <Field
                 type="password"
                 id="password"
+                component={CustomField}
                 name="password"
                 placeholder="Password"
               />
@@ -103,6 +111,7 @@ function RegisterForm() {
               <Field
                 type="password"
                 id="passwordRepeat"
+                component={CustomField}
                 name="passwordRepeat"
                 placeholder="Repeat password"
               />

@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
-import axios from "axios";
 import { AuthContext } from "../../context/AuthContext";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { NavLink, useNavigate } from "react-router-dom";
+import { CustomField } from "../../components";
 import * as Yup from "yup";
 
 import "./LoginForm.scss";
@@ -63,11 +63,12 @@ function LoginForm() {
               <Field
                 type="text"
                 id="username"
+                component={CustomField}
                 name="username"
                 placeholder="Username"
               />
               <ErrorMessage
-                className="auth__form-error"
+                className="span-error"
                 component="span"
                 name="username"
               />
@@ -78,10 +79,11 @@ function LoginForm() {
                 type="password"
                 id="password"
                 name="password"
+                component={CustomField}
                 placeholder="Password"
               />
               <ErrorMessage
-                className="auth__form-error"
+                className="span-error"
                 component="span"
                 name="password"
               />

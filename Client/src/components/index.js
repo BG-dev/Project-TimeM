@@ -13,6 +13,7 @@ import NewTaskCard from "./NewTaskCard";
 import AddNewTaskForm from "./AddNewTaskForm";
 import ConfirmForm from "./ConfirmForm";
 import DropdownMenu from "./DropdownMenu";
+import CustomField from "./CustomField";
 
 export {
   Navbar,
@@ -30,4 +31,5 @@ export {
   AddNewTaskForm,
   ConfirmForm,
   DropdownMenu,
+  CustomField,
 };

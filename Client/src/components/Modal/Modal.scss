@@ -22,17 +22,20 @@
     background-color: #ffffff;
     position: absolute;
 
-    .close-icon {
+    .icon {
       color: $dark-gray;
-      font-size: 40px;
-      position: absolute;
-      right: 10px;
-      top: 15px;
-      cursor: pointer;
+      font-size: 35px;
     }
   }
 }
 
+.close-icon {
+  position: absolute;
+  right: 10px;
+  top: 14px;
+  background-color: #ffffff;
+  cursor: pointer;
+}
 .modal.active {
   opacity: 1;
   pointer-events: all;

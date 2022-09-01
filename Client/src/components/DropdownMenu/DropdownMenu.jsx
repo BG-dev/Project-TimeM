@@ -28,11 +28,13 @@ function DropdownMenu({ options }) {
 
   return (
     <div className="dropdown">
-      <i
+      <button
+        className={`btn btn-icon btn-gray ${active ? "active" : ""} `}
         ref={btnRef}
-        className="bx bx-dots-horizontal-rounded icon"
         onClick={() => setActive((prev) => !prev)}
-      ></i>
+      >
+        <i className="bx bx-dots-horizontal-rounded icon"></i>
+      </button>
       {active && (
         <div ref={menuRef} className="dropdown__menu">
           <ul className="dropdown__list">

@@ -12,7 +12,12 @@ function Modal({ active, setActive, children }) {
         className="modal__content"
         onClick={(event) => event.stopPropagation()}
       >
-        <i className="bx bx-x close-icon" onClick={() => setActive(false)}></i>
+        <button
+          className="btn btn-icon close-icon"
+          onClick={() => setActive(false)}
+        >
+          <i className="bx bx-x icon "></i>
+        </button>
         {children}
       </div>
     </div>
