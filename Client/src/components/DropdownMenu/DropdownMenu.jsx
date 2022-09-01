@@ -7,13 +7,21 @@ function DropdownMenu({ options }) {
   const [active, setActive] = useState(false);
 
   useEffect(() => {
-    document.addEventListener("click", handleClickOutside, true);
-  }, []);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [active]);
 
-  const refBlock = useRef(null);
+  const menuRef = useRef();
+  const btnRef = useRef();
 
   const handleClickOutside = (e) => {
-    if (!refBlock.current.contains(e.target)) {
+    if (
+      active &&
+      !menuRef.current.contains(e.target) &&
+      !btnRef.current.contains(e.target)
+    ) {
       setActive(false);
     }
   };
@@ -21,11 +29,12 @@ function DropdownMenu({ options }) {
   return (
     <div className="dropdown">
       <i
+        ref={btnRef}
         className="bx bx-dots-horizontal-rounded icon"
         onClick={() => setActive((prev) => !prev)}
       ></i>
       {active && (
-        <div ref={refBlock} className="dropdown__menu">
+        <div ref={menuRef} className="dropdown__menu">
           <ul className="dropdown__list">
             {options &&
               options.map((option, index) => (
