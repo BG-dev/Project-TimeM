@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "./BoardPage.scss";
 import {
   TasksList,
   Modal,
   AddNewTaskForm,
-  BoardHeader,
   ConfirmForm,
 } from "../../components";
 import boardApi from "../../api/boardApi";
 import taskApi from "../../api/taskApi";
+import { BoardContext } from "../../context/BoardContext";
 
 function BoardPage() {
   const { id } = useParams();
@@ -18,10 +18,10 @@ function BoardPage() {
   const [isDeleteModalActive, setIsDeleteModalActive] = useState(false);
   const [newTaskStatus, setNewTaskStatus] = useState(null);
   const [boardName, setBoardName] = useState(null);
-  const [lists, setLists] = useState(null);
   const [loading, setLoading] = useState(false);
   const [currentList, setCurrentList] = useState(null);
   const [currentTask, setCurrentTask] = useState(null);
+  const { dispatch, lists } = useContext(BoardContext);
 
   async function updateTaskPosition(data) {
     try {
@@ -73,7 +73,12 @@ function BoardPage() {
       resourceStatus: currentList.status,
       destinationStatus: list.status,
     });
-    setLists(updatedLists);
+    dispatch({
+      type: "SET_LISTS",
+      payload: {
+        lists: updatedLists,
+      },
+    });
   }
 
   async function onDropTaskHandler(e, list) {
@@ -97,7 +102,12 @@ function BoardPage() {
       resourceStatus: currentList.status,
       destinationStatus: list.status,
     });
-    setLists(updatedLists);
+    dispatch({
+      type: "SET_LISTS",
+      payload: {
+        lists: updatedLists,
+      },
+    });
   }
 
   async function deleteBoard(event) {
@@ -113,7 +123,12 @@ function BoardPage() {
       try {
         const response = await boardApi.getOne(id);
         setBoardName(response.board.name);
-        setLists(response.board.tasks);
+        dispatch({
+          type: "SET_LISTS",
+          payload: {
+            lists: response.board.tasks,
+          },
+        });
       } catch (error) {
         console.log(error);
       } finally {

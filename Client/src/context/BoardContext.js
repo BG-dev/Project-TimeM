@@ -3,63 +3,31 @@ const INITIAL_STATE = {
   lists: [],
 };
 
-export const AuthContext = createContext(INITIAL_STATE);
+export const BoardContext = createContext(INITIAL_STATE);
 
-const authReducer = (state, action) => {
+const boardReducer = (state, action) => {
   switch (action.type) {
-    case "DELETE_TASK":
+    case "SET_LISTS":
       return {
-        token: null,
-        username: null,
-        loading: true,
-        error: null,
-      };
-    case "LOGIN_SUCCESS":
-      return {
-        token: action.payload.token,
-        username: action.payload.username,
-        loading: false,
-        error: null,
-      };
-
-    case "LOGIN_FAILURE":
-      return {
-        token: null,
-        username: null,
-        loading: false,
-        error: action.payload,
-      };
-    case "LOGOUT":
-      return {
-        token: null,
-        username: null,
-        loading: false,
-        error: null,
+        ...state,
+        lists: action.payload,
       };
     default:
       return state;
   }
 };
 
-export const AuthContextProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(authReducer, INITIAL_STATE);
-
-  useEffect(() => {
-    localStorage.setItem("token", JSON.stringify(state.token));
-    localStorage.setItem("username", JSON.stringify(state.username));
-  }, [state.token]);
+export const BoardContextProvider = ({ children }) => {
+  const [state, dispatch] = useReducer(boardReducer, INITIAL_STATE);
 
   return (
-    <AuthContext.Provider
+    <BoardContext.Provider
       value={{
-        token: state.token,
-        username: state.username,
-        loading: state.loading,
-        error: state.error,
+        lists: state.lists,
         dispatch,
       }}
     >
       {children}
-    </AuthContext.Provider>
+    </BoardContext.Provider>
   );
 };

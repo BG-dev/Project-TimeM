@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import DropdownMenu from "../DropdownMenu/DropdownMenu";
 import { ConfirmForm, Modal } from "../../components";
+import { BoardContext } from "../../context/BoardContext";
 import taskApi from "../../api/taskApi";
 import "./TaskCard.scss";
 
@@ -14,6 +15,7 @@ function TaskCard({
   onDropHandler,
 }) {
   const [isDeleteModalActive, setIsDeleteModalActive] = useState(false);
+  const { dispatch, lists } = useContext(BoardContext);
 
   const openDeleteModal = () => {
     setIsDeleteModalActive(true);
@@ -21,6 +23,7 @@ function TaskCard({
 
   const deleteTask = async () => {
     await taskApi.delete(task._id);
+    const newLists = [...lists];
   };
 
   const editTask = async () => {
@@ -41,15 +44,7 @@ function TaskCard({
   ];
 
   return (
-    <div
-      draggable={true}
-      onDragOver={(e) => onDragOverHandler(e)}
-      onDragLeave={(e) => onDragLeaveHandler(e)}
-      onDragStart={(e) => onDragStartHandler(e, list, task)}
-      onDragEnd={(e) => onDragEndHandler(e)}
-      onDrop={(e) => onDropHandler(e, list, task)}
-      className="task"
-    >
+    <>
       <Modal active={isDeleteModalActive} setActive={setIsDeleteModalActive}>
         <ConfirmForm
           text={"Do you want to delete this task?"}
@@ -57,11 +52,22 @@ function TaskCard({
           setActive={setIsDeleteModalActive}
         />
       </Modal>
-      <div className="task__top">
-        <span className="task-text">{task && task.text}</span>
-        <DropdownMenu options={options} />
+
+      <div
+        draggable={true}
+        onDragOver={(e) => onDragOverHandler(e)}
+        onDragLeave={(e) => onDragLeaveHandler(e)}
+        onDragStart={(e) => onDragStartHandler(e, list, task)}
+        onDragEnd={(e) => onDragEndHandler(e)}
+        onDrop={(e) => onDropHandler(e, list, task)}
+        className="task"
+      >
+        <div className="task__top">
+          <span className="task-text">{task && task.text}</span>
+          <DropdownMenu options={options} />
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 
