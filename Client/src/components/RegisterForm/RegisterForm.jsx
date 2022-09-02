@@ -71,7 +71,7 @@ function RegisterForm() {
                 placeholder="Username"
               />
               <ErrorMessage
-                className="auth__form-error"
+                className="span-error"
                 component="span"
                 name="username"
               />
@@ -86,7 +86,7 @@ function RegisterForm() {
                 placeholder="Email"
               />
               <ErrorMessage
-                className="auth__form-error"
+                className="span-error"
                 component="span"
                 name="email"
               />
@@ -101,7 +101,7 @@ function RegisterForm() {
                 placeholder="Password"
               />
               <ErrorMessage
-                className="auth__form-error"
+                className="span-error"
                 component="span"
                 name="password"
               />
@@ -116,7 +116,7 @@ function RegisterForm() {
                 placeholder="Repeat password"
               />
               <ErrorMessage
-                className="auth__form-error"
+                className="span-error"
                 component="span"
                 name="passwordRepeat"
               />

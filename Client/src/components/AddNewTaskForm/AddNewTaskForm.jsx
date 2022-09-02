@@ -53,9 +53,23 @@ function AddNewTaskForm({ setActiveModal, status, boardId, lists }) {
               <label htmlFor="text">Text</label>
               <Field type="text" id="text" name="text" placeholder="Text" />
               <ErrorMessage
-                className="add-task-error"
+                className="span-error"
                 component="span"
                 name="text"
+              />
+            </div>
+            <div className="add-task__form-container">
+              <label htmlFor="text">Deadline</label>
+              <Field
+                type="date"
+                id="deadline"
+                name="deadline"
+                placeholder="deadline"
+              />
+              <ErrorMessage
+                className="span-error"
+                component="span"
+                name="deadline"
               />
             </div>
             <div className="add-task-control">

@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import DropdownMenu from "../DropdownMenu/DropdownMenu";
+import { ConfirmForm, Modal } from "../../components";
 import taskApi from "../../api/taskApi";
 import "./TaskCard.scss";
 
@@ -12,19 +13,29 @@ function TaskCard({
   onDragEndHandler,
   onDropHandler,
 }) {
+  const [isDeleteModalActive, setIsDeleteModalActive] = useState(false);
+
+  const openDeleteModal = () => {
+    setIsDeleteModalActive(true);
+  };
+
   const deleteTask = async () => {
     await taskApi.delete(task._id);
+  };
+
+  const editTask = async () => {
+    await taskApi.update(task._id);
   };
 
   const options = [
     {
       text: "Edit",
-      action: deleteTask,
+      action: editTask,
       icon: "bx-edit",
     },
     {
       text: "Remove",
-      action: deleteTask,
+      action: openDeleteModal,
       icon: "bx-trash",
     },
   ];
@@ -39,6 +50,13 @@ function TaskCard({
       onDrop={(e) => onDropHandler(e, list, task)}
       className="task"
     >
+      <Modal active={isDeleteModalActive} setActive={setIsDeleteModalActive}>
+        <ConfirmForm
+          text={"Do you want to delete this task?"}
+          confirmHandler={deleteTask}
+          setActive={setIsDeleteModalActive}
+        />
+      </Modal>
       <div className="task__top">
         <span className="task-text">{task && task.text}</span>
         <DropdownMenu options={options} />

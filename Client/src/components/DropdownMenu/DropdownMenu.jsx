@@ -16,6 +16,11 @@ function DropdownMenu({ options }) {
   const menuRef = useRef();
   const btnRef = useRef();
 
+  const handleClickItem = (action) => {
+    setActive(false);
+    action();
+  };
+
   const handleClickOutside = (e) => {
     if (
       active &&
@@ -43,7 +48,7 @@ function DropdownMenu({ options }) {
                 <li
                   key={`${index}-${option.text}`}
                   className="dropdown__item"
-                  onClick={() => option.action()}
+                  onClick={() => handleClickItem(option.action)}
                 >
                   <i className={`bx icon ${option.icon}`}></i>
                   <span className="dropdown__item-text">{option.text}</span>
