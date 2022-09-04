@@ -9,7 +9,7 @@ import {
 } from "../../components";
 import boardApi from "../../api/boardApi";
 import taskApi from "../../api/taskApi";
-import { BoardContext } from "../../context/BoardContext";
+import { BoardContext, BoardContextActions } from "../../context/BoardContext";
 
 function BoardPage() {
   const { id } = useParams();
@@ -73,12 +73,7 @@ function BoardPage() {
       resourceStatus: currentList.status,
       destinationStatus: list.status,
     });
-    dispatch({
-      type: "SET_LISTS",
-      payload: {
-        lists: updatedLists,
-      },
-    });
+    dispatch(BoardContextActions.setLists(updatedLists));
   }
 
   async function onDropTaskHandler(e, list) {
@@ -102,12 +97,7 @@ function BoardPage() {
       resourceStatus: currentList.status,
       destinationStatus: list.status,
     });
-    dispatch({
-      type: "SET_LISTS",
-      payload: {
-        lists: updatedLists,
-      },
-    });
+    dispatch(BoardContextActions.setLists(updatedLists));
   }
 
   async function deleteBoard(event) {
@@ -123,12 +113,7 @@ function BoardPage() {
       try {
         const response = await boardApi.getOne(id);
         setBoardName(response.board.name);
-        dispatch({
-          type: "SET_LISTS",
-          payload: {
-            lists: response.board.tasks,
-          },
-        });
+        dispatch(BoardContextActions.setLists(response.board.tasks));
       } catch (error) {
         console.log(error);
       } finally {

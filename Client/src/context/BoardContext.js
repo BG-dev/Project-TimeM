@@ -3,6 +3,15 @@ const INITIAL_STATE = {
   lists: [],
 };
 
+export const BoardContextActions = {
+  setLists: (lists) => ({
+    type: "SET_LISTS",
+    payload: {
+      lists: lists,
+    },
+  }),
+};
+
 export const BoardContext = createContext(INITIAL_STATE);
 
 const boardReducer = (state, action) => {
@@ -10,7 +19,7 @@ const boardReducer = (state, action) => {
     case "SET_LISTS":
       return {
         ...state,
-        lists: action.payload,
+        lists: action.payload.lists,
       };
     default:
       return state;

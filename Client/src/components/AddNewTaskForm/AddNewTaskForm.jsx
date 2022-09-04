@@ -1,11 +1,24 @@
 import React from "react";
 import "./AddNewTaskForm.scss";
 import { Formik, Form, Field, ErrorMessage } from "formik";
+import { CustomField } from "../../components";
 import { useState } from "react";
 import taskApi from "../../api/taskApi";
+import * as Yup from "yup";
 
 function AddNewTaskForm({ setActiveModal, status, boardId, lists }) {
   const [loading, setLoading] = useState(false);
+
+  const newTaskSchema = Yup.object().shape({
+    title: Yup.string()
+      .min(3, "Title is too short")
+      .min(64, "Title is too long")
+      .required("Title is required"),
+    description: Yup.string()
+      .min(3, "Description is too short")
+      .min(1024, "Description is too long")
+      .required("Description is required"),
+  });
 
   const addTask = (task) => {
     let newTasks = [...lists];
@@ -41,6 +54,7 @@ function AddNewTaskForm({ setActiveModal, status, boardId, lists }) {
         initialValues={{
           text: "",
         }}
+        validationSchema={newTaskSchema}
         onSubmit={async (values, { resetForm }) => {
           await createTask(values);
           resetForm();
@@ -50,12 +64,33 @@ function AddNewTaskForm({ setActiveModal, status, boardId, lists }) {
         {() => (
           <Form className="add-task__form">
             <div className="add-task__form-container">
-              <label htmlFor="text">Text</label>
-              <Field type="text" id="text" name="text" placeholder="Text" />
+              <label htmlFor="text">Title</label>
+              <Field
+                type="title"
+                id="title"
+                name="title"
+                component={CustomField}
+                placeholder="Title"
+              />
               <ErrorMessage
                 className="span-error"
                 component="span"
-                name="text"
+                name="title"
+              />
+            </div>
+            <div className="add-task__form-container">
+              <label htmlFor="text">Description</label>
+              <Field
+                type="description"
+                id="description"
+                name="description"
+                component={CustomField}
+                placeholder="Description"
+              />
+              <ErrorMessage
+                className="span-error"
+                component="span"
+                name="description"
               />
             </div>
             <div className="add-task__form-container">
@@ -64,6 +99,7 @@ function AddNewTaskForm({ setActiveModal, status, boardId, lists }) {
                 type="date"
                 id="deadline"
                 name="deadline"
+                component={CustomField}
                 placeholder="deadline"
               />
               <ErrorMessage

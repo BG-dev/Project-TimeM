@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import DropdownMenu from "../DropdownMenu/DropdownMenu";
 import { ConfirmForm, Modal } from "../../components";
-import { BoardContext } from "../../context/BoardContext";
+import { BoardContext, BoardContextActions } from "../../context/BoardContext";
 import taskApi from "../../api/taskApi";
 import "./TaskCard.scss";
 
@@ -22,8 +22,20 @@ function TaskCard({
   };
 
   const deleteTask = async () => {
-    await taskApi.delete(task._id);
-    const newLists = [...lists];
+    try {
+      await taskApi.delete(task._id);
+      const newLists = [...lists];
+      const listIndex = newLists.findIndex(
+        (elem) => elem.status === list.status
+      );
+      const taskIndex = newLists[listIndex].tasks.findIndex(
+        (elem) => elem._id === task._id
+      );
+      newLists[listIndex].tasks.splice(taskIndex, 1);
+      dispatch(BoardContextActions.setLists(newLists));
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const editTask = async () => {
