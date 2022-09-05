@@ -1,0 +1,9 @@
+.form-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 18px;
+
+  label {
+    margin: 0 0 10px 1px;
+  }
+}
