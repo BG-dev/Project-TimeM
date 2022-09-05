@@ -1,3 +1,3 @@
-import LoginPage from "./LoginForm";
+import FormContainer from "./FormContainer";
 
-export default LoginPage;
+export default FormContainer;

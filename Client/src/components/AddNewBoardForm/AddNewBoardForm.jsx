@@ -1,7 +1,7 @@
 import React from "react";
 import "./AddNewBoardForm.scss";
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import ColorSelector from "../ColorSelector";
+import { Formik, Form } from "formik";
+import { FormContainer, ColorSelector } from "../../components";
 import colors from "../../service/colors";
 import { useState } from "react";
 import boardApi from "../../api/boardApi";
@@ -45,36 +45,19 @@ function AddNewBoardForm({ setBoards, setActiveModal }) {
         }}
       >
         {() => (
-          <Form className="add-board__form">
-            <div className="add-board__form-container">
-              <label htmlFor="name">Name</label>
-              <Field type="text" id="name" name="name" placeholder="Name" />
-              <ErrorMessage
-                className="add-board__form-error"
-                component="span"
-                name="name"
-              />
-            </div>
-            <div className="add-board__form-container">
-              <label htmlFor="email">Description</label>
-              <Field
-                type="text"
-                id="description"
-                name="description"
-                placeholder="Description"
-              />
-              <ErrorMessage
-                className="add-board-error"
-                component="span"
-                name="description"
-              />
-            </div>
+          <Form className="custom-form__container">
+            <FormContainer value={"name"} placeholder={"Name"} type={"text"} />
+            <FormContainer
+              value={"description"}
+              placeholder={"Description"}
+              type={"text"}
+            />
             <ColorSelector
               activeColor={acitveColor}
               setActiveColor={setActiveColor}
               colors={colors}
             />
-            <div className="add-board-control">
+            <div className="custom-form__control">
               <button className="btn btn-blue" type="submit" disabled={loading}>
                 Create
               </button>

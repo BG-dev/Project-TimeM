@@ -1,7 +1,7 @@
 import React from "react";
 import "./AddNewTaskForm.scss";
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import { CustomField } from "../../components";
+import { Formik, Form } from "formik";
+import { FormContainer } from "../../components";
 import { useState } from "react";
 import taskApi from "../../api/taskApi";
 import * as Yup from "yup";
@@ -62,53 +62,23 @@ function AddNewTaskForm({ setActiveModal, status, boardId, lists }) {
         }}
       >
         {() => (
-          <Form className="add-task__form">
-            <div className="add-task__form-container">
-              <label htmlFor="text">Title</label>
-              <Field
-                type="title"
-                id="title"
-                name="title"
-                component={CustomField}
-                placeholder="Title"
-              />
-              <ErrorMessage
-                className="span-error"
-                component="span"
-                name="title"
-              />
-            </div>
-            <div className="add-task__form-container">
-              <label htmlFor="text">Description</label>
-              <Field
-                type="description"
-                id="description"
-                name="description"
-                component={CustomField}
-                placeholder="Description"
-              />
-              <ErrorMessage
-                className="span-error"
-                component="span"
-                name="description"
-              />
-            </div>
-            <div className="add-task__form-container">
-              <label htmlFor="text">Deadline</label>
-              <Field
-                type="date"
-                id="deadline"
-                name="deadline"
-                component={CustomField}
-                placeholder="deadline"
-              />
-              <ErrorMessage
-                className="span-error"
-                component="span"
-                name="deadline"
-              />
-            </div>
-            <div className="add-task-control">
+          <Form className="custom-form__container">
+            <FormContainer
+              value={"title"}
+              placeholder={"Title"}
+              type={"text"}
+            />
+            <FormContainer
+              value={"description"}
+              placeholder={"Description"}
+              type={"text"}
+            />
+            <FormContainer
+              value={"deadline"}
+              placeholder={"Deadline"}
+              type={"date"}
+            />
+            <div className="custom-form__control">
               <button className="btn btn-blue" type="submit" disabled={loading}>
                 Create
               </button>

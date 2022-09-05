@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form } from "formik";
 import { NavLink, useNavigate } from "react-router-dom";
-import { CustomField } from "../../components";
+import { CustomField, FormContainer } from "../../components";
 import * as Yup from "yup";
 
 import "./LoginForm.scss";
@@ -58,36 +58,16 @@ function LoginForm() {
       >
         {() => (
           <Form className="auth__form">
-            <div className="auth__form-container">
-              <label htmlFor="username">Username</label>
-              <Field
-                type="text"
-                id="username"
-                component={CustomField}
-                name="username"
-                placeholder="Username"
-              />
-              <ErrorMessage
-                className="span-error"
-                component="span"
-                name="username"
-              />
-            </div>
-            <div className="auth__form-container">
-              <label htmlFor="password">Password</label>
-              <Field
-                type="password"
-                id="password"
-                name="password"
-                component={CustomField}
-                placeholder="Password"
-              />
-              <ErrorMessage
-                className="span-error"
-                component="span"
-                name="password"
-              />
-            </div>
+            <FormContainer
+              value={"username"}
+              placeholder={"Username"}
+              type={"text"}
+            />
+            <FormContainer
+              value={"password"}
+              placeholder={"Password"}
+              type={"password"}
+            />
             <div className="auth__form-control">
               <button className="btn btn-blue" type="submit" disabled={loading}>
                 Sign In

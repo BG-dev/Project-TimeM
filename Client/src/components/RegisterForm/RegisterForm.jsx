@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form } from "formik";
 import { NavLink, useNavigate } from "react-router-dom";
-import { CustomField } from "../../components";
+import { CustomField, FormContainer } from "../../components";
 import * as Yup from "yup";
 
 import "./RegisterForm.scss";
@@ -61,66 +61,26 @@ function RegisterForm() {
       >
         {() => (
           <Form className="auth__form">
-            <div className="auth__form-container">
-              <label htmlFor="username">Username</label>
-              <Field
-                type="text"
-                id="username"
-                component={CustomField}
-                name="username"
-                placeholder="Username"
-              />
-              <ErrorMessage
-                className="span-error"
-                component="span"
-                name="username"
-              />
-            </div>
-            <div className="auth__form-container">
-              <label htmlFor="email">Email</label>
-              <Field
-                type="email"
-                id="email"
-                component={CustomField}
-                name="email"
-                placeholder="Email"
-              />
-              <ErrorMessage
-                className="span-error"
-                component="span"
-                name="email"
-              />
-            </div>
-            <div className="auth__form-container">
-              <label htmlFor="password">Password</label>
-              <Field
-                type="password"
-                id="password"
-                component={CustomField}
-                name="password"
-                placeholder="Password"
-              />
-              <ErrorMessage
-                className="span-error"
-                component="span"
-                name="password"
-              />
-            </div>
-            <div className="auth__form-container">
-              <label htmlFor="passwordRepeat">Repeat password</label>
-              <Field
-                type="password"
-                id="passwordRepeat"
-                component={CustomField}
-                name="passwordRepeat"
-                placeholder="Repeat password"
-              />
-              <ErrorMessage
-                className="span-error"
-                component="span"
-                name="passwordRepeat"
-              />
-            </div>
+            <FormContainer
+              value={"username"}
+              placeholder={"Username"}
+              type={"text"}
+            />
+            <FormContainer
+              value={"email"}
+              placeholder={"Email"}
+              type={"email"}
+            />
+            <FormContainer
+              value={"password"}
+              placeholder={"Password"}
+              type={"password"}
+            />
+            <FormContainer
+              value={"passwordRepeat"}
+              placeholder={"Repeat password"}
+              type={"password"}
+            />
             <div className="auth__form-control">
               <button className="btn btn-blue" type="submit" disabled={loading}>
                 Sign Up
