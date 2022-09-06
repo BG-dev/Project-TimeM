@@ -65,20 +65,25 @@ function TaskCard({
         />
       </Modal>
 
-      <div
-        draggable={true}
-        onDragOver={(e) => onDragOverHandler(e)}
-        onDragLeave={(e) => onDragLeaveHandler(e)}
-        onDragStart={(e) => onDragStartHandler(e, list, task)}
-        onDragEnd={(e) => onDragEndHandler(e)}
-        onDrop={(e) => onDropHandler(e, list, task)}
-        className="task"
-      >
-        <div className="task__top">
-          <span className="task-text">{task && task.text}</span>
-          <DropdownMenu options={options} />
+      {task && (
+        <div
+          draggable={true}
+          onDragOver={(e) => onDragOverHandler(e)}
+          onDragLeave={(e) => onDragLeaveHandler(e)}
+          onDragStart={(e) => onDragStartHandler(e, list, task)}
+          onDragEnd={(e) => onDragEndHandler(e)}
+          onDrop={(e) => onDropHandler(e, list, task)}
+          className="task"
+        >
+          <div className="task__top">
+            <span className="task-text">{task.title}</span>
+            <DropdownMenu options={options} />
+          </div>
+          <div className="task__content">
+            <p className="task__description">{task.description}</p>
+          </div>
         </div>
-      </div>
+      )}
     </>
   );
 }

@@ -31,7 +31,7 @@ function AddNewTaskForm({ setActiveModal, status, boardId, lists }) {
     const position = lists.find((list) => list.status === status).tasks.length;
     console.log(values.deadline);
     let taskData = {
-      text: values.text,
+      title: values.title,
       description: values.description,
       // deadline: values.deadline,
       status: status,
@@ -55,7 +55,8 @@ function AddNewTaskForm({ setActiveModal, status, boardId, lists }) {
       <h2 className="custom-form__title">Create new tasks</h2>
       <Formik
         initialValues={{
-          text: "",
+          title: "",
+          description: "",
         }}
         validationSchema={newTaskSchema}
         onSubmit={async (values, { resetForm }) => {

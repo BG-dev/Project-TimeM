@@ -3,7 +3,7 @@ const { Schema, model } = mongoose;
 
 const taskSchema = new Schema(
   {
-    text: {
+    title: {
       type: String,
       required: true,
     },
@@ -13,7 +13,7 @@ const taskSchema = new Schema(
     },
     deadline: {
       type: mongoose.SchemaTypes.Date,
-      required: true,
+      required: false,
     },
     status: {
       type: String,
