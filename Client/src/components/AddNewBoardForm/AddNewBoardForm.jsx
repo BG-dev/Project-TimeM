@@ -1,7 +1,7 @@
 import React from "react";
 import "./AddNewBoardForm.scss";
 import { Formik, Form } from "formik";
-import { FormContainer, ColorSelector } from "../../components";
+import { CustomField, ColorSelector } from "../../components";
 import colors from "../../service/colors";
 import { useState } from "react";
 import boardApi from "../../api/boardApi";
@@ -46,12 +46,8 @@ function AddNewBoardForm({ setBoards, setActiveModal }) {
       >
         {() => (
           <Form className="custom-form__container">
-            <FormContainer value={"name"} placeholder={"Name"} type={"text"} />
-            <FormContainer
-              value={"description"}
-              placeholder={"Description"}
-              type={"text"}
-            />
+            <CustomField name="name" label="Name" type="text" />
+            <CustomField name="description" label="Description" type="text" />
             <ColorSelector
               activeColor={acitveColor}
               setActiveColor={setActiveColor}

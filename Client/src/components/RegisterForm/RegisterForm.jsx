@@ -61,25 +61,13 @@ function RegisterForm() {
       >
         {() => (
           <Form className="auth__form">
-            <FormContainer
-              value={"username"}
-              placeholder={"Username"}
-              type={"text"}
-            />
-            <FormContainer
-              value={"email"}
-              placeholder={"Email"}
-              type={"email"}
-            />
-            <FormContainer
-              value={"password"}
-              placeholder={"Password"}
-              type={"password"}
-            />
-            <FormContainer
-              value={"passwordRepeat"}
-              placeholder={"Repeat password"}
-              type={"password"}
+            <CustomField name="username" label="Username" type="text" />
+            <CustomField name="email" label="PasswoEmailrd" type="email" />
+            <CustomField name="password" label="Password" type="password" />
+            <CustomField
+              name="passwordRepeat"
+              label="Repeat password"
+              type="password"
             />
             <div className="auth__form-control">
               <button className="btn btn-blue" type="submit" disabled={loading}>

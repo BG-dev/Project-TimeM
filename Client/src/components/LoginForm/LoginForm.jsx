@@ -58,16 +58,8 @@ function LoginForm() {
       >
         {() => (
           <Form className="auth__form">
-            <FormContainer
-              value={"username"}
-              placeholder={"Username"}
-              type={"text"}
-            />
-            <FormContainer
-              value={"password"}
-              placeholder={"Password"}
-              type={"password"}
-            />
+            <CustomField name="username" label="Username" type="text" />
+            <CustomField name="password" label="Password" type="password" />
             <div className="auth__form-control">
               <button className="btn btn-blue" type="submit" disabled={loading}>
                 Sign In

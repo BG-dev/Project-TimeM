@@ -1,7 +1,7 @@
 import React from "react";
 import "./AddNewTaskForm.scss";
 import { Formik, Form } from "formik";
-import { FormContainer } from "../../components";
+import { CustomField } from "../../components";
 import { useState } from "react";
 import taskApi from "../../api/taskApi";
 import * as Yup from "yup";
@@ -12,11 +12,11 @@ function AddNewTaskForm({ setActiveModal, status, boardId, lists }) {
   const newTaskSchema = Yup.object().shape({
     title: Yup.string()
       .min(3, "Title is too short")
-      .min(64, "Title is too long")
+      .max(64, "Title is too long")
       .required("Title is required"),
     description: Yup.string()
       .min(3, "Description is too short")
-      .min(1024, "Description is too long")
+      .max(1024, "Description is too long")
       .required("Description is required"),
   });
 
@@ -66,21 +66,9 @@ function AddNewTaskForm({ setActiveModal, status, boardId, lists }) {
       >
         {() => (
           <Form className="custom-form__container">
-            <FormContainer
-              value={"title"}
-              placeholder={"Title"}
-              type={"text"}
-            />
-            <FormContainer
-              value={"description"}
-              placeholder={"Description"}
-              type={"text"}
-            />
-            <FormContainer
-              value={"deadline"}
-              placeholder={"Deadline"}
-              type={"date"}
-            />
+            <CustomField name="title" label="Title" type="text" />
+            <CustomField name="description" label="Description" type="text" />
+            <CustomField name="deadline" label="Deadline" type="date" />
             <div className="custom-form__control">
               <button className="btn btn-blue" type="submit" disabled={loading}>
                 Create
