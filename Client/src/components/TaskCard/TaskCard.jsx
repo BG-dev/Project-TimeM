@@ -81,6 +81,7 @@ function TaskCard({
           </div>
           <div className="task__content">
             <p className="task__description">{task.description}</p>
+            <p className="task__description">{task.deadline}</p>
           </div>
         </div>
       )}

@@ -11,6 +11,7 @@ function CustomField({ label, ...props }) {
         className={meta.touched && meta.error ? "invalid" : ""}
         {...field}
         {...props}
+        placeholder={label}
       />
       {meta.touched && meta.error ? (
         <span className="span-error">{meta.error}</span>
