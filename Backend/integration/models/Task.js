@@ -7,6 +7,14 @@ const taskSchema = new Schema(
       type: String,
       required: true,
     },
+    description: {
+      type: String,
+      required: true,
+    },
+    deadline: {
+      type: mongoose.SchemaTypes.Date,
+      required: true,
+    },
     status: {
       type: String,
       require: true,

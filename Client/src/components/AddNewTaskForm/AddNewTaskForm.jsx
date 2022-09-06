@@ -29,8 +29,11 @@ function AddNewTaskForm({ setActiveModal, status, boardId, lists }) {
 
   const createTask = async (values) => {
     const position = lists.find((list) => list.status === status).tasks.length;
+    console.log(values.deadline);
     let taskData = {
       text: values.text,
+      description: values.description,
+      // deadline: values.deadline,
       status: status,
       board: boardId,
       position: position,
