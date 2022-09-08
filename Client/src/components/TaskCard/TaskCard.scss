@@ -4,7 +4,7 @@
   width: 100%;
   padding: 12px 10px;
   border-radius: 12px;
-  background-color: $gray;
+  background-color: $white;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 
   &__top {
@@ -18,10 +18,21 @@
     }
   }
 
-  &-text {
+  &__title {
     color: $dark-gray;
     font-size: 17px;
-    font-weight: bold;
+    font-weight: normal;
     display: flex;
+  }
+
+  &__description{
+    margin-top: 5px;
+    color: $dark-gray;
+    font-weight: 100;
+  }
+
+  &__deadline{
+    margin-top: 20px;
+    font-weight: 100;
   }
 }

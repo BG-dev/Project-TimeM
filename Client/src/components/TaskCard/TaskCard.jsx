@@ -76,12 +76,12 @@ function TaskCard({
           className="task"
         >
           <div className="task__top">
-            <span className="task-text">{task.title}</span>
+            <span className="task__title">{task.title}</span>
             <DropdownMenu options={options} />
           </div>
           <div className="task__content">
             <p className="task__description">{task.description}</p>
-            <p className="task__description">{task.deadline}</p>
+            <p className="task__deadline">{task.deadline}</p>
           </div>
         </div>
       )}
