@@ -1,13 +1,14 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import "./EditTaskForm.scss";
 import { Formik, Form } from "formik";
 import { CustomField } from "..";
-import { useState } from "react";
 import taskApi from "../../api/taskApi";
 import * as Yup from "yup";
+import { BoardContext, BoardContextActions } from "../../context/BoardContext";
 
-function EditTaskForm({ setActiveModal, status, boardId, lists }) {
+function EditTaskForm({ setActiveModal, task, list }) {
   const [loading, setLoading] = useState(false);
+  const { dispatch, lists } = useContext(BoardContext);
 
   const taskSchema = Yup.object().shape({
     title: Yup.string()
@@ -20,11 +21,15 @@ function EditTaskForm({ setActiveModal, status, boardId, lists }) {
       .required("Description is required"),
   });
 
-  const updateTask = (task) => {
-    let newTasks = [...lists];
-    newTasks.forEach((list) => {
-      if (list.status === status) list.tasks.push(task);
-    });
+  const updateTask = (newTask) => {
+    let updatedLists = [...lists];
+    const listIndex = updatedLists.indexOf(list);
+    const taskIndex = updatedLists[listIndex].tasks.indexOf(task);
+    updatedLists[list].tasks.splice(taskIndex, 1);
+
+    updatedLists[list].tasks.splice(taskIndex, 0, newTask);
+
+    dispatch(BoardContextActions.setLists(updatedLists));
   };
 
   const editTask = async (values) => {
@@ -35,9 +40,9 @@ function EditTaskForm({ setActiveModal, status, boardId, lists }) {
     };
     setLoading(true);
     try {
-      const response = await taskApi.update(taskData);
-      const task = response.task;
-      updateTask(task);
+      const response = await taskApi.update(task._id, taskData);
+      const newTask = response.task;
+      updateTask(newTask);
     } catch (error) {
       console.log(error);
     } finally {

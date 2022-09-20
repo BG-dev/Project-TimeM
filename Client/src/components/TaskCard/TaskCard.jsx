@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import DropdownMenu from "../DropdownMenu/DropdownMenu";
-import { ConfirmForm, Modal } from "../../components";
+import { ConfirmForm, EditTaskForm, Modal } from "../../components";
 import { BoardContext, BoardContextActions } from "../../context/BoardContext";
 import taskApi from "../../api/taskApi";
 import "./TaskCard.scss";
@@ -15,6 +15,7 @@ function TaskCard({
   onDropHandler,
 }) {
   const [isDeleteModalActive, setIsDeleteModalActive] = useState(false);
+  const [isEditModalActive, setIsEditModalActive] = useState(false);
   const { dispatch, lists } = useContext(BoardContext);
 
   const openDeleteModal = () => {
@@ -39,7 +40,7 @@ function TaskCard({
   };
 
   const editTask = async () => {
-    await taskApi.update(task._id);
+    setIsEditModalActive(true);
   };
 
   const options = [
@@ -62,6 +63,13 @@ function TaskCard({
           text={"Do you want to delete this task?"}
           confirmHandler={deleteTask}
           setActive={setIsDeleteModalActive}
+        />
+      </Modal>
+      <Modal active={isEditModalActive} setActive={setIsEditModalActive}>
+        <EditTaskForm
+          setActive={setIsEditModalActive}
+          list={list}
+          task={task}
         />
       </Modal>
 
