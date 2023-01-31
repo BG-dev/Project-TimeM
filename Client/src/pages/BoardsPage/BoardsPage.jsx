@@ -6,13 +6,16 @@ import {
   AddNewBoardForm,
 } from "../../components";
 import boardApi from "../../api/boardApi";
-import { Link } from "react-router-dom";
 import "./BoardsPage.scss";
 
 function BoardsPage() {
   const [isModalActive, setIsModalActive] = useState(false);
   const [loading, setLoading] = useState(false);
   const [boards, setBoards] = useState([]);
+
+  const boardsList = boards.map((board) => (
+    <BoardCard key={board._id} board={board} />
+  ));
 
   useEffect(() => {
     async function getBoards() {
@@ -40,14 +43,7 @@ function BoardsPage() {
       <div className="boards">
         <ul className="boards__list">
           <NewBoardCard setActive={setIsModalActive} />
-          {boards &&
-            boards.map((board) => (
-              <li className="boards__list-item" key={board._id}>
-                <Link to={`/board/${board._id}`}>
-                  <BoardCard board={board} />
-                </Link>
-              </li>
-            ))}
+          {boards && boardsList}
         </ul>
       </div>
     </>

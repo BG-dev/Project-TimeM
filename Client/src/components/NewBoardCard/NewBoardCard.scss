@@ -10,6 +10,12 @@
   border-radius: 20px;
   cursor: pointer;
 
+  &__container {
+    display: flex;
+    justify-content: center;
+    flex: 0 1 33%;
+  }
+
   .wrapper {
     display: flex;
     flex-direction: column;

@@ -16,6 +16,12 @@ $card-radius: 20px;
     font-weight: normal;
   }
 
+  &__container {
+    display: flex;
+    justify-content: center;
+    flex: 0 1 33%;
+  }
+
   &__info {
     display: flex;
     align-items: center;
