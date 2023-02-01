@@ -1,40 +1,34 @@
 const { Model } = require("sequelize");
 
 module.exports = (sequelize, DataTypes) => {
-  class User extends Model {
-    static associate({ Board, BoardUser }) {
-      User.belongsToMany(Board, {
-        through: BoardUser,
-        foreignKey: "userId",
-        otherKey: "boardId",
-      });
-    }
+  class BoardUser extends Model {
+    static associate({}) {}
   }
-  User.init(
+  BoardUser.init(
     {
-      userId: {
+      boardUserId: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true,
       },
-      username: {
+      userId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      role: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      email: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      password: {
-        type: DataTypes.STRING,
+      boardId: {
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
     },
     {
       sequelize,
-      tableName: "Users",
+      tableName: "BoardUsers",
       timestamps: true,
     }
   );
-  return User;
+  return BoardUser;
 };

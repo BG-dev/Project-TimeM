@@ -1,33 +1,41 @@
-const mongoose = require("mongoose");
-const { Schema, model } = mongoose;
+const { Model } = require("sequelize");
 
-const boardSchema = new Schema(
-  {
-    name: {
-      type: String,
-      required: true,
-    },
-    description: {
-      type: String,
-      default: "",
-    },
-    color: {
-      name: String,
-      value: String,
-    },
-    creator: {
-      type: mongoose.SchemaTypes.ObjectId,
-      ref: "User",
-      required: true,
-    },
-    users: [{ type: mongoose.SchemaTypes.ObjectId, ref: "User", default: [] }],
-    lists: { type: [String], default: ["To Do", "Doing", "Done"] },
-  },
-  {
-    timestamps: true,
+module.exports = (sequelize, DataTypes) => {
+  class Board extends Model {
+    static associate({ List, User, BoardUser }) {
+      Board.hasMany(List, { foreignKey: "boardId" });
+      Board.belongsToMany(User, {
+        through: BoardUser,
+        foreignKey: "boardId",
+        otherKey: "userId",
+      });
+    }
   }
-);
-
-const Board = model("Board", boardSchema);
-
-module.exports = Board;
+  Board.init(
+    {
+      boardId: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true,
+      },
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      description: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      color: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+    },
+    {
+      sequelize,
+      tableName: "Boards",
+      timestamps: true,
+    }
+  );
+  return Board;
+};
