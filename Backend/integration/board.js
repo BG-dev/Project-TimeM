@@ -6,7 +6,7 @@ const boardIntegration = {
   update: async (id, data) =>
     await Board.update({ ...data }, { where: { boardId: id } }),
   delete: async (id) => await Board.destroy({ where: { boardId: id } }),
-  getOne: async (id) => await Board.findOne({ where: { boardId: id } }),
+  getOne: async (id) => await Board.findByPk(id),
   getAll: async () => await Board.findAll(),
 };
 
