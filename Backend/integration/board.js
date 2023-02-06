@@ -1,13 +1,13 @@
 const db = require("./models");
 const Board = db.Board;
 
-const boardIntegration = {
-  create: async (data) => await Board.create({ ...data }),
-  update: async (id, data) =>
-    await Board.update({ ...data }, { where: { boardId: id } }),
-  delete: async (id) => await Board.destroy({ where: { boardId: id } }),
-  getOne: async (id) => await Board.findByPk(id),
-  getAll: async () => await Board.findAll(),
-};
+exports.create = async (data) => await Board.create({ ...data });
+
+exports.update = async (id, data) =>
+  await Board.update({ ...data }, { where: { board_id: id } });
+
+exports.delete = async (id) => await Board.destroy({ where: { board_id: id } });
+
+exports.getOne = async (id) => await Board.findByPk(id);
 
 module.exports = boardIntegration;

@@ -1,47 +1,13 @@
-const User = require("./models/User");
-
-exports.getOne = async (id) => await User.findById(id);
-
-exports.getOneBy = async (data) => await User.findOne({ ...data });
-
-exports.getAll = async () => await User.find();
+const db = require("./models");
+const User = db.User;
 
 exports.create = async (data) => await User.create({ ...data });
 
-exports.deleteBoard = async (boardId, userId) => {
-  await User.findByIdAndUpdate(
-    userId,
-    {
-      $pull: {
-        boards: boardId,
-      },
-    },
-    {
-      upsert: true,
-    }
-  );
-};
+exports.update = async (id, data) =>
+  await User.update({ ...data }, { where: { user_id: id } });
 
-exports.addBoard = async (boardId, userId) => {
-  await User.findByIdAndUpdate(
-    userId,
-    {
-      $push: {
-        boards: boardId,
-      },
-    },
-    {
-      upsert: true,
-    }
-  );
-};
+exports.delete = async (id) => await User.destroy({ where: { user_id: id } });
 
-exports.getBoards = async (id) => {
-  const user = await User.findById(id).populate({
-    path: "boards",
-    populate: {
-      path: "creator",
-    },
-  });
-  return user.boards;
-};
+exports.getOne = async (id) => await User.findByPk(id);
+
+exports.getAll = async () => await User.findAll();
