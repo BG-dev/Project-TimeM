@@ -3,17 +3,17 @@ const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Board extends Model {
     static associate({ List, User, BoardUser }) {
-      Board.hasMany(List, { foreignKey: "board_id" });
+      Board.hasMany(List, { foreignKey: "boardId" });
       Board.belongsToMany(User, {
         through: BoardUser,
-        foreignKey: "board_id",
-        otherKey: "user_id",
+        foreignKey: "boardId",
+        otherKey: "userId",
       });
     }
   }
   Board.init(
     {
-      board_id: {
+      boardId: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true,
@@ -35,6 +35,7 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       tableName: "boards",
       timestamps: true,
+      underscored: true,
     }
   );
   return Board;

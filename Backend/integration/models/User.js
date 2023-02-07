@@ -5,14 +5,14 @@ module.exports = (sequelize, DataTypes) => {
     static associate({ Board, BoardUser }) {
       User.belongsToMany(Board, {
         through: BoardUser,
-        foreignKey: "user_id",
-        otherKey: "board_id",
+        foreignKey: "userId",
+        otherKey: "boardId",
       });
     }
   }
   User.init(
     {
-      user_id: {
+      userId: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true,
@@ -38,6 +38,7 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       tableName: "users",
       timestamps: true,
+      underscored: true,
     }
   );
   return User;

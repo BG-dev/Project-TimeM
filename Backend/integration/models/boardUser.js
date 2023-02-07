@@ -6,12 +6,12 @@ module.exports = (sequelize, DataTypes) => {
   }
   BoardUser.init(
     {
-      board_user_id: {
+      boardUserId: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true,
       },
-      user_id: {
+      userId: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      board_id: {
+      boardId: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
@@ -28,6 +28,7 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       tableName: "boards_users",
       timestamps: true,
+      underscored: true,
     }
   );
   return BoardUser;

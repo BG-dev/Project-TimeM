@@ -1,11 +1,13 @@
 const boardIntegration = require("../integration/board");
+const boardUserIntegration = require("../integration/boardUser");
 const userIntegration = require("../integration/user");
 const taskIntegration = require("../integration/task");
 
-exports.create = async (newBoardData) => {
+exports.create = async (newBoardData, creatorId) => {
+  const ROLE = "creator";
   const newBoard = await boardIntegration.create(newBoardData);
-  console.log(newBoard);
-  // await userIntegration.addBoard(newBoard._id, newBoard.creator);
+  await boardUserIntegration.addUser(newBoard.boardId, creatorId, ROLE);
+
   return newBoard;
 };
 
