@@ -9,5 +9,3 @@ exports.update = async (id, data) =>
 exports.delete = async (id) => await Board.destroy({ where: { board_id: id } });
 
 exports.getOne = async (id) => await Board.findByPk(id);
-
-module.exports = boardIntegration;

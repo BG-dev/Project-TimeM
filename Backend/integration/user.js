@@ -10,4 +10,9 @@ exports.delete = async (id) => await User.destroy({ where: { user_id: id } });
 
 exports.getOne = async (id) => await User.findByPk(id);
 
+exports.getByUsername = async (username) =>
+  await User.findOne({ where: { username } });
+
+exports.getByEmail = async (email) => await User.findOne({ where: { email } });
+
 exports.getAll = async () => await User.findAll();
