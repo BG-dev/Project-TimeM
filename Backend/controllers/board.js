@@ -4,7 +4,6 @@ const taskIntegration = require("../integration/task");
 
 exports.create = async (newBoardData) => {
   const newBoard = await boardIntegration.create(newBoardData);
-  console.log(newBoard);
   // await userIntegration.addBoard(newBoard._id, newBoard.creator);
   return newBoard;
 };

@@ -1,5 +1,4 @@
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
 const userIntegration = require("../integration/user");
 
 exports.create = async (userData) => {
@@ -12,7 +11,6 @@ exports.create = async (userData) => {
   const newUser = {
     username: userData.username,
     email: userData.email,
-    role: "user",
     password: hashedPassword,
   };
 
@@ -24,30 +22,25 @@ exports.login = async (userData) => {
   const isUserExists = await checkIsUserExists(userData.username);
   if (!isUserExists) throw new Error("This user no exists");
 
-  const user = await userIntegration.getByUsername(userData.username);
+  const user = await userIntegration.getOneBy({
+    username: userData.username,
+  });
 
   const isMatch = await bcrypt.compare(userData.password, user.password);
 
   if (!isMatch) throw new Error("Password is incorrect");
 
-  const token = generateAuthToken(user.user_id, user.username);
+  const token = user.generateAuthToken();
 
   return token;
 };
 
-function generateAuthToken(id, username) {
-  const token = jwt.sign({ id, username }, process.env.JWT_SECRET, {
-    expiresIn: "1d",
-  });
-  return token;
-}
-
 async function checkIsUserExists(username) {
-  const isExists = await userIntegration.getByUsername(username);
+  const isExists = await userIntegration.getOneBy({ username });
   return !!isExists;
 }
 
 async function checkIsUserEmailExists(email) {
-  const isExists = await userIntegration.getByEmail(email);
+  const isExists = await userIntegration.getOneBy({ email });
   return !!isExists;
 }
