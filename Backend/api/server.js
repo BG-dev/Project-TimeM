@@ -1,7 +1,6 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const helmet = require("helmet");
-const db = require("../integration/models");
 const mongoose = require("mongoose");
 const bodyparser = require("body-parser");
 const boardsRoutes = require("./routes/boards");
@@ -12,7 +11,6 @@ const logger = require("./middlewares/logger");
 const { logError, sendError } = require("./middlewares/errorHandler");
 
 dotenv.config();
-db.sequelize.sync();
 
 const app = express();
 const port = process.env.PORT || 8000;

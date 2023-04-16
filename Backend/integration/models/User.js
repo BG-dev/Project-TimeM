@@ -1,40 +1,40 @@
-const { Model } = require("sequelize");
+const mongoose = require("mongoose");
+const jwt = require("jsonwebtoken");
+const { Schema, model } = mongoose;
 
-module.exports = (sequelize, DataTypes) => {
-  class User extends Model {
-    static associate({ Board, BoardUser }) {
-      User.belongsToMany(Board, {
-        through: BoardUser,
-        foreignKey: "userId",
-        otherKey: "boardId",
-      });
-    }
-  }
-  User.init(
-    {
-      userId: {
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
-        primaryKey: true,
-      },
-      username: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      email: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      password: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
+const userSchema = new Schema(
+  {
+    username: {
+      type: String,
+      required: true,
     },
+    email: {
+      type: String,
+      required: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    contacts: [{ type: mongoose.SchemaTypes.ObjectId, ref: "User" }],
+    boards: [{ type: mongoose.SchemaTypes.ObjectId, ref: "Board" }],
+  },
+  {
+    timestamps: true,
+  }
+);
+
+userSchema.methods.generateAuthToken = function () {
+  const token = jwt.sign(
+    { id: this._id, username: this.username },
+    process.env.JWT_SECRET,
     {
-      sequelize,
-      tableName: "Users",
-      timestamps: true,
+      expiresIn: "1d",
     }
   );
-  return User;
+  return token;
 };
+
+const User = model("User", userSchema);
+
+module.exports = User;

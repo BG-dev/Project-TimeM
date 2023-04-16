@@ -1,41 +1,33 @@
-const { Model } = require("sequelize");
+const mongoose = require("mongoose");
+const { Schema, model } = mongoose;
 
-module.exports = (sequelize, DataTypes) => {
-  class Board extends Model {
-    static associate({ List, User, BoardUser }) {
-      Board.hasMany(List, { foreignKey: "boardId" });
-      Board.belongsToMany(User, {
-        through: BoardUser,
-        foreignKey: "boardId",
-        otherKey: "userId",
-      });
-    }
-  }
-  Board.init(
-    {
-      boardId: {
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
-        primaryKey: true,
-      },
-      name: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      description: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      color: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
+const boardSchema = new Schema(
+  {
+    name: {
+      type: String,
+      required: true,
     },
-    {
-      sequelize,
-      tableName: "Boards",
-      timestamps: true,
-    }
-  );
-  return Board;
-};
+    description: {
+      type: String,
+      default: "",
+    },
+    color: {
+      name: String,
+      value: String,
+    },
+    creator: {
+      type: mongoose.SchemaTypes.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    users: [{ type: mongoose.SchemaTypes.ObjectId, ref: "User", default: [] }],
+    lists: { type: [String], default: ["To Do", "Doing", "Done"] },
+  },
+  {
+    timestamps: true,
+  }
+);
+
+const Board = model("Board", boardSchema);
+
+module.exports = Board;
