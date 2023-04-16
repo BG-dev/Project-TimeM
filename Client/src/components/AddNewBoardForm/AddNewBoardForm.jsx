@@ -14,7 +14,9 @@ function AddNewBoardForm({ setBoards, setActiveModal }) {
     const boardData = {
       name: values.name,
       description: values.description,
-      color: colors[acitveColor],
+      color: {
+        ...colors[acitveColor],
+      },
     };
     setLoading(true);
     try {

@@ -9,8 +9,8 @@ function ColorSelector({ activeColor, setActiveColor, colors }) {
         {colors &&
           colors.map((color, index) => (
             <li
-              key={index}
-              style={{ backgroundColor: color }}
+              key={`${index}-${color.name}`}
+              style={{ backgroundColor: color.value }}
               className={`selector__color ${
                 index === activeColor ? "active" : ""
               }`}

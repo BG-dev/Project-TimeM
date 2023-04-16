@@ -5,7 +5,7 @@ import useDate from "../../hooks/date.hook";
 import "./BoardCard.scss";
 
 function BoardCard({ board }) {
-  const color = board.color;
+  const color = board.color.value;
   const date = useDate(board.createdAt);
 
   return (
