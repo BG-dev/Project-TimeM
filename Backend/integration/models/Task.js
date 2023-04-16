@@ -3,12 +3,12 @@ const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Task extends Model {
     static associate({ List }) {
-      Task.belongsTo(List, { foreignKey: "list_id" });
+      Task.belongsTo(List, { foreignKey: "listId" });
     }
   }
   Task.init(
     {
-      task_id: {
+      taskId: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true,
@@ -25,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.DATE,
         allowNull: true,
       },
-      list_id: {
+      listId: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
@@ -36,7 +36,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      tableName: "tasks",
+      tableName: "Tasks",
       timestamps: true,
     }
   );
