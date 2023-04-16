@@ -3,13 +3,13 @@ const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class List extends Model {
     static associate({ Task, Board }) {
-      List.hasMany(Task, { foreignKey: "listId" });
-      List.belongsTo(Board, { foreignKey: "boardId" });
+      List.hasMany(Task, { foreignKey: "list_id" });
+      List.belongsTo(Board, { foreignKey: "board_id" });
     }
   }
   List.init(
     {
-      listId: {
+      list_id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true,
@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      boardId: {
+      board_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
@@ -27,7 +27,6 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       tableName: "lists",
       timestamps: true,
-      underscored: true,
     }
   );
   return List;

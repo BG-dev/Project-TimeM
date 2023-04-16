@@ -30,7 +30,7 @@ exports.login = async (userData) => {
 
   if (!isMatch) throw new Error("Password is incorrect");
 
-  const token = generateAuthToken(user.userId, user.username);
+  const token = generateAuthToken(user.user_id, user.username);
 
   return token;
 };
