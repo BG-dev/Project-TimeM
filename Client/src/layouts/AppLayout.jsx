@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../hooks/auth.hook";
 import { Outlet, useNavigate } from "react-router-dom";
-import { Navbar } from "../components";
+import { Loading, Navbar } from "../components";
 
 export default function AppLayout() {
   const navigate = useNavigate();
@@ -18,7 +18,7 @@ export default function AppLayout() {
   }, [navigate]);
 
   return loading ? (
-    <h1>Loading...</h1>
+    <Loading />
   ) : (
     <>
       <Navbar />

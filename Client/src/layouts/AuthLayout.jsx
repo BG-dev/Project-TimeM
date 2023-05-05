@@ -3,6 +3,7 @@ import { useAuth } from "../hooks/auth.hook";
 import { Outlet, useNavigate } from "react-router-dom";
 
 import "../scss/_auth.scss";
+import { Loading } from "../components";
 
 export default function AuthLayout() {
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ export default function AuthLayout() {
   }, [navigate]);
 
   return loading ? (
-    <h1>Loading...</h1>
+    <Loading />
   ) : (
     <div className="auth-wrapper">
       <div className="auth">

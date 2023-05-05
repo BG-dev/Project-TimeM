@@ -13,6 +13,7 @@ import ConfirmForm from "./ConfirmForm";
 import DropdownMenu from "./DropdownMenu";
 import CustomField from "./CustomField";
 import EditTaskForm from "./EditTaskForm";
+import Loading from "./Loading";
 
 export {
   Navbar,
@@ -30,4 +31,5 @@ export {
   DropdownMenu,
   CustomField,
   EditTaskForm,
+  Loading,
 };
