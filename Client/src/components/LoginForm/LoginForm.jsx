@@ -64,10 +64,10 @@ function LoginForm() {
               <button className="btn btn-blue" type="submit" disabled={loading}>
                 Sign In
               </button>
-              <NavLink to="/register" className="btn btn-blue">
+              <NavLink to="/signup" className="btn btn-blue">
                 Create new account
               </NavLink>
-              <NavLink to="/register" className="auth__form-link">
+              <NavLink to="/signup" className="auth__form-link">
                 Forgot password?
               </NavLink>
             </div>
