@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useAuth } from "../hooks/auth.hook";
 import { Outlet, useNavigate } from "react-router-dom";
+import { useAuth } from "../hooks/auth.hook";
+import { Loading } from "../components";
 
 import "../scss/_auth.scss";
-import { Loading } from "../components";
 
 export default function AuthLayout() {
   const navigate = useNavigate();
