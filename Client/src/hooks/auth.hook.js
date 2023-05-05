@@ -1,8 +1,13 @@
-import { AuthContext } from "../context/AuthContext";
-import React, { useContext } from "react";
+import authApi from "../api/authApi";
 
-export const useAuth = () => {
-  const { token } = useContext(AuthContext);
+export const useAuth = async () => {
+  const token = localStorage.getItem("token");
+  if (!token) return false;
 
-  return { isLoggedIn: !!token };
+  try {
+    const res = await authApi.verify();
+    return res.isLoggedIn;
+  } catch {
+    return false;
+  }
 };
