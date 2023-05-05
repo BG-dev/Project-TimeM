@@ -1,8 +1,9 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import { LoginForm, RegisterForm } from "./components";
 import { AuthLayout, AppLayout } from "./layouts";
 import {
+  LoginPage,
+  SignupPage,
   ProfilePage,
   HomePage,
   BoardsPage,
@@ -14,8 +15,8 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<AuthLayout />}>
-        <Route path="login" element={<LoginForm />} />
-        <Route path="signup" element={<RegisterForm />} />
+        <Route path="login" element={<LoginPage />} />
+        <Route path="signup" element={<SignupPage />} />
       </Route>
       <Route path="/" element={<AppLayout />}>
         <Route index element={<HomePage />} />
@@ -23,6 +24,7 @@ function App() {
         <Route path="/boards" element={<BoardsPage />} />
         <Route path="/tasks" element={<TasksPage />} />
         <Route path="/board/:id" element={<BoardPage />} />
+        <Route path="/settings" element={<ProfilePage />} />
       </Route>
     </Routes>
   );

@@ -1,7 +1,5 @@
 import BoardCard from "./BoardCard";
 import Navbar from "./Navbar";
-import LoginForm from "./LoginForm";
-import RegisterForm from "./RegisterForm";
 import Footer from "./Footer";
 import NewBoardCard from "./NewBoardCard";
 import Modal from "./Modal";
@@ -19,8 +17,6 @@ import EditTaskForm from "./EditTaskForm";
 export {
   Navbar,
   BoardCard,
-  LoginForm,
-  RegisterForm,
   Footer,
   NewBoardCard,
   Modal,

@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { Formik, Form } from "formik";
 import { NavLink, useNavigate } from "react-router-dom";
-import { CustomField, FormContainer } from "../../components";
+import { CustomField } from "../../components";
 import * as Yup from "yup";
 
-import "./RegisterForm.scss";
+import "./SignupPage.scss";
 import authApi from "../../api/authApi";
 
-function RegisterForm() {
+function SignupPage() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
@@ -85,4 +85,4 @@ function RegisterForm() {
   );
 }
 
-export default RegisterForm;
+export default SignupPage;

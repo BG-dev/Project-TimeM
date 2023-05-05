@@ -2,13 +2,13 @@ import React, { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { Formik, Form } from "formik";
 import { NavLink, useNavigate } from "react-router-dom";
-import { CustomField, FormContainer } from "../../components";
+import { CustomField } from "../../components";
 import * as Yup from "yup";
 
-import "./LoginForm.scss";
+import "./LoginPage.scss";
 import authApi from "../../api/authApi";
 
-function LoginForm() {
+function LoginPage() {
   const navigate = useNavigate();
   const { loading, dispatch } = useContext(AuthContext);
 
@@ -78,4 +78,4 @@ function LoginForm() {
   );
 }
 
-export default LoginForm;
+export default LoginPage;
