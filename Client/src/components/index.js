@@ -1,7 +1,5 @@
 import BoardCard from "./BoardCard";
 import Navbar from "./Navbar";
-import LoginForm from "./LoginForm";
-import RegisterForm from "./RegisterForm";
 import Footer from "./Footer";
 import NewBoardCard from "./NewBoardCard";
 import Modal from "./Modal";
@@ -15,12 +13,11 @@ import ConfirmForm from "./ConfirmForm";
 import DropdownMenu from "./DropdownMenu";
 import CustomField from "./CustomField";
 import EditTaskForm from "./EditTaskForm";
+import Loading from "./Loading";
 
 export {
   Navbar,
   BoardCard,
-  LoginForm,
-  RegisterForm,
   Footer,
   NewBoardCard,
   Modal,
@@ -34,4 +31,5 @@ export {
   DropdownMenu,
   CustomField,
   EditTaskForm,
+  Loading,
 };
