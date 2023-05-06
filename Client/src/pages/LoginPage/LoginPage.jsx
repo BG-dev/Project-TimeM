@@ -1,5 +1,4 @@
-import React, { useContext } from "react";
-import { AuthContext } from "../../context/AuthContext";
+import React, { useState } from "react";
 import { Formik, Form } from "formik";
 import { NavLink, useNavigate } from "react-router-dom";
 import { CustomField } from "../../components";
@@ -10,7 +9,7 @@ import authApi from "../../api/authApi";
 
 function LoginPage() {
   const navigate = useNavigate();
-  const { loading, dispatch } = useContext(AuthContext);
+  const [loading, setLoading] = useState(false);
 
   const signInSchema = Yup.object().shape({
     username: Yup.string()
@@ -22,23 +21,18 @@ function LoginPage() {
   });
 
   const loginHandler = async (values) => {
-    dispatch({ type: "LOGIN_START" });
+    setLoading(true);
     const userData = {
       username: values.username.toLowerCase(),
       password: values.password,
     };
     try {
       const response = await authApi.login(userData);
-      dispatch({
-        type: "LOGIN_SUCCESS",
-        payload: {
-          token: response.token,
-          username: response.username,
-        },
-      });
+      setLoading(false);
+      localStorage.setItem("token", response.token);
       navigate("/");
     } catch (error) {
-      dispatch({ type: "LOGIN_FAILURE", payload: error.response.message });
+      setLoading(false);
     }
   };
 

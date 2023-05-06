@@ -6,7 +6,7 @@ export const useAuth = async () => {
 
   try {
     const res = await authApi.verify();
-    return res.isLoggedIn;
+    return res;
   } catch {
     return false;
   }

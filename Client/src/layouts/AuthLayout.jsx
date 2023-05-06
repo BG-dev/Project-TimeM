@@ -11,9 +11,9 @@ export default function AuthLayout() {
 
   useEffect(() => {
     async function verify() {
-      const isAuth = await useAuth();
+      const user = await useAuth();
 
-      if (!isAuth) setLoading(false);
+      if (!user.isLoggedIn) setLoading(false);
       else navigate("/");
     }
     verify();
