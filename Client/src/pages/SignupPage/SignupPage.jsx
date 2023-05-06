@@ -62,7 +62,7 @@ function SignupPage() {
         {() => (
           <Form className="auth__form">
             <CustomField name="username" label="Username" type="text" />
-            <CustomField name="email" label="PasswoEmailrd" type="email" />
+            <CustomField name="email" label="Email" type="email" />
             <CustomField name="password" label="Password" type="password" />
             <CustomField
               name="passwordRepeat"
