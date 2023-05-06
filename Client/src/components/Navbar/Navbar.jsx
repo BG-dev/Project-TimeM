@@ -1,19 +1,19 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { AuthContext } from "../../context/AuthContext";
+import { useSelector } from "react-redux";
 import { ConfirmForm, Modal } from "../../components";
 
 import "./Navbar.scss";
 
 function Navbar() {
   const navigate = useNavigate();
-  const { username, dispatch } = useContext(AuthContext);
+  const user = useSelector((state) => state.user.value);
   const [isOpenNavbar, setIsOpenNavbar] = useState(true);
   const [isLogoutModalActive, setIsLogoutModalActive] = useState(false);
 
   const logoutHandler = (event) => {
     event.preventDefault();
-    dispatch({ type: "LOGOUT" });
+
     navigate("/login");
   };
 
@@ -39,7 +39,7 @@ function Navbar() {
         <div className="image user__avatar">
           <div className="user__image image"></div>
         </div>
-        <span className="user__username text">{username}</span>
+        <span className="user__username text">{user.username}</span>
       </div>
       <div className="menu-bar">
         <div className="menu">

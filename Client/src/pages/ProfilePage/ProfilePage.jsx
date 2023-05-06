@@ -1,14 +1,14 @@
-import React, { useContext } from "react";
-import { AuthContext } from "../../context/AuthContext";
+import React from "react";
+import { useSelector } from "react-redux";
 
 function ProfilePage() {
-  const { username } = useContext(AuthContext);
+  const user = useSelector((state) => state.user.value);
 
   return (
     <>
       <h1>Your Profile</h1>
       <div>
-        <h2>{username}</h2>
+        <h2>{user.username}</h2>
       </div>
     </>
   );
