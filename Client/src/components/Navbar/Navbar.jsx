@@ -13,7 +13,7 @@ function Navbar() {
 
   const logoutHandler = (event) => {
     event.preventDefault();
-
+    localStorage.removeItem("token");
     navigate("/login");
   };
 
