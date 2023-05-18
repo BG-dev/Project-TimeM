@@ -14,6 +14,9 @@ import DropdownMenu from "./DropdownMenu";
 import CustomField from "./CustomField";
 import EditTaskForm from "./EditTaskForm";
 import Loading from "./Loading";
+import TagsList from "./TagsList";
+import AddTagButton from "./AddTagButton";
+import Tag from "./Tag";
 
 export {
   Navbar,
@@ -32,4 +35,7 @@ export {
   CustomField,
   EditTaskForm,
   Loading,
+  TagsList,
+  AddTagButton,
+  Tag,
 };

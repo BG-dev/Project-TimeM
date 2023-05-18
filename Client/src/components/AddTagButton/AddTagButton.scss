@@ -1,0 +1,31 @@
+@import "../../scss/variables";
+
+.add-tag {
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  height: 35px;
+  border-radius: 50px;
+  color: $dark-gray;
+  font-weight: bold;
+  user-select: none;
+
+  &__input {
+    font-size: 0.9rem;
+    font-weight: bold;
+    width: 150px;
+    padding: 0;
+    background-color: transparent;
+    border: none;
+    outline: none;
+
+    &:focus {
+      border: none;
+      outline: none;
+    }
+  }
+
+  &__text {
+    font-size: 1.2rem;
+  }
+}

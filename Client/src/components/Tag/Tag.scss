@@ -1,0 +1,18 @@
+@import "../../scss/variables";
+
+.tag {
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  height: 35px;
+  border-radius: 50px;
+  color: $dark-gray;
+  font-size: 0.9rem;
+  font-weight: bold;
+  pointer-events: none;
+
+  &__text {
+    font-size: 0.9rem;
+    font-weight: bold;
+  }
+}

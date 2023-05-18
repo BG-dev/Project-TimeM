@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../hooks/auth.hook";
 import { Outlet, useNavigate } from "react-router-dom";
-import { Loading, Navbar } from "../components";
+import { Footer, Loading, Navbar } from "../components";
 import { useDispatch } from "react-redux";
 import { setUser } from "../redux/features/userSlice";
 
@@ -31,6 +31,7 @@ export default function AppLayout() {
         <div className="content">
           <Outlet />
         </div>
+        <Footer />
       </div>
     </>
   );

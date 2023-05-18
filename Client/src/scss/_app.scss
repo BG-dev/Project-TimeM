@@ -6,14 +6,17 @@
 .container {
   position: relative;
   left: 240px;
-  height: 100vh;
+  min-height: 100vh;
   width: calc(100% - 240px);
   transition: all 0.5s ease;
   background-color: $gray;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
 
   .content {
-    min-height: calc(100% - 40px);
     padding: 20px 30px;
+    flex: 1;
   }
 }
 

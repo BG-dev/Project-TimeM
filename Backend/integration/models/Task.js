@@ -15,6 +15,12 @@ const taskSchema = new Schema(
       type: String,
       required: true,
     },
+    tags: [
+      {
+        text: String,
+        color: String,
+      },
+    ],
     status: {
       type: String,
       require: true,

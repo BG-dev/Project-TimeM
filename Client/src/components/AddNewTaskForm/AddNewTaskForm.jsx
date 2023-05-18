@@ -1,13 +1,14 @@
 import React from "react";
 import "./AddNewTaskForm.scss";
 import { Formik, Form } from "formik";
-import { CustomField } from "../../components";
+import { CustomField, TagsList } from "../../components";
 import { useState } from "react";
 import taskApi from "../../api/taskApi";
 import * as Yup from "yup";
 
 function AddNewTaskForm({ setActiveModal, status, boardId, lists }) {
   const [loading, setLoading] = useState(false);
+  const [tags, setTags] = useState([]);
 
   const newTaskSchema = Yup.object().shape({
     title: Yup.string()
@@ -36,6 +37,7 @@ function AddNewTaskForm({ setActiveModal, status, boardId, lists }) {
       status: status,
       board: boardId,
       position: position,
+      tags: tags,
     };
     setLoading(true);
     try {
@@ -62,6 +64,7 @@ function AddNewTaskForm({ setActiveModal, status, boardId, lists }) {
         onSubmit={async (values, { resetForm }) => {
           await createTask(values);
           resetForm();
+          setTags([]);
           setActiveModal(false);
         }}
       >
@@ -70,6 +73,7 @@ function AddNewTaskForm({ setActiveModal, status, boardId, lists }) {
             <CustomField name="title" label="Title" type="text" />
             <CustomField name="description" label="Description" type="text" />
             <CustomField name="deadline" label="Deadline" type="date" />
+            <TagsList tags={tags} setTags={setTags} />
             <div className="custom-form__control">
               <button className="btn btn-blue" type="submit" disabled={loading}>
                 Create
