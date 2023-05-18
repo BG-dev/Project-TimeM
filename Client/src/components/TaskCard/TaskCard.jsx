@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import DropdownMenu from "../DropdownMenu/DropdownMenu";
-import { ConfirmForm, EditTaskForm, Modal } from "../../components";
+import { ConfirmForm, EditTaskForm, Modal, TagsList } from "../../components";
 import { BoardContext, BoardContextActions } from "../../context/BoardContext";
 import taskApi from "../../api/taskApi";
 import "./TaskCard.scss";
@@ -88,8 +88,10 @@ function TaskCard({
             <DropdownMenu options={options} />
           </div>
           <div className="task__content">
+            <p className="task__id">{task._id}</p>
             <p className="task__description">{task.description}</p>
             <p className="task__deadline">{task.deadline}</p>
+            <TagsList tags={task.tags} isRead />
           </div>
         </div>
       )}
