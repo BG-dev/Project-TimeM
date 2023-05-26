@@ -17,6 +17,7 @@ import Loading from "./Loading";
 import TagsList from "./TagsList";
 import AddTagButton from "./AddTagButton";
 import Tag from "./Tag";
+import ProfileCard from "./ProfileCard";
 
 export {
   Navbar,
@@ -38,4 +39,5 @@ export {
   TagsList,
   AddTagButton,
   Tag,
+  ProfileCard,
 };

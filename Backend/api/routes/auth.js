@@ -6,7 +6,7 @@ const verifyJWT = require("../middlewares/verifyJWT");
 const router = express.Router();
 
 router.get("/isAuthUser", verifyJWT, (req, res) => {
-  return res.json({ isLoggedIn: true, username: req.user.username });
+  return res.json({ isLoggedIn: true, user: req.user });
 });
 
 router.post("/register", async (req, res, next) => {
