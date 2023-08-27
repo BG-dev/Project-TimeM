@@ -12,10 +12,10 @@ export default function AppLayout() {
 
   useEffect(() => {
     async function verify() {
-      const user = await useAuth();
-      if (!user.isLoggedIn) navigate("/login");
+      const res = await useAuth();
+      if (!res.isLoggedIn) navigate("/login");
       else {
-        dispatch(setUser(user));
+        dispatch(setUser(res.user));
         setLoading(false);
       }
     }
