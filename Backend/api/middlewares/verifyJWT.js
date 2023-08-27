@@ -13,7 +13,6 @@ async function verifyJWT(req, res, next) {
       const user = await userIntegration.getOneBy({
         username: decoded.username,
       });
-      console.log(user);
       req.user = user;
       // req.user.id = decoded.id;
       // req.user.username = decoded.username;

@@ -6,6 +6,8 @@ import {
   Modal,
   AddNewTaskForm,
   ConfirmForm,
+  EditBoardForm,
+  Loading,
 } from "../../components";
 import boardApi from "../../api/boardApi";
 import taskApi from "../../api/taskApi";
@@ -14,10 +16,11 @@ import { BoardContext, BoardContextActions } from "../../context/BoardContext";
 function BoardPage() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const [isEditBoardModalActive, setIsEditBoardModalActive] = useState(false);
   const [isModalActive, setIsModalActive] = useState(false);
   const [isDeleteModalActive, setIsDeleteModalActive] = useState(false);
   const [newTaskStatus, setNewTaskStatus] = useState(null);
-  const [boardName, setBoardName] = useState(null);
+  const [board, setBoard] = useState(null);
   const [loading, setLoading] = useState(false);
   const [currentList, setCurrentList] = useState(null);
   const [currentTask, setCurrentTask] = useState(null);
@@ -112,7 +115,7 @@ function BoardPage() {
       setLoading(true);
       try {
         const response = await boardApi.getOne(id);
-        setBoardName(response.board.name);
+        setBoard(response.board);
         dispatch(BoardContextActions.setLists(response.board.tasks));
       } catch (error) {
         console.log(error);
@@ -123,12 +126,20 @@ function BoardPage() {
     getBoard();
   }, []);
 
-  return (
+
+  return !board ? (
+    <Loading />
+  ) : (
     <div className="board">
       <div className="board__top">
-        <span className="board__title">{boardName}</span>
+        <span className="board__title">{board && board.name}</span>
         <div className="board__menu">
-          <button className="btn btn-blue">Edit</button>
+          <button
+            className="btn btn-blue"
+            onClick={() => setIsEditBoardModalActive((prev) => !prev)}
+          >
+            Edit
+          </button>
           <button
             className="btn btn-red"
             onClick={() => setIsDeleteModalActive((prev) => !prev)}
@@ -137,6 +148,17 @@ function BoardPage() {
           </button>
         </div>
       </div>
+      <Modal
+        active={isEditBoardModalActive}
+        setActive={setIsEditBoardModalActive}
+      >
+        <EditBoardForm
+          setActiveModal={setIsEditBoardModalActive}
+          board={board}
+          setBoard={setBoard}
+          id={id}
+        />
+      </Modal>
       <Modal active={isModalActive} setActive={setIsModalActive}>
         <AddNewTaskForm
           setActiveModal={setIsModalActive}
