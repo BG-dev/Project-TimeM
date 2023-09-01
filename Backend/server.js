@@ -3,9 +3,9 @@ const dotenv = require("dotenv");
 const helmet = require("helmet");
 const mongoose = require("mongoose");
 const bodyparser = require("body-parser");
-const boardsRoutes = require("./routes/boards");
-const usersRoutes = require("./routes/users");
-const tasksRoutes = require("./routes/tasks");
+const boardRoutes = require("./routes/board");
+const userRoutes = require("./routes/user");
+const taskRoutes = require("./routes/task");
 const authRoutes = require("./routes/auth");
 const logger = require("./middlewares/logger");
 const { logError, sendError } = require("./middlewares/errorHandler");
@@ -20,14 +20,14 @@ app.use(bodyparser.urlencoded({ extended: false }));
 app.use(bodyparser.json());
 app.use(helmet());
 
-app.use("/boards", boardsRoutes);
-app.use("/tasks", tasksRoutes);
+app.use("/boards", boardRoutes);
+app.use("/tasks", taskRoutes);
 app.use("/api/auth", authRoutes);
-app.use("/users", usersRoutes);
+app.use("/users", userRoutes);
 
 app.use(logError);
 app.use(sendError);
 
 app.listen(port, () => {
-  logger.info(`Server was started on port: ${port}`);
+    logger.info(`Server was started on port: ${port}`);
 });

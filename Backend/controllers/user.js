@@ -1,5 +1,48 @@
-const userIntegration = require("../integration/user");
+const bcrypt = require("bcrypt");
+const User = require("../models/User");
 
-exports.getOne = async (id) => await userIntegration.getOne(id);
+exports.register = async (req, res) => {
+    const { username, email, password } = req.body;
+    try {
+        const isExistsUsername = await User.findOne({ username });
+        const isExistsEmail = await User.findOne({ email });
 
-exports.getAll = async () => await userIntegration.getAll();
+        if (isExistsEmail || isExistsUsername)
+            res.status(400).send({
+                message: "Username or email is already in use",
+            });
+
+        const hashedPassword = await bcrypt.hash(password, 12);
+        const newUser = {
+            password: hashedPassword,
+            username,
+            email,
+        };
+
+        const user = await User.create({ ...newUser });
+        res.status(201).send({
+            message: `User ${user.username} was created`,
+        });
+    } catch (err) {
+        res.status(500).send({ error: err });
+    }
+};
+
+exports.login = async (req, res) => {
+    const { username, password } = req.body;
+    try {
+        const user = await User.findOne({ username }).select("password");
+        if (!user)
+            res.status(401).send({ message: "Invalid username or password" });
+
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch)
+            res.status(401).send({ message: "Invalid username or password" });
+
+        const token = user.generateAuthToken();
+
+        res.status(200).send({ token });
+    } catch (err) {
+        res.status(500).send({ error: err });
+    }
+};
