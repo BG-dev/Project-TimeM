@@ -115,10 +115,8 @@ function BoardPage() {
             setLoading(true);
             try {
                 const response = await boardApi.getOne(id);
-                console.log(response.board);
                 setBoard(response.board);
                 dispatch(BoardContextActions.setLists(response.board.tasks));
-                console.log(board);
             } catch (error) {
                 console.log(error);
             } finally {

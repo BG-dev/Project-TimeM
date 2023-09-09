@@ -80,7 +80,7 @@ exports.getUserBoards = async (req, res) => {
 exports.getOne = async (req, res) => {
     const id = req.params.id;
     try {
-        const board = await Board.findById(id);
+        const board = (await Board.findById(id)).toJSON();
         const boardsTasks = await Task.find({ board: id });
         const taskLists = [];
         board.lists.forEach((list) => {
