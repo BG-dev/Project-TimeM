@@ -3,14 +3,21 @@ const Task = require("../models/Task");
 const User = require("../models/User");
 
 exports.create = async (req, res) => {
+    console.log(req.user);
     const boardData = {
         ...req.body,
-        creator: req.user.id,
+        author: req.user.username,
+        users: [
+            {
+                user: req.user.id,
+                role: "author",
+            },
+        ],
     };
     try {
         const board = await Board.create({ ...boardData });
         await User.findByIdAndUpdate(
-            board.creator,
+            req.user.id,
             {
                 $push: {
                     boards: board._id,
@@ -39,11 +46,14 @@ exports.update = async (req, res) => {
 
 exports.delete = async (req, res) => {
     const boardId = req.params.id;
-    const userId = req.user.id;
     try {
         await Board.findByIdAndDelete(boardId);
-        await User.findByIdAndUpdate(
-            userId,
+        await User.updateMany(
+            {
+                boards: {
+                    $in: boardId,
+                },
+            },
             {
                 $pull: {
                     boards: boardId,
@@ -63,14 +73,7 @@ exports.delete = async (req, res) => {
 exports.getUserBoards = async (req, res) => {
     const userId = req.user.id;
     try {
-        const boards = (
-            await User.findById(userId).populate({
-                path: "boards",
-                populate: {
-                    path: "creator",
-                },
-            })
-        ).boards;
+        const boards = (await User.findById(userId).populate("boards")).boards;
         res.status(200).send({ boards });
     } catch (err) {
         res.status(500).send({ error: err });
