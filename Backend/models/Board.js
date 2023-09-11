@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const { Schema, model } = mongoose;
+const { schemaOptions } = require("./modelOptions");
 
 const boardSchema = new Schema(
     {
@@ -11,7 +12,7 @@ const boardSchema = new Schema(
             type: String,
             default: "",
         },
-        author: {
+        authorName: {
             type: String,
             required: true,
         },
@@ -31,11 +32,8 @@ const boardSchema = new Schema(
                 default: [],
             },
         ],
-        lists: { type: [String], default: ["To Do", "Doing", "Done"] },
     },
-    {
-        timestamps: true,
-    }
+    schemaOptions
 );
 
 const Board = model("Board", boardSchema);

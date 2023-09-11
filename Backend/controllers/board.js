@@ -1,4 +1,5 @@
 const Board = require("../models/Board");
+const Section = require("../models/Section");
 const Task = require("../models/Task");
 const User = require("../models/User");
 
@@ -6,7 +7,7 @@ exports.create = async (req, res) => {
     console.log(req.user);
     const boardData = {
         ...req.body,
-        author: req.user.username,
+        authorName: req.user.username,
         users: [
             {
                 user: req.user.id,
@@ -82,20 +83,19 @@ exports.getUserBoards = async (req, res) => {
 
 exports.getOne = async (req, res) => {
     const id = req.params.id;
+
     try {
-        const board = (await Board.findById(id)).toJSON();
-        const boardsTasks = await Task.find({ board: id });
-        const taskLists = [];
-        board.lists.forEach((list) => {
-            filteredTasks = boardsTasks
-                .filter((task) => task.status === list)
-                .sort((a, b) => a.position - b.position);
-            taskLists.push({
-                status: list,
-                tasks: filteredTasks,
-            });
-        });
-        board.tasks = taskLists;
+        const board = await Board.findById(id);
+        const sections = await Section.find({ boardId: board._id }).sort(
+            "position"
+        );
+        for (const section of sections) {
+            const tasks = await Task.find({ sectionId: section._id }).sort(
+                "position"
+            );
+            section._doc.tasks = tasks;
+        }
+        board._doc.sections = sections;
         res.status(200).send({ board });
     } catch (err) {
         res.status(500).send({ error: err });

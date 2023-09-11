@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const bodyparser = require("body-parser");
 const boardRoutes = require("./routes/board");
 const userRoutes = require("./routes/user");
+const sectionRoutes = require("./routes/section");
 const taskRoutes = require("./routes/task");
 const authRoutes = require("./routes/auth");
 const logger = require("./middlewares/logger");
@@ -24,6 +25,7 @@ app.use("/boards", boardRoutes);
 app.use("/tasks", taskRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/users", userRoutes);
+app.use("/sections", sectionRoutes);
 
 app.use(logError);
 app.use(sendError);

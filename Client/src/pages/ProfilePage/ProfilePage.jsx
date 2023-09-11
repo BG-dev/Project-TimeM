@@ -4,34 +4,32 @@ import { ProfileCard } from "../../components";
 import authApi from "../../api/authApi";
 
 function ProfilePage() {
-  const user = useSelector((state) => state.user.value);
+    const user = useSelector((state) => state.user.value);
 
-  useEffect(() => {
-    async function getUser() {
-      setLoading(true);
-      try {
-        const response = await authApi.getOne(id);
-        setBoardName(response.board.name);
-        dispatch(BoardContextActions.setLists(response.board.tasks));
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
-      }
-    }
-    getUser();
-  }, []);
+    useEffect(() => {
+        async function getUser() {
+            setLoading(true);
+            try {
+                const response = await authApi.getOne(id);
+            } catch (error) {
+                console.log(error);
+            } finally {
+                setLoading(false);
+            }
+        }
+        getUser();
+    }, []);
 
-  console.log(user);
+    console.log(user);
 
-  return (
-    <>
-      <h1>My Profile</h1>
-      <div className="profile">
-        <ProfileCard user={user} />
-      </div>
-    </>
-  );
+    return (
+        <>
+            <h1>My Profile</h1>
+            <div className="profile">
+                <ProfileCard user={user} />
+            </div>
+        </>
+    );
 }
 
 export default ProfilePage;

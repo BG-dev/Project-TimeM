@@ -4,50 +4,40 @@ import TaskCard from "../TaskCard";
 import "./TasksList.scss";
 
 function TasksList({
-  list,
-  tasks,
-  setModalActive,
-  setNewTaskStatus,
-  onDragOverHandler,
-  onDragLeaveHandler,
-  onDragStartHandler,
-  onDragEndHandler,
-  onDropHandler,
-  onDropTaskHandler,
+    section,
+    setModalActive,
+    setNewTaskStatus,
+    dragAndDropMethods,
 }) {
-  return (
-    <div
-      onDragOver={(e) => onDragOverHandler(e)}
-      onDrop={(e) => onDropTaskHandler(e, list)}
-      className="tasks"
-    >
-      <div className="tasks-list__top">
-        <span className="tasks-list__title">{list.status}</span>
-      </div>
-      <ul className="tasks-list">
-        {tasks &&
-          tasks.map((task) => (
-            <TaskCard
-              key={task._id}
-              task={task}
-              list={list}
-              onDragOverHandler={onDragOverHandler}
-              onDragLeaveHandler={onDragLeaveHandler}
-              onDragStartHandler={onDragStartHandler}
-              onDragEndHandler={onDragEndHandler}
-              onDropHandler={onDropHandler}
-            />
-          ))}
-        {
-          <NewTaskCard
-            setModalActive={setModalActive}
-            setNewTaskStatus={setNewTaskStatus}
-            status={list.status}
-          />
-        }
-      </ul>
-    </div>
-  );
+    return (
+        <div
+            onDragOver={(e) => dragAndDropMethods.onDragOverHandler(e)}
+            onDrop={(e) => dragAndDropMethods.onDropTaskHandler(e, section)}
+            className="tasks"
+        >
+            <div className="tasks-list__top">
+                <span className="tasks-list__title">{section.status}</span>
+            </div>
+            <ul className="tasks-list">
+                {section.tasks &&
+                    section.tasks.map((task) => (
+                        <TaskCard
+                            key={task._id}
+                            task={task}
+                            section={section}
+                            dragAndDropMethods={dragAndDropMethods}
+                        />
+                    ))}
+                {
+                    <NewTaskCard
+                        setModalActive={setModalActive}
+                        setNewTaskStatus={setNewTaskStatus}
+                        status={section.status}
+                    />
+                }
+            </ul>
+        </div>
+    );
 }
 
 export default TasksList;

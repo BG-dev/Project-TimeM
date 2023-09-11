@@ -1,3 +1,3 @@
-import TasksPage from "./ContactsPage";
+import ContactsPage from "./ContactsPage";
 
 export default ContactsPage;

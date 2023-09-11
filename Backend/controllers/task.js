@@ -1,9 +1,15 @@
 const Task = require("../models/Task");
 
 exports.create = async (req, res) => {
-    const taskData = { ...req.body, user: req.user.id };
     try {
-        const task = await Task.create({ ...taskData });
+        const sectionTasksCount = await Task.find({
+            sectionId: req.body.sectionId,
+        }).count();
+        const taskData = {
+            ...req.body,
+            position: sectionTasksCount,
+        };
+        const task = await Task.create(taskData);
         res.status(201).send({ task });
     } catch (error) {
         res.status(400).send({ error });
@@ -22,23 +28,18 @@ exports.update = async (req, res) => {
 };
 
 exports.updatePosition = async (req, res) => {
-    const {
-        resourceTasks,
-        destinationTasks,
-        resourceStatus,
-        destinationStatus,
-    } = req.body;
+    const { resourceSection, destinationSection } = req.body;
     try {
-        if (resourceStatus !== destinationStatus) {
-            resourceTasks.forEach(async (task, index) => {
+        if (resourceSection.status !== destinationSection.status) {
+            resourceSection.tasks.forEach(async (task, index) => {
                 await Task.findByIdAndUpdate(task._id, {
-                    $set: { status: resourceStatus, position: index },
+                    $set: { sectionId: resourceSection._id, position: index },
                 });
             });
         }
-        destinationTasks.forEach(async (task, index) => {
+        destinationSection.tasks.forEach(async (task, index) => {
             await Task.findByIdAndUpdate(task._id, {
-                $set: { status: destinationStatus, position: index },
+                $set: { sectionId: destinationSection._id, position: index },
             });
         });
         res.status(200).send({ message: "Task successfully updated" });

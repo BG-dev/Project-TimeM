@@ -1,5 +1,6 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { setBoard } from "../../redux/features/boardSlice";
 import "./BoardPage.scss";
 import {
     TasksList,
@@ -11,20 +12,29 @@ import {
 } from "../../components";
 import boardApi from "../../api/boardApi";
 import taskApi from "../../api/taskApi";
-import { BoardContext, BoardContextActions } from "../../context/BoardContext";
+import { useDispatch, useSelector } from "react-redux";
 
 function BoardPage() {
     const { id } = useParams();
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const board = useSelector((state) => state.board.value);
     const [isEditBoardModalActive, setIsEditBoardModalActive] = useState(false);
     const [isModalActive, setIsModalActive] = useState(false);
     const [isDeleteModalActive, setIsDeleteModalActive] = useState(false);
     const [newTaskStatus, setNewTaskStatus] = useState(null);
-    const [board, setBoard] = useState(null);
     const [loading, setLoading] = useState(false);
-    const [currentList, setCurrentList] = useState(null);
+    const [currentSection, setCurrentSection] = useState(null);
     const [currentTask, setCurrentTask] = useState(null);
-    const { dispatch, lists } = useContext(BoardContext);
+
+    const dragAndDropMethods = {
+        onDragEndHandler,
+        onDragLeaveHandler,
+        onDragOverHandler,
+        onDragStartHandler,
+        onDropHandler,
+        onDropTaskHandler,
+    };
 
     async function updateTaskPosition(data) {
         try {
@@ -36,71 +46,80 @@ function BoardPage() {
 
     function onDragOverHandler(e) {
         e.preventDefault();
-        if (e.target.className === "task")
-            e.target.style.boxShadow = "0 2px 3px black";
+        // if (e.target.className === "task")
+        //     e.target.style.boxShadow = "0 2px 3px black";
     }
 
     function onDragLeaveHandler(e) {
-        e.target.style.boxShadow = "none";
+        // e.target.style.boxShadow = "none";
     }
 
-    function onDragStartHandler(e, list, task) {
-        setCurrentList(list);
+    function onDragStartHandler(e, section, task) {
+        setCurrentSection(section);
         setCurrentTask(task);
     }
 
     function onDragEndHandler(e) {
-        e.target.style.boxShadow = "none";
+        // e.target.style.boxShadow = "none";
     }
 
-    async function onDropHandler(e, list, task) {
+    async function onDropHandler(e, destinationSection, destinationTask) {
         e.preventDefault();
         e.stopPropagation();
-        let updatedLists = [...lists];
-        const currentIndex = currentList.tasks.indexOf(currentTask);
-        const dropIndex = list.tasks.indexOf(task);
-        updatedLists
-            .find((tasksList) => tasksList.status === currentList.status)
-            .tasks.splice(currentIndex, 1);
+        let updatedSections = JSON.parse(JSON.stringify(board.sections));
 
-        currentTask.status = list.status;
-        setCurrentTask(currentTask);
-
-        updatedLists
-            .find((tasksList) => tasksList.status === list.status)
-            .tasks.splice(dropIndex + 1, 0, currentTask);
+        const currentSectionIndex = updatedSections.findIndex(
+            (section) => section.status === currentSection.status
+        );
+        const destinationSectionIndex = updatedSections.findIndex(
+            (section) => section.status === destinationSection.status
+        );
+        const currentTaskIndex = currentSection.tasks.indexOf(currentTask);
+        const destinationTaskIndex =
+            destinationSection.tasks.indexOf(destinationTask);
+        updatedSections[currentSectionIndex].tasks.splice(currentTaskIndex, 1);
+        const newTask = { ...currentTask, sectionId: destinationSection._id };
+        updatedSections[destinationSectionIndex].tasks.splice(
+            destinationTaskIndex + 1,
+            0,
+            newTask
+        );
 
         await updateTaskPosition({
-            resourceTasks: currentList.tasks,
-            destinationTasks: list.tasks,
-            resourceStatus: currentList.status,
-            destinationStatus: list.status,
+            resourceSection: updatedSections[currentSectionIndex],
+            destinationSection: updatedSections[destinationSectionIndex],
         });
-        dispatch(BoardContextActions.setLists(updatedLists));
+        const newBoard = {
+            ...board,
+            sections: updatedSections,
+        };
+        dispatch(setBoard(newBoard));
     }
 
-    async function onDropTaskHandler(e, list) {
+    async function onDropTaskHandler(e, destinationSection) {
         e.preventDefault();
-        let updatedLists = [...lists];
-        const currentIndex = currentList.tasks.indexOf(currentTask);
-        updatedLists
-            .find((tasksList) => tasksList.status === currentList.status)
-            .tasks.splice(currentIndex, 1);
+        let updatedSections = JSON.parse(JSON.stringify(board.sections));
 
-        currentTask.status = list.status;
-        setCurrentTask(currentTask);
-
-        updatedLists
-            .find((tasksList) => tasksList.status === list.status)
-            .tasks.push(currentTask);
+        const currentSectionIndex = updatedSections.findIndex(
+            (section) => section.status === currentSection.status
+        );
+        const destinationSectionIndex = updatedSections.findIndex(
+            (section) => section.status === destinationSection.status
+        );
+        const currentTaskIndex = currentSection.tasks.indexOf(currentTask);
+        updatedSections[currentSectionIndex].tasks.splice(currentTaskIndex, 1);
+        const newTask = { ...currentTask, sectionId: destinationSection._id };
+        updatedSections[destinationSectionIndex].tasks.push(newTask);
 
         await updateTaskPosition({
-            resourceTasks: currentList.tasks,
-            destinationTasks: list.tasks,
-            resourceStatus: currentList.status,
-            destinationStatus: list.status,
+            resourceSection: updatedSections[currentSectionIndex],
+            destinationSection: updatedSections[destinationSectionIndex],
         });
-        dispatch(BoardContextActions.setLists(updatedLists));
+        const newBoard = {
+            ...board,
+            sections: updatedSections,
+        };
+        dispatch(setBoard(newBoard));
     }
 
     async function deleteBoard(event) {
@@ -115,8 +134,7 @@ function BoardPage() {
             setLoading(true);
             try {
                 const response = await boardApi.getOne(id);
-                setBoard(response.board);
-                dispatch(BoardContextActions.setLists(response.board.tasks));
+                dispatch(setBoard(response.board));
             } catch (error) {
                 console.log(error);
             } finally {
@@ -153,19 +171,12 @@ function BoardPage() {
                 active={isEditBoardModalActive}
                 setActive={setIsEditBoardModalActive}
             >
-                <EditBoardForm
-                    setActiveModal={setIsEditBoardModalActive}
-                    board={board}
-                    setBoard={setBoard}
-                    id={id}
-                />
+                <EditBoardForm setActiveModal={setIsEditBoardModalActive} />
             </Modal>
             <Modal active={isModalActive} setActive={setIsModalActive}>
                 <AddNewTaskForm
                     setActiveModal={setIsModalActive}
-                    lists={lists}
                     status={newTaskStatus}
-                    boardId={id}
                 />
             </Modal>
             <Modal
@@ -179,20 +190,14 @@ function BoardPage() {
                 />
             </Modal>
             <div className="lists">
-                {lists &&
-                    lists.map((tasksList, index) => (
+                {board.sections &&
+                    board.sections.map((section) => (
                         <TasksList
-                            key={`${index}-${tasksList.status}`}
-                            list={tasksList}
-                            tasks={tasksList.tasks}
+                            key={section._id}
+                            section={section}
                             setModalActive={setIsModalActive}
                             setNewTaskStatus={setNewTaskStatus}
-                            onDragOverHandler={onDragOverHandler}
-                            onDragLeaveHandler={onDragLeaveHandler}
-                            onDragStartHandler={onDragStartHandler}
-                            onDragEndHandler={onDragEndHandler}
-                            onDropHandler={onDropHandler}
-                            onDropTaskHandler={onDropTaskHandler}
+                            dragAndDropMethods={dragAndDropMethods}
                         />
                     ))}
             </div>
