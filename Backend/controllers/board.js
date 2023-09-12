@@ -4,7 +4,6 @@ const Task = require("../models/Task");
 const User = require("../models/User");
 
 exports.create = async (req, res) => {
-    console.log(req.user);
     const boardData = {
         ...req.body,
         authorName: req.user.username,
@@ -38,7 +37,7 @@ exports.update = async (req, res) => {
     const boardId = req.params.id;
     try {
         const board = await Board.findByIdAndUpdate(boardId, req.body);
-        res.status(200).send(board);
+        res.status(200).send({ board });
     } catch (err) {
         res.status(500).send({ error: err });
     }
@@ -63,7 +62,11 @@ exports.delete = async (req, res) => {
                 upsert: true,
             }
         );
-        await Task.deleteMany({ board: boardId });
+        const sections = await Section.find({ boardId: boardId });
+        sections.forEach(
+            async (section) => await Task.deleteMany({ sectionId: section._id })
+        );
+        await Section.deleteMany({ boardId: boardId });
         res.status(200).send({ message: "Board has been deleted" });
     } catch (err) {
         res.status(500).send({ error: err });

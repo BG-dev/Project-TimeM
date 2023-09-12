@@ -22,10 +22,10 @@ function BoardPage() {
     const [isEditBoardModalActive, setIsEditBoardModalActive] = useState(false);
     const [isModalActive, setIsModalActive] = useState(false);
     const [isDeleteModalActive, setIsDeleteModalActive] = useState(false);
-    const [newTaskStatus, setNewTaskStatus] = useState(null);
     const [loading, setLoading] = useState(false);
     const [currentSection, setCurrentSection] = useState(null);
     const [currentTask, setCurrentTask] = useState(null);
+    const [newTaskSection, setNewTaskSection] = useState(null);
 
     const dragAndDropMethods = {
         onDragEndHandler,
@@ -143,13 +143,12 @@ function BoardPage() {
         }
         getBoard();
     }, []);
-
-    return !board ? (
+    return !board?.name ? (
         <Loading />
     ) : (
         <div className="board">
             <div className="board__top">
-                <span className="board__title">{board && board.name}</span>
+                <span className="board__title">{board.name}</span>
                 <div className="board__menu">
                     <button
                         className="btn btn-blue"
@@ -171,12 +170,15 @@ function BoardPage() {
                 active={isEditBoardModalActive}
                 setActive={setIsEditBoardModalActive}
             >
-                <EditBoardForm setActiveModal={setIsEditBoardModalActive} />
+                <EditBoardForm
+                    setActiveModal={setIsEditBoardModalActive}
+                    board={board}
+                />
             </Modal>
             <Modal active={isModalActive} setActive={setIsModalActive}>
                 <AddNewTaskForm
                     setActiveModal={setIsModalActive}
-                    status={newTaskStatus}
+                    section={newTaskSection}
                 />
             </Modal>
             <Modal
@@ -196,7 +198,7 @@ function BoardPage() {
                             key={section._id}
                             section={section}
                             setModalActive={setIsModalActive}
-                            setNewTaskStatus={setNewTaskStatus}
+                            setNewTaskSection={setNewTaskSection}
                             dragAndDropMethods={dragAndDropMethods}
                         />
                     ))}

@@ -8,7 +8,7 @@ import taskApi from "../../api/taskApi";
 import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
 
-function AddNewTaskForm({ setActiveModal, status }) {
+function AddNewTaskForm({ setActiveModal, section }) {
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
     const [tags, setTags] = useState([]);
@@ -26,30 +26,26 @@ function AddNewTaskForm({ setActiveModal, status }) {
     });
 
     const addTask = (task) => {
-        let newTasks = [...board.tasks];
-        newTasks.forEach((list) => {
-            if (list.status === status) list.tasks.push(task);
-        });
-        dispatch(setBoard({ ...board, tasks: newTasks }));
+        let sections = JSON.parse(JSON.stringify(board.sections));
+        const currentSection = sections.find(
+            (sectionElem) => sectionElem._id === section._id
+        );
+        currentSection.tasks = [...currentSection.tasks, task];
+        dispatch(setBoard({ ...board, sections: sections }));
     };
 
     const createTask = async (values) => {
-        const position = board.tasks.find((list) => list.status === status)
-            .tasks.length;
         let taskData = {
             title: values.title,
             description: values.description,
             deadline: values.deadline,
-            status: status,
-            board: board._id,
-            position: position,
+            sectionId: section._id,
             tags: tags,
         };
         setLoading(true);
         try {
             const response = await taskApi.create(taskData);
-            const task = response.task;
-            addTask(task);
+            addTask(response.task);
         } catch (error) {
             console.log(error);
         } finally {

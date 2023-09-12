@@ -3,10 +3,14 @@ import DropdownMenu from "../DropdownMenu/DropdownMenu";
 import { ConfirmForm, EditTaskForm, Modal, TagsList } from "../../components";
 import taskApi from "../../api/taskApi";
 import "./TaskCard.scss";
+import { setBoard } from "../../redux/features/boardSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 function TaskCard({ task, section, dragAndDropMethods }) {
     const [isDeleteModalActive, setIsDeleteModalActive] = useState(false);
     const [isEditModalActive, setIsEditModalActive] = useState(false);
+    const dispatch = useDispatch();
+    const board = useSelector((state) => state.board.value);
 
     const openDeleteModal = () => {
         setIsDeleteModalActive(true);
@@ -15,15 +19,15 @@ function TaskCard({ task, section, dragAndDropMethods }) {
     const deleteTask = async () => {
         try {
             await taskApi.delete(task._id);
-            const newLists = [...lists];
-            const listIndex = newLists.findIndex(
-                (elem) => elem.status === list.status
+            const updatedSections = JSON.parse(JSON.stringify(board.sections));
+            const sectionIndex = updatedSections.findIndex(
+                (sectionElem) => sectionElem._id === section._id
             );
-            const taskIndex = newLists[listIndex].tasks.findIndex(
-                (elem) => elem._id === task._id
+            const taskIndex = updatedSections[sectionIndex].tasks.findIndex(
+                (taskElem) => taskElem._id === task._id
             );
-            newLists[listIndex].tasks.splice(taskIndex, 1);
-            dispatch(BoardContextActions.setLists(newLists));
+            updatedSections[sectionIndex].tasks.splice(taskIndex, 1);
+            dispatch(setBoard({ ...board, sections: [...updatedSections] }));
         } catch (error) {
             console.log(error);
         }
@@ -60,7 +64,7 @@ function TaskCard({ task, section, dragAndDropMethods }) {
             </Modal>
             <Modal active={isEditModalActive} setActive={setIsEditModalActive}>
                 <EditTaskForm
-                    setActive={setIsEditModalActive}
+                    setActiveModal={setIsEditModalActive}
                     section={section}
                     task={task}
                 />

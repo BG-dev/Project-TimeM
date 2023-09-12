@@ -6,7 +6,7 @@ import "./TasksList.scss";
 function TasksList({
     section,
     setModalActive,
-    setNewTaskStatus,
+    setNewTaskSection,
     dragAndDropMethods,
 }) {
     return (
@@ -30,9 +30,9 @@ function TasksList({
                     ))}
                 {
                     <NewTaskCard
+                        setNewTaskSection={setNewTaskSection}
                         setModalActive={setModalActive}
-                        setNewTaskStatus={setNewTaskStatus}
-                        status={section.status}
+                        section={section}
                     />
                 }
             </ul>

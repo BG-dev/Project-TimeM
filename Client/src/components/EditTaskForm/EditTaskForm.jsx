@@ -4,9 +4,13 @@ import { Formik, Form } from "formik";
 import { CustomField } from "..";
 import taskApi from "../../api/taskApi";
 import * as Yup from "yup";
+import { setBoard } from "../../redux/features/boardSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 function EditTaskForm({ setActiveModal, task, section }) {
     const [loading, setLoading] = useState(false);
+    const dispatch = useDispatch();
+    const board = useSelector((state) => state.board.value);
 
     const taskSchema = Yup.object().shape({
         title: Yup.string()
@@ -20,14 +24,16 @@ function EditTaskForm({ setActiveModal, task, section }) {
     });
 
     const updateTask = (newTask) => {
-        let updatedLists = [...lists];
-        const listIndex = updatedLists.indexOf(list);
-        const taskIndex = updatedLists[listIndex].tasks.indexOf(task);
-        updatedLists[list].tasks.splice(taskIndex, 1);
-
-        updatedLists[list].tasks.splice(taskIndex, 0, newTask);
-
-        dispatch(BoardContextActions.setLists(updatedLists));
+        const updatedSections = JSON.parse(JSON.stringify(board.sections));
+        const sectionIndex = updatedSections.findIndex(
+            (sectionElem) => sectionElem._id === section._id
+        );
+        const taskIndex = updatedSections[sectionIndex].tasks.findIndex(
+            (taskElem) => taskElem._id === task._id
+        );
+        updatedSections[sectionIndex].tasks.splice(taskIndex, 1);
+        updatedSections[sectionIndex].tasks.splice(taskIndex, 0, newTask);
+        dispatch(setBoard({ ...board, sections: [...updatedSections] }));
     };
 
     const editTask = async (values) => {
@@ -38,9 +44,9 @@ function EditTaskForm({ setActiveModal, task, section }) {
         };
         setLoading(true);
         try {
-            const response = await taskApi.update(task._id, taskData);
-            const newTask = response.task;
-            updateTask(newTask);
+            await taskApi.update(task._id, taskData);
+            const response = await taskApi.getOne(task._id);
+            updateTask(response.task);
         } catch (error) {
             console.log(error);
         } finally {
@@ -53,14 +59,13 @@ function EditTaskForm({ setActiveModal, task, section }) {
             <h2 className="custom-form__title">Edit task</h2>
             <Formik
                 initialValues={{
-                    title: "",
-                    description: "",
-                    deadline: Date.now(),
+                    title: task.title,
+                    description: task.description,
+                    deadline: task.deadline,
                 }}
                 validationSchema={taskSchema}
                 onSubmit={async (values, { resetForm }) => {
                     await editTask(values);
-                    resetForm();
                     setActiveModal(false);
                 }}
             >

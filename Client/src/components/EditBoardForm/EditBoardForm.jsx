@@ -1,15 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./EditBoardForm.scss";
 import { Formik, Form } from "formik";
 import { ColorSelector, CustomField } from "..";
 import colors from "../../service/colors";
 import boardApi from "../../api/boardApi";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch} from "react-redux";
 import { setBoard } from "../../redux/features/boardSlice";
 
-function EditBoardForm({ setActiveModal }) {
+function EditBoardForm({ setActiveModal, board }) {
     const dispatch = useDispatch();
-    const board = useSelector((state) => state.board.value);
     const [loading, setLoading] = useState(false);
     const [acitveColor, setActiveColor] = useState(0);
 
@@ -23,14 +22,21 @@ function EditBoardForm({ setActiveModal }) {
         };
         setLoading(true);
         try {
-            const response = await boardApi.update(id, boardData);
-            dispatch(setBoard(response.updatedBoard));
+            await boardApi.update(board._id, boardData);
+            const response = await boardApi.getOne(board._id);
+            dispatch(setBoard(response.board));
         } catch (error) {
             console.log(error);
         } finally {
             setLoading(false);
         }
     };
+
+    useEffect(() => {
+        setActiveColor(
+            colors.findIndex((color) => color.value === board.color.value)
+        );
+    }, [board]);
 
     return (
         <div className="custom-form">
