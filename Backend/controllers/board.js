@@ -36,9 +36,8 @@ exports.create = async (req, res) => {
 
 exports.update = async (req, res) => {
     const boardId = req.params.id;
-    const board = req.body;
     try {
-        const board = await Board.findByIdAndUpdate(boardId, board);
+        const board = await Board.findByIdAndUpdate(boardId, req.body);
         res.status(200).send(board);
     } catch (err) {
         res.status(500).send({ error: err });

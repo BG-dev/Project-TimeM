@@ -18,9 +18,8 @@ exports.create = async (req, res) => {
 
 exports.update = async (req, res) => {
     const id = req.params.id;
-    const taskData = req.body;
     try {
-        const task = await Task.findByIdAndUpdate(id, taskData);
+        const task = await Task.findByIdAndUpdate(id, req.body);
         res.status(200).send({ task });
     } catch (error) {
         res.status(400).send({ error });
@@ -51,7 +50,16 @@ exports.updatePosition = async (req, res) => {
 exports.delete = async (req, res) => {
     const id = req.params.id;
     try {
+        const task = await Task.findById(id);
         await Task.findByIdAndDelete(id);
+        const tasks = await Task.find({ sectionId: task.sectionId }).sort(
+            "position"
+        );
+        for (const key in tasks) {
+            await Task.findByIdAndUpdate(tasks[key]._id, {
+                $set: { position: key },
+            });
+        }
         res.status(200).send({ message: "Task has been deleted" });
     } catch (error) {
         res.status(400).send({ error });
@@ -61,13 +69,9 @@ exports.delete = async (req, res) => {
 exports.getOne = async (req, res) => {
     const id = req.params.id;
     try {
-        const task = Task.findById(id);
+        const task = await Task.findById(id);
         res.status(200).send({ task });
     } catch (error) {
         res.status(400).send({ error });
     }
 };
-
-// exports.getBoardTasks = async (id) => await taskIntegration.getBoardTasks(id);
-
-// exports.getUserTasks = async (id) => await taskIntegration.getUserTasks(id);

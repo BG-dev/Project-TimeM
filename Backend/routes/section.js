@@ -4,14 +4,12 @@ const verifyJWT = require("../middlewares/verifyJWT");
 
 const router = express.Router();
 
-// router.get("/:id", verifyJWT, sectionController.getOne);
-
-// router.get("/userboards", verifyJWT, boardController.getUserBoards);
+router.get("/:id", verifyJWT, sectionController.getOne);
 
 router.post("/", verifyJWT, sectionController.create);
 
-// router.put("/:id", verifyJWT, boardController.update);
+router.put("/:id", verifyJWT, sectionController.update);
 
-// router.delete("/:id", verifyJWT, boardController.delete);
+router.delete("/:id", verifyJWT, sectionController.delete);
 
 module.exports = router;
