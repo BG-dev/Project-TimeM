@@ -5,7 +5,7 @@ import NewBoardCard from "./NewBoardCard";
 import Modal from "./Modal";
 import AddNewBoardForm from "./AddNewBoardForm";
 import ColorSelector from "./ColorSelector";
-import TasksList from "./TasksList";
+import Section from "./Section";
 import TaskCard from "./TaskCard";
 import NewTaskCard from "./NewTaskCard";
 import AddNewTaskForm from "./AddNewTaskForm";
@@ -21,25 +21,25 @@ import Tag from "./Tag";
 import ProfileCard from "./ProfileCard";
 
 export {
-  Navbar,
-  BoardCard,
-  Footer,
-  NewBoardCard,
-  Modal,
-  AddNewBoardForm,
-  ColorSelector,
-  TasksList,
-  TaskCard,
-  NewTaskCard,
-  AddNewTaskForm,
-  ConfirmForm,
-  DropdownMenu,
-  CustomField,
-  EditTaskForm,
-  Loading,
-  TagsList,
-  AddTagButton,
-  Tag,
-  ProfileCard,
-  EditBoardForm,
+    Navbar,
+    BoardCard,
+    Footer,
+    NewBoardCard,
+    Modal,
+    AddNewBoardForm,
+    ColorSelector,
+    Section,
+    TaskCard,
+    NewTaskCard,
+    AddNewTaskForm,
+    ConfirmForm,
+    DropdownMenu,
+    CustomField,
+    EditTaskForm,
+    Loading,
+    TagsList,
+    AddTagButton,
+    Tag,
+    ProfileCard,
+    EditBoardForm,
 };

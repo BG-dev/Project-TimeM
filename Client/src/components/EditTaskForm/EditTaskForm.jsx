@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./EditTaskForm.scss";
 import { Formik, Form } from "formik";
 import { CustomField } from "..";
 import taskApi from "../../api/taskApi";
 import * as Yup from "yup";
+import { TagsList } from "..";
 import { setBoard } from "../../redux/features/boardSlice";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -11,7 +12,7 @@ function EditTaskForm({ setActiveModal, task, section }) {
     const [loading, setLoading] = useState(false);
     const dispatch = useDispatch();
     const board = useSelector((state) => state.board.value);
-
+    const [tags, setTags] = useState([]);
     const taskSchema = Yup.object().shape({
         title: Yup.string()
             .min(3, "Title is too short")
@@ -22,6 +23,10 @@ function EditTaskForm({ setActiveModal, task, section }) {
             .max(1024, "Description is too long")
             .required("Description is required"),
     });
+
+    useEffect(() => {
+        setTags(task.tags);
+    }, [task]);
 
     const updateTask = (newTask) => {
         const updatedSections = JSON.parse(JSON.stringify(board.sections));
@@ -41,6 +46,7 @@ function EditTaskForm({ setActiveModal, task, section }) {
             title: values.title,
             description: values.description,
             deadline: values.deadline,
+            tags: tags,
         };
         setLoading(true);
         try {
@@ -82,6 +88,7 @@ function EditTaskForm({ setActiveModal, task, section }) {
                             label="Deadline"
                             type="date"
                         />
+                        <TagsList tags={tags} setTags={setTags} />
                         <div className="custom-form__control">
                             <button
                                 className="btn btn-blue"

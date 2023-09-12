@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { setBoard } from "../../redux/features/boardSlice";
 import "./BoardPage.scss";
 import {
-    TasksList,
+    Section,
     Modal,
     AddNewTaskForm,
     ConfirmForm,
@@ -194,7 +194,7 @@ function BoardPage() {
             <div className="lists">
                 {board.sections &&
                     board.sections.map((section) => (
-                        <TasksList
+                        <Section
                             key={section._id}
                             section={section}
                             setModalActive={setIsModalActive}

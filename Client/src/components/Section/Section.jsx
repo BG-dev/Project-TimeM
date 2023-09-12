@@ -1,9 +1,9 @@
 import React from "react";
 import NewTaskCard from "../NewTaskCard";
 import TaskCard from "../TaskCard";
-import "./TasksList.scss";
+import "./Section.scss";
 
-function TasksList({
+function Section({
     section,
     setModalActive,
     setNewTaskSection,
@@ -40,4 +40,4 @@ function TasksList({
     );
 }
 
-export default TasksList;
+export default Section;
