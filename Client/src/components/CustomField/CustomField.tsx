@@ -17,6 +17,7 @@ function CustomField({
             <input
                 className={meta.touched && meta.error ? "invalid" : ""}
                 {...field}
+                type={props.type}
                 placeholder={label}
             />
             {meta.touched && meta.error ? (
