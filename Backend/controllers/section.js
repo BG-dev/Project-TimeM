@@ -22,7 +22,7 @@ exports.update = async (req, res) => {
     const id = req.params.id;
     try {
         const section = await Section.findByIdAndUpdate(id, req.body);
-        res.status(200).send(section);
+        res.status(200).send({ section });
     } catch (err) {
         res.status(500).send({ error: err });
     }

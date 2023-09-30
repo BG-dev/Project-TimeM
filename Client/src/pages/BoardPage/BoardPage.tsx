@@ -1,0 +1,261 @@
+import React, { DragEvent, useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { setBoard } from "../../redux/features/boardSlice";
+import "./BoardPage.scss";
+import {
+    Section,
+    Modal,
+    AddNewTaskForm,
+    ConfirmForm,
+    EditBoardForm,
+    Loading,
+} from "../../components";
+import boardApi from "../../api/boardApi";
+import taskApi from "../../api/taskApi";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import ISection from "../../types/section";
+import ITask from "../../types/task";
+import IBoard from "../../types/board";
+import IDragAndDropMethods from "../../types/dnd";
+
+function BoardPage() {
+    const { id } = useParams();
+    const navigate = useNavigate();
+    const dispatch = useAppDispatch();
+    const board: IBoard | null = useAppSelector((state) => state.board.value);
+    const [isEditBoardModalActive, setIsEditBoardModalActive] =
+        useState<boolean>(false);
+    const [isModalActive, setIsModalActive] = useState<boolean>(false);
+    const [isDeleteModalActive, setIsDeleteModalActive] =
+        useState<boolean>(false);
+    const [loading, setLoading] = useState<boolean>(false);
+    const [currentSection, setCurrentSection] = useState<ISection | null>(null);
+    const [currentTask, setCurrentTask] = useState<ITask | null>(null);
+    const [newTaskSection, setNewTaskSection] = useState<ISection | null>(null);
+
+    const dragAndDropMethods: IDragAndDropMethods = {
+        onDragEndHandler,
+        onDragLeaveHandler,
+        onDragOverHandler,
+        onDragStartHandler,
+        onDropHandler,
+        onDropTaskHandler,
+    };
+
+    async function updateTaskPosition(updatingData: {
+        resourceSection: ISection;
+        destinationSection: ISection;
+    }) {
+        try {
+            await taskApi.updatePosition(updatingData);
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    function onDragOverHandler(e: React.DragEvent<HTMLDivElement>) {
+        e.preventDefault();
+        // if (e.target.className === "task")
+        //     e.target.style.boxShadow = "0 2px 3px black";
+    }
+
+    function onDragLeaveHandler(e: React.DragEvent<HTMLDivElement>) {
+        // e.target.style.boxShadow = "none";
+    }
+
+    function onDragStartHandler(
+        e: React.DragEvent<HTMLDivElement>,
+        section: ISection,
+        task: ITask
+    ) {
+        setCurrentSection(section);
+        setCurrentTask(task);
+    }
+
+    function onDragEndHandler(e: DragEvent<HTMLDivElement>) {
+        // e.target.style.boxShadow = "none";
+    }
+
+    function onDropHandler(
+        e: React.DragEvent<HTMLDivElement>,
+        destinationSection: ISection,
+        destinationTask: ITask
+    ) {
+        e.preventDefault();
+        e.stopPropagation();
+        if (!board) return;
+        let updatedSections: ISection[] = JSON.parse(
+            JSON.stringify(board.sections)
+        );
+
+        let currentSectionIndex = -1;
+        let destinationSectionIndex = -1;
+
+        if (currentTask && currentSection?.tasks && destinationSection.tasks) {
+            currentSectionIndex = updatedSections.findIndex(
+                (section: ISection) => section.status === currentSection?.status
+            );
+            destinationSectionIndex = updatedSections.findIndex(
+                (section: ISection) =>
+                    section.status === destinationSection.status
+            );
+            const currentTaskIndex = currentSection.tasks.indexOf(currentTask);
+            const destinationTaskIndex =
+                destinationSection.tasks.indexOf(destinationTask);
+            if (
+                updatedSections[currentSectionIndex] &&
+                updatedSections[currentSectionIndex].tasks
+            ) {
+                updatedSections[currentSectionIndex].tasks?.splice(
+                    currentTaskIndex,
+                    1
+                );
+            }
+            const newTask = {
+                ...currentTask,
+                sectionId: destinationSection.id,
+            };
+            if (
+                updatedSections[destinationSectionIndex] &&
+                updatedSections[destinationSectionIndex].tasks
+            ) {
+                updatedSections[destinationSectionIndex].tasks?.splice(
+                    destinationTaskIndex + 1,
+                    0,
+                    newTask
+                );
+            }
+        }
+
+        updateTaskPosition({
+            resourceSection: updatedSections[currentSectionIndex],
+            destinationSection: updatedSections[destinationSectionIndex],
+        });
+        const newBoard = {
+            ...board,
+            sections: updatedSections,
+        };
+        dispatch(setBoard(newBoard));
+    }
+
+    async function onDropTaskHandler(
+        e: React.DragEvent<HTMLDivElement>,
+        destinationSection: ISection
+    ) {
+        e.preventDefault();
+        if (board === null || currentTask === null || currentSection === null)
+            return;
+
+        let updatedSections = JSON.parse(JSON.stringify(board.sections));
+
+        const currentSectionIndex = updatedSections.findIndex(
+            (section: ISection) => section.status === currentSection.status
+        );
+        const destinationSectionIndex = updatedSections.findIndex(
+            (section: ISection) => section.status === destinationSection.status
+        );
+        const currentTaskIndex = currentSection.tasks?.indexOf(currentTask);
+        updatedSections[currentSectionIndex].tasks.splice(currentTaskIndex, 1);
+        const newTask = { ...currentTask, sectionId: destinationSection.id };
+        updatedSections[destinationSectionIndex].tasks.push(newTask);
+
+        await updateTaskPosition({
+            resourceSection: updatedSections[currentSectionIndex],
+            destinationSection: updatedSections[destinationSectionIndex],
+        });
+        const newBoard: IBoard = {
+            ...board,
+            sections: updatedSections,
+        };
+        dispatch(setBoard(newBoard));
+    }
+
+    async function deleteBoard(e: React.MouseEvent<HTMLButtonElement>) {
+        e.preventDefault();
+        if (!id) return;
+        await boardApi.delete(id);
+        setIsDeleteModalActive(false);
+        navigate("/boards");
+    }
+
+    useEffect(() => {
+        async function getBoard() {
+            setLoading(true);
+            try {
+                if (!id) return;
+                const response = await boardApi.getOne(id);
+                const board: IBoard = response.data.board;
+                dispatch(setBoard(board));
+            } catch (error) {
+                console.log(error);
+            } finally {
+                setLoading(false);
+            }
+        }
+        getBoard();
+    }, []);
+    return !board?.name ? (
+        <Loading />
+    ) : (
+        <div className="board">
+            <div className="board__top">
+                <span className="board__title">{board.name}</span>
+                <div className="board__menu">
+                    <button
+                        className="btn btn-blue"
+                        onClick={() =>
+                            setIsEditBoardModalActive((prev) => !prev)
+                        }
+                    >
+                        Edit
+                    </button>
+                    <button
+                        className="btn btn-red"
+                        onClick={() => setIsDeleteModalActive((prev) => !prev)}
+                    >
+                        Delete
+                    </button>
+                </div>
+            </div>
+            <Modal
+                active={isEditBoardModalActive}
+                setActive={setIsEditBoardModalActive}
+            >
+                <EditBoardForm
+                    setActiveModal={setIsEditBoardModalActive}
+                    board={board}
+                />
+            </Modal>
+            <Modal active={isModalActive} setActive={setIsModalActive}>
+                <AddNewTaskForm
+                    setActiveModal={setIsModalActive}
+                    section={newTaskSection}
+                />
+            </Modal>
+            <Modal
+                active={isDeleteModalActive}
+                setActive={setIsDeleteModalActive}
+            >
+                <ConfirmForm
+                    text={"Do you want to delete this board?"}
+                    confirmHandler={deleteBoard}
+                    setActive={setIsDeleteModalActive}
+                />
+            </Modal>
+            <div className="lists">
+                {board.sections &&
+                    board.sections.map((section) => (
+                        <Section
+                            key={section.id}
+                            section={section}
+                            setModalActive={setIsModalActive}
+                            setNewTaskSection={setNewTaskSection}
+                            dragAndDropMethods={dragAndDropMethods}
+                        />
+                    ))}
+            </div>
+        </div>
+    );
+}
+
+export default BoardPage;
