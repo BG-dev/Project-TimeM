@@ -4,12 +4,22 @@ import queryString from "query-string";
 const getToken = () => localStorage.getItem("token");
 
 const axiosClient = axios.create({
-    baseURL: "/",
+  baseURL: "/",
+  headers: {
+    "Content-Type": "application/json",
+    authorization: `Bearer ${getToken()}`,
+  },
+  paramsSerializer: (params) => queryString.stringify({ params }),
+});
+
+axiosClient.interceptors.request.use(async (config) => {
+  return {
+    ...config,
     headers: {
-        "Content-Type": "application/json",
-        authorization: `Bearer ${getToken()}`,
+      "Content-Type": "application/json",
+      authorization: `Bearer ${getToken()}`,
     },
-    paramsSerializer: (params) => queryString.stringify({ params }),
+  };
 });
 
 export default axiosClient;

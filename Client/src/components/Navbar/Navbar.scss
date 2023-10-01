@@ -103,7 +103,8 @@
       display: flex;
       align-items: center;
 
-      a {
+      a,
+      button {
         height: 100%;
         width: 100%;
         display: flex;
@@ -119,6 +120,11 @@
             color: #ffffff;
           }
         }
+      }
+
+      button {
+        background-color: #ffffff;
+        border: none;
       }
     }
   }

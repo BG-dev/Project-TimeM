@@ -13,7 +13,7 @@ const months = [
   "December",
 ];
 
-export const useDate = (dateAndTime) => {
+export const useDate = (dateAndTime: any) => {
   const date = dateAndTime.split("T");
   const dateValues = date[0].split("-").reverse();
   const month = months[dateValues[1] - 1];

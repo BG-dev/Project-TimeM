@@ -3,28 +3,29 @@ import { FieldHookConfig, useField } from "formik";
 import "./CustomField.scss";
 
 interface ICustomFieldProps {
-    label: string;
+  label: string;
 }
 
 function CustomField({
-    label,
-    ...props
+  label,
+  ...props
 }: ICustomFieldProps & FieldHookConfig<string>) {
-    const [field, meta] = useField(props);
-    return (
-        <div className="form-container">
-            <label htmlFor="text">{label}</label>
-            <input
-                className={meta.touched && meta.error ? "invalid" : ""}
-                {...field}
-                type={props.type}
-                placeholder={label}
-            />
-            {meta.touched && meta.error ? (
-                <span className="span-error">{meta.error}</span>
-            ) : null}
-        </div>
-    );
+  const [field, meta] = useField(props);
+  return (
+    <div className="form-container">
+      <label htmlFor="text">{label}</label>
+      <input
+        className={meta.touched && meta.error ? "invalid" : ""}
+        // eslint-disable-next-line react/jsx-props-no-spreading
+        {...field}
+        type={props.type}
+        placeholder={label}
+      />
+      {meta.touched && meta.error ? (
+        <span className="span-error">{meta.error}</span>
+      ) : null}
+    </div>
+  );
 }
 
 export default CustomField;

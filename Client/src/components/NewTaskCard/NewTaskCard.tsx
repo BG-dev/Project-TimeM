@@ -3,30 +3,30 @@ import "./NewTaskCard.scss";
 import ISection from "../../types/section";
 
 interface INewsTaskCardProps {
-    setModalActive: React.Dispatch<React.SetStateAction<boolean>>;
-    setNewTaskSection: React.Dispatch<React.SetStateAction<ISection | null>>;
-    section: ISection;
+  setModalActive: React.Dispatch<React.SetStateAction<boolean>>;
+  setNewTaskSection: React.Dispatch<React.SetStateAction<ISection | null>>;
+  section: ISection;
 }
 
 function NewTaskCard({
-    setModalActive,
-    setNewTaskSection,
-    section,
+  setModalActive,
+  setNewTaskSection,
+  section,
 }: INewsTaskCardProps) {
-    return (
-        <div
-            className="new-task-card"
-            onClick={() => {
-                setModalActive(true);
-                setNewTaskSection(section);
-            }}
-        >
-            <div className="wrapper">
-                <i className="bx bx-plus-circle icon"></i>
-                <span className="text">Add Task</span>
-            </div>
-        </div>
-    );
+  return (
+    <div
+      className="new-task-card"
+      onClick={() => {
+        setModalActive(true);
+        setNewTaskSection(section);
+      }}
+    >
+      <div className="wrapper">
+        <i className="bx bx-plus-circle icon" />
+        <span className="text">Add Task</span>
+      </div>
+    </div>
+  );
 }
 
 export default NewTaskCard;

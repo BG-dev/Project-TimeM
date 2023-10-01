@@ -8,12 +8,12 @@ import LoginPage from "./LoginPage";
 import SignupPage from "./SignupPage";
 
 export {
-    ErrorPage,
-    ProfilePage,
-    HomePage,
-    BoardsPage,
-    ContactsPage,
-    BoardPage,
-    LoginPage,
-    SignupPage,
+  ErrorPage,
+  ProfilePage,
+  HomePage,
+  BoardsPage,
+  ContactsPage,
+  BoardPage,
+  LoginPage,
+  SignupPage,
 };

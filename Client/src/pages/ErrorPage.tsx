@@ -1,16 +1,15 @@
 import React from "react";
 
 function ErrorPage() {
+  const style = {
+    color: "red",
+  };
 
-    const style = {
-        color: 'red'
-    }
-
-    return(
-        <div>
-            <h1 style={style}>Error 404</h1>
-        </div>
-    )
+  return (
+    <div>
+      <h1 style={style}>Error 404</h1>
+    </div>
+  );
 }
 
-export default ErrorPage
+export default ErrorPage;
