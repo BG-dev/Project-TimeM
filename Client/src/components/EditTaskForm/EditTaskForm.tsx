@@ -10,6 +10,8 @@ import ISection from "../../types/section";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import IBoard from "../../types/board";
 import ITag from "../../types/tag";
+import { useServerError } from "../../hooks/serverError.hook";
+import { useAlert } from "../../hooks/alert.hook";
 
 interface IEditTaskFormProps {
   setActiveModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -39,6 +41,8 @@ function EditTaskForm({ setActiveModal, task, section }: IEditTaskFormProps) {
   const dispatch = useAppDispatch();
   const board: IBoard | null = useAppSelector((state) => state.board.value);
   const [tags, setTags] = useState<ITag[]>([]);
+  const { setAlertState } = useAlert();
+  const { handleServerError } = useServerError();
 
   useEffect(() => {
     setTags(task.tags);
@@ -63,12 +67,13 @@ function EditTaskForm({ setActiveModal, task, section }: IEditTaskFormProps) {
     setLoading(true);
     try {
       if (task.id) {
-        await taskApi.update(task.id, taskData);
-        const response = await taskApi.getOne(task.id);
-        updateTask(response.data.task);
+        const { message } = (await taskApi.update(task.id, taskData)).data;
+        const { task: updatedTask } = (await taskApi.getOne(task.id)).data;
+        updateTask(updatedTask);
+        setAlertState(message, "success");
       }
     } catch (error) {
-      console.log(error);
+      setAlertState(handleServerError(error), "error");
     } finally {
       setLoading(false);
     }

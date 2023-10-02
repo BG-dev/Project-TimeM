@@ -8,7 +8,7 @@ exports.register = async (req, res) => {
         const isExistsEmail = await User.findOne({ email });
 
         if (isExistsEmail || isExistsUsername)
-            res.status(400).send({
+            return res.status(400).send({
                 message: "Username or email is already in use",
             });
 
@@ -20,11 +20,11 @@ exports.register = async (req, res) => {
         };
 
         const user = await User.create({ ...newUser });
-        res.status(201).send({
+        return res.status(201).send({
             message: `User ${user.username} was created`,
         });
     } catch (err) {
-        res.status(500).send({ error: err });
+        return res.status(500).send({ error: err });
     }
 };
 
@@ -33,16 +33,22 @@ exports.login = async (req, res) => {
     try {
         const user = await User.findOne({ username }).select("password");
         if (!user)
-            res.status(401).send({ message: "Invalid username or password" });
+            return res
+                .status(401)
+                .json({ message: "Invalid username or password" });
 
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch)
-            res.status(401).send({ message: "Invalid username or password" });
+            return res
+                .status(401)
+                .json({ message: "Invalid username or password" });
 
         const token = user.generateAuthToken();
 
-        res.status(200).send({ token });
+        return res
+            .status(200)
+            .send({ message: "The user has successfully logged in", token });
     } catch (err) {
-        res.status(500).send({ error: err });
+        return res.status(500).send({ message: err });
     }
 };

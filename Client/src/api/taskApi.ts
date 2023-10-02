@@ -4,14 +4,21 @@ import axiosClient from "./axiosClient";
 
 interface IGetOneResponse {
   task: ITask;
+  message: string;
 }
 
 interface ICreateResponse {
   task: ITask;
+  message: string;
 }
 
 interface IUpdateResponse {
   task: ITask;
+  message: string;
+}
+
+interface IDeleteResponse {
+  message: string;
 }
 
 const taskApi = {
@@ -23,7 +30,7 @@ const taskApi = {
     resourceSection: ISection;
     destinationSection: ISection;
   }) => axiosClient.put<ITask>("tasks/updateposition", data),
-  delete: (id: string) => axiosClient.delete(`tasks/${id}`),
+  delete: (id: string) => axiosClient.delete<IDeleteResponse>(`tasks/${id}`),
 };
 
 export default taskApi;

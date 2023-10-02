@@ -10,7 +10,20 @@ exports.create = async (req, res) => {
             position: sectionTasksCount,
         };
         const task = await Task.create(taskData);
-        res.status(201).send({ task });
+        res.status(201).send({
+            task,
+            message: "The task was successfully created",
+        });
+    } catch (error) {
+        res.status(400).send({ error });
+    }
+};
+
+exports.getOne = async (req, res) => {
+    const id = req.params.id;
+    try {
+        const task = await Task.findById(id);
+        res.status(200).send({ task });
     } catch (error) {
         res.status(400).send({ error });
     }
@@ -20,7 +33,10 @@ exports.update = async (req, res) => {
     const id = req.params.id;
     try {
         const task = await Task.findByIdAndUpdate(id, req.body);
-        res.status(200).send({ task });
+        res.status(200).send({
+            task,
+            message: "The task was successfully updated",
+        });
     } catch (error) {
         res.status(400).send({ error });
     }
@@ -61,16 +77,6 @@ exports.delete = async (req, res) => {
             });
         }
         res.status(200).send({ message: "Task has been deleted" });
-    } catch (error) {
-        res.status(400).send({ error });
-    }
-};
-
-exports.getOne = async (req, res) => {
-    const id = req.params.id;
-    try {
-        const task = await Task.findById(id);
-        res.status(200).send({ task });
     } catch (error) {
         res.status(400).send({ error });
     }

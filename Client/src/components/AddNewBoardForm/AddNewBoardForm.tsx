@@ -5,6 +5,8 @@ import { CustomField, ColorSelector } from "..";
 import colors from "../../service/colors";
 import boardApi from "../../api/boardApi";
 import IBoard from "../../types/board";
+import { useAlert } from "../../hooks/alert.hook";
+import { useServerError } from "../../hooks/serverError.hook";
 
 interface IAddNewBoardFormProps {
   setBoards: React.Dispatch<React.SetStateAction<IBoard[]>>;
@@ -24,16 +26,19 @@ const formInitialValues = {
 function AddNewBoardForm({ setBoards, setActiveModal }: IAddNewBoardFormProps) {
   const [loading, setLoading] = useState<boolean>(false);
   const [acitveColor, setActiveColor] = useState<number>(0);
+  const { setAlertState } = useAlert();
+  const { handleServerError } = useServerError();
 
   const createBoard = async (boardData: IBoard) => {
     try {
       if (!boardData) throw new Error("Error board creation");
       setLoading(true);
       const response = await boardApi.create(boardData);
-      const { board } = response.data;
+      const { board, message } = response.data;
       setBoards((prev) => [...prev, board]);
+      setAlertState(message, "success");
     } catch (error) {
-      console.log(error);
+      setAlertState(handleServerError(error), "error");
     } finally {
       setLoading(false);
     }

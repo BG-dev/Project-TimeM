@@ -3,6 +3,13 @@
 @import "forms";
 @import "fonts";
 
+.alert {
+  position: fixed;
+  width: 400px;
+  right: 30px;
+  bottom: 70px;
+}
+
 .container {
   position: relative;
   left: 240px;

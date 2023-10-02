@@ -27,8 +27,8 @@ app.use("/api/auth", authRoutes);
 app.use("/users", userRoutes);
 app.use("/sections", sectionRoutes);
 
-app.use(logError);
-app.use(sendError);
+// app.use(logError);
+// app.use(sendError);
 
 app.listen(port, () => {
     logger.info(`Server was started on port: ${port}`);

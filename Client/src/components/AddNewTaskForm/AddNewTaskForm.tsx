@@ -10,6 +10,8 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import ITag from "../../types/tag";
 import ITask from "../../types/task";
 import IBoard from "../../types/board";
+import { useAlert } from "../../hooks/alert.hook";
+import { useServerError } from "../../hooks/serverError.hook";
 
 interface IAddNewTaskFormProps {
   setActiveModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -38,6 +40,8 @@ function AddNewTaskForm({ setActiveModal, section }: IAddNewTaskFormProps) {
   const [loading, setLoading] = useState<boolean>(false);
   const [tags, setTags] = useState<ITag[]>([]);
   const board: IBoard | null = useAppSelector((state) => state.board.value);
+  const { setAlertState } = useAlert();
+  const { handleServerError } = useServerError();
 
   const addTask = (task: ITask) => {
     if (board === null) return;
@@ -57,10 +61,11 @@ function AddNewTaskForm({ setActiveModal, section }: IAddNewTaskFormProps) {
     setLoading(true);
     try {
       const response = await taskApi.create(taskData);
-      const { task } = response.data;
+      const { task, message } = response.data;
       addTask(task);
+      setAlertState(message, "success");
     } catch (error) {
-      console.log(error);
+      setAlertState(handleServerError(error), "error");
     } finally {
       setLoading(false);
     }

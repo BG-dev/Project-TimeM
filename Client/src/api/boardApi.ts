@@ -11,10 +11,16 @@ interface IGetUserBoardsResponse {
 
 interface ICreateResponse {
   board: IBoard;
+  message: string;
 }
 
 interface IUpdateResponse {
   board: IBoard;
+  message: string;
+}
+
+interface IDeleteResponse {
+  message: string;
 }
 
 const boardApi = {
@@ -25,7 +31,7 @@ const boardApi = {
   create: (data: IBoard) => axiosClient.post<ICreateResponse>("/boards", data),
   update: (id: string, data: IBoard) =>
     axiosClient.put<IUpdateResponse>(`boards/${id}`, data),
-  delete: (id: string) => axiosClient.delete(`boards/${id}`),
+  delete: (id: string) => axiosClient.delete<IDeleteResponse>(`boards/${id}`),
 };
 
 export default boardApi;

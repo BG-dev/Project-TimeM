@@ -7,6 +7,8 @@ import { CustomField } from "../../components";
 import "./SignupPage.scss";
 import authApi from "../../api/authApi";
 import IUser from "../../types/user";
+import { useAlert } from "../../hooks/alert.hook";
+import { useServerError } from "../../hooks/serverError.hook";
 
 const signUpSchema = Yup.object().shape({
   username: Yup.string()
@@ -32,14 +34,18 @@ interface IFormValues {
 function SignupPage() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const { setAlertState } = useAlert();
+  const { handleServerError } = useServerError();
 
   const signUpHandler = async (userData: IUser) => {
     setLoading(true);
     try {
-      await authApi.signup(userData);
+      const response = await authApi.signup(userData);
+      const { message } = response.data;
+      setAlertState(message, "success");
       navigate("/login");
     } catch (error) {
-      console.log(error);
+      setAlertState(handleServerError(error), "error");
     } finally {
       setLoading(false);
     }

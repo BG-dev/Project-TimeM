@@ -17,6 +17,8 @@ import ISection from "../../types/section";
 import ITask from "../../types/task";
 import IBoard from "../../types/board";
 import IDragAndDropMethods from "../../types/dnd";
+import { useAlert } from "../../hooks/alert.hook";
+import { useServerError } from "../../hooks/serverError.hook";
 
 function BoardPage() {
   const { id } = useParams();
@@ -33,6 +35,8 @@ function BoardPage() {
   const [currentSection, setCurrentSection] = useState<ISection | null>(null);
   const [currentTask, setCurrentTask] = useState<ITask | null>(null);
   const [newTaskSection, setNewTaskSection] = useState<ISection | null>(null);
+  const { setAlertState } = useAlert();
+  const { handleServerError } = useServerError();
 
   async function updateTaskPosition(updatingData: {
     resourceSection: ISection;
@@ -166,9 +170,16 @@ function BoardPage() {
   async function deleteBoard(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
     if (!id) return;
-    await boardApi.delete(id);
-    setIsDeleteModalActive(false);
-    navigate("/boards");
+    try {
+      const { message } = (await boardApi.delete(id)).data;
+      setIsDeleteModalActive(false);
+      setAlertState(message, "info");
+      navigate("/boards");
+    } catch (error) {
+      setAlertState(handleServerError(error), "error");
+    } finally {
+      setLoading(false);
+    }
   }
 
   useEffect(() => {
@@ -187,12 +198,14 @@ function BoardPage() {
     }
     getBoard();
   }, []);
-  return !board?.name ? (
+
+  // eslint-disable-next-line prettier/prettier
+  return loading ? (
     <Loading />
   ) : (
     <div className="board">
       <div className="board__top">
-        <span className="board__title">{board.name}</span>
+        <span className="board__title">{board?.name}</span>
         <div className="board__menu">
           <button
             className="btn btn-blue"
@@ -233,7 +246,7 @@ function BoardPage() {
         />
       </Modal>
       <div className="lists">
-        {board.sections &&
+        {board?.sections &&
           board.sections.map((section) => (
             <Section
               key={section.id}

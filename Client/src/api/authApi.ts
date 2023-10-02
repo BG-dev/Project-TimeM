@@ -5,6 +5,7 @@ const BASE_URL = "/api/auth";
 
 interface ILoginResponse {
   token: string;
+  message: string;
 }
 
 interface IVerifyResponse {
@@ -12,10 +13,15 @@ interface IVerifyResponse {
   user: IUser;
 }
 
+interface ISignupResponse {
+  message: string;
+}
+
 const authApi = {
   login: (data: IUser) =>
     axiosClient.post<ILoginResponse>(`${BASE_URL}/login`, data),
-  signup: (data: IUser) => axiosClient.post(`${BASE_URL}/register`, data),
+  signup: (data: IUser) =>
+    axiosClient.post<ISignupResponse>(`${BASE_URL}/register`, data),
   verify: () => axiosClient.get<IVerifyResponse>(`${BASE_URL}/isAuthUser`),
 };
 

@@ -4,6 +4,7 @@ import {
   NewBoardCard,
   Modal,
   AddNewBoardForm,
+  Loading,
 } from "../../components";
 import boardApi from "../../api/boardApi";
 import "./BoardsPage.scss";
@@ -31,7 +32,9 @@ function BoardsPage() {
     getBoards();
   }, []);
 
-  return (
+  return loading ? (
+    <Loading />
+  ) : (
     <>
       <Modal active={isModalActive} setActive={setIsModalActive}>
         <AddNewBoardForm

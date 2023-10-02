@@ -23,12 +23,15 @@ function Section({
       <div
         onDragOver={(e) => dragAndDropMethods.onDragOverHandler(e)}
         onDrop={(e) => dragAndDropMethods.onDropTaskHandler(e, section)}
-        className="tasks"
+        className="section"
       >
-        <div className="tasks-list__top">
-          <span className="tasks-list__title">{section.status}</span>
+        <div className="section__header">
+          <span className="section__title">{section.status}</span>
+          <span className="section__tasks-count">
+            {section.tasks && section.tasks.length}
+          </span>
         </div>
-        <ul className="tasks-list">
+        <ul className="section__tasks">
           {section.tasks &&
             section.tasks.map((task) => (
               <TaskCard

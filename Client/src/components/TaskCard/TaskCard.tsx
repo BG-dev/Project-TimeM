@@ -9,6 +9,8 @@ import ISection from "../../types/section";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import IBoard from "../../types/board";
 import IDragAndDropMethods from "../../types/dnd";
+import { useAlert } from "../../hooks/alert.hook";
+import { useServerError } from "../../hooks/serverError.hook";
 
 interface ITaskCardProps {
   task: ITask;
@@ -22,6 +24,8 @@ function TaskCard({ task, section, dragAndDropMethods }: ITaskCardProps) {
   const [isEditModalActive, setIsEditModalActive] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const board: IBoard | null = useAppSelector((state) => state.board.value);
+  const { setAlertState } = useAlert();
+  const { handleServerError } = useServerError();
 
   const openDeleteModal = () => {
     setIsDeleteModalActive(true);
@@ -31,7 +35,7 @@ function TaskCard({ task, section, dragAndDropMethods }: ITaskCardProps) {
     if (!board) return;
     try {
       if (task.id) {
-        await taskApi.delete(task.id);
+        const { message } = (await taskApi.delete(task.id)).data;
         const updatedSections = JSON.parse(JSON.stringify(board.sections));
         const sectionIndex = updatedSections.findIndex(
           (sectionElem: ISection) => sectionElem.id === section.id,
@@ -41,9 +45,10 @@ function TaskCard({ task, section, dragAndDropMethods }: ITaskCardProps) {
         );
         updatedSections[sectionIndex].tasks.splice(taskIndex, 1);
         dispatch(setBoard({ ...board, sections: [...updatedSections] }));
+        setAlertState(message, "info");
       }
     } catch (error) {
-      console.log(error);
+      setAlertState(handleServerError(error), "error");
     }
   };
 

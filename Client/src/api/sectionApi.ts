@@ -3,14 +3,17 @@ import axiosClient from "./axiosClient";
 
 interface IGetOneResponse {
   section: ISection;
+  message: string;
 }
 
 interface ICreateResponse {
   section: ISection;
+  message: string;
 }
 
 interface IUpdateResponse {
   section: ISection;
+  message: string;
 }
 
 const sectionApi = {
