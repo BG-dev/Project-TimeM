@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { Button } from "antd";
 import { setBoard } from "../../redux/features/boardSlice";
 import "./BoardPage.scss";
 import {
@@ -207,20 +208,21 @@ function BoardPage() {
       <div className="board__top">
         <span className="board__title">{board?.name}</span>
         <div className="board__menu">
-          <button
-            className="btn btn-blue"
-            type="button"
+          <Button
+            type="primary"
+            size="large"
             onClick={() => setIsEditBoardModalActive((prev) => !prev)}
           >
             Edit
-          </button>
-          <button
-            className="btn btn-red"
-            type="button"
+          </Button>
+          <Button
+            type="primary"
+            size="large"
+            danger
             onClick={() => setIsDeleteModalActive((prev) => !prev)}
           >
             Delete
-          </button>
+          </Button>
         </div>
       </div>
       <Modal

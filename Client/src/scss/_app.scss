@@ -16,7 +16,7 @@
   min-height: 100vh;
   width: calc(100% - 240px);
   transition: all 0.5s ease;
-  background-color: $gray;
+  background-color: #fcfdfe;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -30,12 +30,6 @@
 .nav.close ~ .container {
   left: 80px;
   width: calc(100% - 80px);
-}
-
-span {
-  color: $dark-gray;
-  font-weight: normal;
-  font-size: 20px;
 }
 
 p {

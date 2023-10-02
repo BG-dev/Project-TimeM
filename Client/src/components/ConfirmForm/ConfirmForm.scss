@@ -1,8 +1,11 @@
+@import "../../scss/variables";
+
 .confirm-form {
   min-width: 30vw;
   display: flex;
   flex-direction: column;
   align-items: center;
+  color: $dark-gray;
 
   &__control {
     margin-top: 20px;

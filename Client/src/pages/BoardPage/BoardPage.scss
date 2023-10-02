@@ -1,7 +1,10 @@
+@import "./../../scss/variables";
+
 .board {
   &__title {
-    font-size: 50px;
+    font-size: 44px;
     font-weight: bold;
+    color: $dark-gray;
   }
   &__top {
     display: flex;
