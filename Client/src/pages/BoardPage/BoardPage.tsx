@@ -200,7 +200,6 @@ function BoardPage() {
     getBoard();
   }, []);
 
-  // eslint-disable-next-line prettier/prettier
   return loading ? (
     <Loading />
   ) : (

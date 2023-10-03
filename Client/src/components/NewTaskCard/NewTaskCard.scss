@@ -6,7 +6,7 @@
   align-items: center;
   width: 100%;
   padding: 12px 10px;
-  border: 2px dashed $dark-gray;
+  border: 2px dashed $default-text;
   border-radius: 12px;
   cursor: pointer;
 
@@ -18,11 +18,11 @@
 
   .icon {
     font-size: 17px;
-    color: $dark-gray;
+    color: $default-text;
   }
 
   .text {
-    color: $dark-gray;
+    color: $default-text;
     font-size: 17px;
     font-weight: bold;
   }
