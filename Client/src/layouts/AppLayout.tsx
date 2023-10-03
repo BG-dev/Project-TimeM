@@ -37,7 +37,7 @@ export default function AppLayout() {
             <Alert className="alert" message={text} type={type} showIcon />
           )}
         </div>
-        <Footer />
+        {/* <Footer /> */}
       </div>
     </>
   );

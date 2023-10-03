@@ -27,12 +27,12 @@ exports.create = async (req, res) => {
                 upsert: true,
             }
         );
-        res.status(201).send({
+        return res.status(201).send({
             board,
             message: "The board was successfully created",
         });
     } catch (err) {
-        res.status(500).send({ error: err });
+        return res.status(500).send({ error: err });
     }
 };
 
@@ -40,6 +40,12 @@ exports.getOne = async (req, res) => {
     const id = req.params.id;
 
     try {
+        const isHasPermissions = await Board.findOne({
+            id,
+            users: { $elemMatch: { user: req.user.id } },
+        });
+        if (!isHasPermissions)
+            return res.status(403).send({ message: "You don't have access" });
         const board = await Board.findById(id);
         const sections = await Section.find({ boardId: board._id }).sort(
             "position"
@@ -51,9 +57,9 @@ exports.getOne = async (req, res) => {
             section._doc.tasks = tasks;
         }
         board._doc.sections = sections;
-        res.status(200).send({ board });
+        return res.status(200).send({ board });
     } catch (err) {
-        res.status(500).send({ error: err });
+        return res.status(500).send({ error: err });
     }
 };
 
@@ -61,28 +67,44 @@ exports.getUserBoards = async (req, res) => {
     const userId = req.user.id;
     try {
         const boards = (await User.findById(userId).populate("boards")).boards;
-        res.status(200).send({ boards });
+        return res.status(200).send({ boards });
     } catch (err) {
-        res.status(500).send({ error: err });
+        return res.status(500).send({ error: err });
     }
 };
 
 exports.update = async (req, res) => {
     const boardId = req.params.id;
     try {
+        const isHasPermissions = await Board.findOne({
+            id: boardId,
+            users: { $elemMatch: { user: req.user.id, role: "author" } },
+        });
+        if (!isHasPermissions)
+            return res
+                .status(403)
+                .send({ message: "You don't have permission" });
         const board = await Board.findByIdAndUpdate(boardId, req.body);
-        res.status(200).send({
+        return res.status(200).send({
             board,
             message: "The board has been successfully updated",
         });
     } catch (err) {
-        res.status(500).send({ error: err });
+        return res.status(500).send({ error: err });
     }
 };
 
 exports.delete = async (req, res) => {
     const boardId = req.params.id;
     try {
+        const isHasPermissions = await Board.findOne({
+            id: boardId,
+            users: { $elemMatch: { user: req.user.id, role: "author" } },
+        });
+        if (!isHasPermissions)
+            return res
+                .status(403)
+                .send({ message: "You don't have permission" });
         await Board.findByIdAndDelete(boardId);
         await User.updateMany(
             {
@@ -104,8 +126,48 @@ exports.delete = async (req, res) => {
             async (section) => await Task.deleteMany({ sectionId: section._id })
         );
         await Section.deleteMany({ boardId: boardId });
-        res.status(200).send({ message: "Board has been deleted" });
+        return res.status(200).send({ message: "Board has been deleted" });
     } catch (err) {
-        res.status(500).send({ error: err });
+        return res.status(500).send({ error: err });
+    }
+};
+
+exports.addUserToBoard = async (req, res) => {
+    const data = {
+        ...req.body,
+    };
+    try {
+        const isHasPermissions = await Board.findOne({
+            id: data.boardId,
+            users: { $elemMatch: { user: req.user.id, role: "author" } },
+        });
+        if (!isHasPermissions)
+            return res
+                .status(403)
+                .send({ message: "You don't have permission" });
+        await Board.findByIdAndUpdate(data.boardId, {
+            $push: {
+                users: {
+                    user: data.userId,
+                    role: data.role,
+                },
+            },
+        });
+        await User.findByIdAndUpdate(
+            data.userId,
+            {
+                $push: {
+                    boards: data.boardId,
+                },
+            },
+            {
+                upsert: true,
+            }
+        );
+        return res.status(200).send({
+            message: "The board was successfully updated",
+        });
+    } catch (err) {
+        return res.status(500).send({ error: err });
     }
 };

@@ -10,6 +10,8 @@ router.get("/userboards", verifyJWT, boardController.getUserBoards);
 
 router.post("/", verifyJWT, boardController.create);
 
+router.post("/adduser", verifyJWT, boardController.addUserToBoard);
+
 router.put("/:id", verifyJWT, boardController.update);
 
 router.delete("/:id", verifyJWT, boardController.delete);

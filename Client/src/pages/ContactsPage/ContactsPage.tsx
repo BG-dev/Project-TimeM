@@ -1,7 +1,14 @@
+import { Empty } from "antd";
 import React from "react";
 
+import "./ContactsPage.scss";
+
 function ContactsPage() {
-  return <h1>Hello tasks</h1>;
+  return (
+    <div className="contacts">
+      <Empty />
+    </div>
+  );
 }
 
 export default ContactsPage;

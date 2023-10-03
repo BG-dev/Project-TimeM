@@ -1,8 +1,13 @@
 import React from "react";
 import "./Loading.scss";
+import { Spin } from "antd";
 
 function Loading() {
-  return <h1>Loading...</h1>;
+  return (
+    <div className="loader">
+      <Spin size="large" />
+    </div>
+  );
 }
 
 export default Loading;

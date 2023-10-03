@@ -1,13 +1,14 @@
+import { Result } from "antd";
 import React from "react";
 
 function ErrorPage() {
-  const style = {
-    color: "red",
-  };
-
   return (
-    <div>
-      <h1 style={style}>Error 404</h1>
+    <div className="error-page">
+      <Result
+        status="404"
+        title="404"
+        subTitle="Sorry, the page you visited does not exist."
+      />
     </div>
   );
 }

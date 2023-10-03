@@ -192,7 +192,8 @@ function BoardPage() {
         const newBoard = response.data.board;
         dispatch(setBoard(newBoard));
       } catch (error) {
-        console.log(error);
+        setAlertState(handleServerError(error), "error");
+        navigate("/boards");
       } finally {
         setLoading(false);
       }

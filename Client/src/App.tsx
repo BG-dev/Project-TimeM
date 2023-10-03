@@ -9,6 +9,7 @@ import {
   BoardsPage,
   ContactsPage,
   BoardPage,
+  ErrorPage,
 } from "./pages";
 
 function App() {
@@ -18,7 +19,7 @@ function App() {
         <Route path="login" element={<LoginPage />} />
         <Route path="signup" element={<SignupPage />} />
       </Route>
-      <Route path="/" element={<AppLayout />}>
+      <Route path="/" element={<AppLayout />} errorElement={<ErrorPage />}>
         <Route index element={<HomePage />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/boards" element={<BoardsPage />} />

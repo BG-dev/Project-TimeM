@@ -1,40 +1,36 @@
-import React, { useEffect, useState } from "react";
-import { ProfileCard } from "../../components";
-import { useAppSelector } from "../../redux/hooks";
-import IUser from "../../types/user";
+import React from "react";
+import { Empty } from "antd";
+// import { ProfileCard } from "../../components";
+// import { useAppSelector } from "../../redux/hooks";
+// import IUser from "../../types/user";
+
+import "./ProfilePage.scss";
 
 function ProfilePage() {
-  const user: IUser | null = useAppSelector((state) => state.user.value);
+  // const user: IUser | null = useAppSelector((state) => state.user.value);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [loading, setLoading] = useState<boolean>(false);
+  // const [loading, setLoading] = useState<boolean>(false);
 
-  useEffect(() => {
-    async function getUser() {
-      setLoading(true);
-      try {
-        // if (user?.id) {
-        //     const response = await authApi.getOne(user.id);
-        // }
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
-      }
-    }
-    getUser();
-  }, []);
-
-  console.log(user);
+  // useEffect(() => {
+  //   async function getUser() {
+  //     setLoading(true);
+  //     try {
+  //       // if (user?.id) {
+  //       //     const response = await authApi.getOne(user.id);
+  //       // }
+  //     } catch (error) {
+  //       console.log(error);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   }
+  //   getUser();
+  // }, []);
 
   return (
-    user && (
-      <>
-        <h1>My Profile</h1>
-        <div className="profile">
-          <ProfileCard user={user} />
-        </div>
-      </>
-    )
+    <div className="profile">
+      <Empty />
+    </div>
   );
 }
 
