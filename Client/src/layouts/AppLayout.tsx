@@ -3,7 +3,7 @@ import { Outlet, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import Alert from "antd/es/alert/Alert";
 import { useAuth } from "../hooks/auth.hook";
-import { Footer, Loading, Navbar } from "../components";
+import { Loading, Navbar } from "../components";
 import { setUser } from "../redux/features/userSlice";
 import { useAlert } from "../hooks/alert.hook";
 

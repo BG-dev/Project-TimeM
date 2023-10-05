@@ -1,44 +1,31 @@
-import React, { useState } from "react";
-import { Formik, Form, FormikHelpers } from "formik";
+import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import * as Yup from "yup";
-import { CustomField } from "../../components";
-
+import { Button, Form, Input, Space } from "antd";
 import "./SignupPage.scss";
 import authApi from "../../api/authApi";
 import IUser from "../../types/user";
 import { useAlert } from "../../hooks/alert.hook";
 import { useServerError } from "../../hooks/serverError.hook";
-
-const signUpSchema = Yup.object().shape({
-  username: Yup.string()
-    .min(3, "Username is too short")
-    .required("Username is required"),
-  email: Yup.string().email("Invalid email").required("Email is required"),
-  password: Yup.string()
-    .min(8, "Password is too short")
-    .required("Password is required"),
-  passwordRepeat: Yup.string()
-    .min(8, "Password confirmation is too short")
-    .required("Password confirmation is required")
-    .oneOf([Yup.ref("password"), null], "Passwords must match"),
-});
+import {
+  confirmPasswordValidation,
+  emailValidation,
+  passwordValidation,
+  usernameValidation,
+} from "../../utils/validations";
 
 interface IFormValues {
   username: string;
   email: string;
   password: string;
-  passwordRepeat: string;
+  confirmPassword: string;
 }
 
 function SignupPage() {
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
   const { setAlertState } = useAlert();
   const { handleServerError } = useServerError();
 
   const signUpHandler = async (userData: IUser) => {
-    setLoading(true);
     try {
       const response = await authApi.signup(userData);
       const { message } = response.data;
@@ -46,15 +33,10 @@ function SignupPage() {
       navigate("/login");
     } catch (error) {
       setAlertState(handleServerError(error), "error");
-    } finally {
-      setLoading(false);
     }
   };
 
-  const submitForm = (
-    values: IFormValues,
-    { setFieldValue }: FormikHelpers<IFormValues>,
-  ) => {
+  const submitForm = (values: IFormValues) => {
     const newUserData = {
       username: values.username.toLowerCase(),
       email: values.email.toLowerCase(),
@@ -62,45 +44,66 @@ function SignupPage() {
     };
 
     signUpHandler(newUserData);
-    setFieldValue("password", "");
-    setFieldValue("passwordRepeat", "");
   };
 
   return (
     <>
       <h2 className="auth__title">Sign Up</h2>
-      <Formik
-        initialValues={{
-          username: "",
-          email: "",
-          password: "",
-          passwordRepeat: "",
-        }}
-        validationSchema={signUpSchema}
-        onSubmit={submitForm}
+      <Form
+        layout="vertical"
+        style={{ maxWidth: 600, minWidth: 500 }}
+        className="signup-form"
+        onFinish={submitForm}
       >
-        {() => (
-          <Form className="auth__form">
-            <CustomField name="username" label="Username" type="text" />
-            <CustomField name="email" label="Email" type="email" />
-            <CustomField name="password" label="Password" type="password" />
-            <CustomField
-              name="passwordRepeat"
-              label="Repeat password"
-              type="password"
-            />
-            <div className="auth__form-control">
-              <button className="btn btn-blue" type="submit" disabled={loading}>
-                Sign Up
-              </button>
-              <span className="auth__form-text">Already have an account?</span>
-              <NavLink to="/login" className="auth__form-link">
-                Sign In
-              </NavLink>
-            </div>
-          </Form>
-        )}
-      </Formik>
+        <Form.Item<IFormValues>
+          label="Username"
+          name="username"
+          validateFirst
+          rules={usernameValidation}
+          hasFeedback
+        >
+          <Input placeholder="Username" />
+        </Form.Item>
+        <Form.Item<IFormValues>
+          label="Email"
+          name="email"
+          validateFirst
+          rules={emailValidation}
+          hasFeedback
+        >
+          <Input placeholder="Email" />
+        </Form.Item>
+        <Form.Item<IFormValues>
+          label="Password"
+          name="password"
+          validateFirst
+          rules={passwordValidation}
+          hasFeedback
+        >
+          <Input.Password placeholder="Password" />
+        </Form.Item>
+        <Form.Item<IFormValues>
+          label="Confirm Password"
+          name="confirmPassword"
+          validateFirst
+          dependencies={["password"]}
+          rules={confirmPasswordValidation}
+          hasFeedback
+        >
+          <Input.Password placeholder="Confirm Password" />
+        </Form.Item>
+        <Space size="middle">
+          <Button type="primary" size="large" htmlType="submit">
+            Sign Up
+          </Button>
+          <Space size={5}>
+            <span>Already have an account?</span>
+            <NavLink to="/login" className="auth__form-link">
+              Sign In
+            </NavLink>
+          </Space>
+        </Space>
+      </Form>
     </>
   );
 }

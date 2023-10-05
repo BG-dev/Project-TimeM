@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "./EditTaskForm.scss";
-import { Formik, Form } from "formik";
-import * as Yup from "yup";
-import { CustomField, TagsList } from "..";
+import { Button, DatePicker, Form, Input } from "antd";
+import dayjs from "dayjs";
+import { TagsList } from "..";
 import taskApi from "../../api/taskApi";
 import { setBoard } from "../../redux/features/boardSlice";
 import ITask from "../../types/task";
@@ -12,6 +12,11 @@ import IBoard from "../../types/board";
 import ITag from "../../types/tag";
 import { useServerError } from "../../hooks/serverError.hook";
 import { useAlert } from "../../hooks/alert.hook";
+import {
+  taskDescriptionValidation,
+  taskTitleValidation,
+} from "../../utils/validations";
+import { dateFormat } from "../../utils/dateFormats";
 
 interface IEditTaskFormProps {
   setActiveModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -22,22 +27,10 @@ interface IEditTaskFormProps {
 interface IFormValues {
   title: string;
   description: string;
-  deadline: number;
+  deadline?: number;
 }
 
-const taskSchema = Yup.object().shape({
-  title: Yup.string()
-    .min(3, "Title is too short")
-    .max(64, "Title is too long")
-    .required("Title is required"),
-  description: Yup.string()
-    .min(3, "Description is too short")
-    .max(1024, "Description is too long")
-    .required("Description is required"),
-});
-
 function EditTaskForm({ setActiveModal, task, section }: IEditTaskFormProps) {
-  const [loading, setLoading] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const board: IBoard | null = useAppSelector((state) => state.board.value);
   const [tags, setTags] = useState<ITag[]>([]);
@@ -64,7 +57,6 @@ function EditTaskForm({ setActiveModal, task, section }: IEditTaskFormProps) {
   };
 
   const editTask = async (taskData: ITask) => {
-    setLoading(true);
     try {
       if (task.id) {
         const { message } = (await taskApi.update(task.id, taskData)).data;
@@ -74,8 +66,6 @@ function EditTaskForm({ setActiveModal, task, section }: IEditTaskFormProps) {
       }
     } catch (error) {
       setAlertState(handleServerError(error), "error");
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -94,29 +84,49 @@ function EditTaskForm({ setActiveModal, task, section }: IEditTaskFormProps) {
   return (
     <div className="custom-form">
       <h2 className="custom-form__title">Edit task</h2>
-      <Formik
+      <Form
+        className="custom-form__container"
+        layout="vertical"
         initialValues={{
           title: task.title,
           description: task.description,
-          deadline: task.deadline,
+          deadline: dayjs(task.deadline),
         }}
-        validationSchema={taskSchema}
-        onSubmit={submitForm}
+        onFinish={submitForm}
       >
-        {() => (
-          <Form className="custom-form__container">
-            <CustomField name="title" label="Title" type="text" />
-            <CustomField name="description" label="Description" type="text" />
-            <CustomField name="deadline" label="Deadline" type="date" />
-            <TagsList tags={tags} setTags={setTags} />
-            <div className="custom-form__control">
-              <button className="btn btn-blue" type="submit" disabled={loading}>
-                Save
-              </button>
-            </div>
-          </Form>
-        )}
-      </Formik>
+        <Form.Item<IFormValues>
+          label="Title"
+          name="title"
+          validateFirst
+          required={false}
+          rules={taskTitleValidation}
+        >
+          <Input placeholder="Name" />
+        </Form.Item>
+        <Form.Item<IFormValues>
+          label="Description"
+          name="description"
+          validateFirst
+          required={false}
+          rules={taskDescriptionValidation}
+        >
+          <Input placeholder="Name" />
+        </Form.Item>
+        <Form.Item<IFormValues>
+          label="Deadline"
+          name="deadline"
+          validateFirst
+          required={false}
+        >
+          <DatePicker format={dateFormat} />
+        </Form.Item>
+        <TagsList tags={tags} setTags={setTags} />
+        <div className="custom-form__control">
+          <Button htmlType="submit" type="primary" size="large">
+            Save
+          </Button>
+        </div>
+      </Form>
     </div>
   );
 }

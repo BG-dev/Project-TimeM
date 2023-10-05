@@ -1,22 +1,11 @@
-import React, { useState } from "react";
-import { Formik, Form, FormikHelpers } from "formik";
+import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import * as Yup from "yup";
-import { CustomField } from "../../components";
-import "./LoginPage.scss";
+import { Button, Form, Input, Space } from "antd";
 import authApi from "../../api/authApi";
 import IUser from "../../types/user";
 import { useAlert } from "../../hooks/alert.hook";
 import { useServerError } from "../../hooks/serverError.hook";
-
-const signInSchema = Yup.object().shape({
-  username: Yup.string()
-    .min(3, "Username is too short")
-    .required("Username is required"),
-  password: Yup.string()
-    .min(8, "Password is too short")
-    .required("Password is required"),
-});
+import "./LoginPage.scss";
 
 interface IFormValues {
   username: string;
@@ -25,67 +14,57 @@ interface IFormValues {
 
 function LoginPage() {
   const navigate = useNavigate();
-  const [loading, setLoading] = useState<boolean>(false);
   const { setAlertState } = useAlert();
   const { handleServerError } = useServerError();
 
   const loginHandler = async (userData: IUser) => {
-    setLoading(true);
     try {
       const response = await authApi.login(userData);
       const { token, message } = response.data;
-      setLoading(false);
       localStorage.setItem("token", token);
       setAlertState(message, "success");
       navigate("/");
     } catch (error) {
       setAlertState(handleServerError(error), "error");
-      setLoading(false);
     }
   };
 
-  const submitForm = (
-    values: IFormValues,
-    { setFieldValue }: FormikHelpers<IFormValues>,
-  ) => {
+  const submitForm = (values: IFormValues) => {
     const userData: IUser = {
       username: values.username.toLowerCase(),
       password: values.password,
     };
 
     loginHandler(userData);
-    setFieldValue("password", "");
   };
 
   return (
     <>
       <h2 className="auth__title">Sign In</h2>
-      <Formik
-        initialValues={{
-          username: "",
-          password: "",
-        }}
-        validationSchema={signInSchema}
-        onSubmit={submitForm}
+      <Form
+        className="login-form"
+        layout="vertical"
+        style={{ minWidth: 500 }}
+        onFinish={submitForm}
       >
-        {() => (
-          <Form className="auth__form">
-            <CustomField name="username" label="Username" type="text" />
-            <CustomField name="password" label="Password" type="password" />
-            <div className="auth__form-control">
-              <button className="btn btn-blue" type="submit" disabled={loading}>
-                Sign In
-              </button>
-              <NavLink to="/signup" className="btn btn-blue">
-                Create new account
-              </NavLink>
-              <NavLink to="/signup" className="auth__form-link">
-                Forgot password?
-              </NavLink>
-            </div>
-          </Form>
-        )}
-      </Formik>
+        <Form.Item<IFormValues> label="Username" name="username" validateFirst>
+          <Input placeholder="Username" />
+        </Form.Item>
+        <Form.Item<IFormValues> label="Password" name="password" validateFirst>
+          <Input.Password placeholder="Password" />
+        </Form.Item>
+        <Space size="middle">
+          <Button type="primary" size="large" htmlType="submit">
+            Sign In
+          </Button>
+          <Button type="primary" size="large" style={{ margin: "0 8px" }}>
+            <NavLink to="/signup">Create new account</NavLink>
+          </Button>
+          <NavLink to="/signup" className="auth__form-link">
+            Forgot password?
+          </NavLink>
+        </Space>
+      </Form>
     </>
   );
 }

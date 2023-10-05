@@ -4,7 +4,7 @@ export default interface ITask {
   id?: string;
   title: string;
   description: string;
-  deadline: number;
+  deadline?: number;
   tags: ITag[];
   position?: number;
   sectionId?: string;

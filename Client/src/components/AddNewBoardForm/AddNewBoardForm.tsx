@@ -1,12 +1,16 @@
 import React, { useState } from "react";
 import "./AddNewBoardForm.scss";
-import { Formik, Form, FormikHelpers } from "formik";
-import { CustomField, ColorSelector } from "..";
+import { Button, Form, Input } from "antd";
+import { ColorSelector } from "..";
 import colors from "../../service/colors";
 import boardApi from "../../api/boardApi";
 import IBoard from "../../types/board";
 import { useAlert } from "../../hooks/alert.hook";
 import { useServerError } from "../../hooks/serverError.hook";
+import {
+  boardDescriptionValidation,
+  boardNameValidation,
+} from "../../utils/validations";
 
 interface IAddNewBoardFormProps {
   setBoards: React.Dispatch<React.SetStateAction<IBoard[]>>;
@@ -18,13 +22,7 @@ interface IFormValues {
   description: string;
 }
 
-const formInitialValues = {
-  name: "",
-  description: "",
-};
-
 function AddNewBoardForm({ setBoards, setActiveModal }: IAddNewBoardFormProps) {
-  const [loading, setLoading] = useState<boolean>(false);
   const [acitveColor, setActiveColor] = useState<number>(0);
   const { setAlertState } = useAlert();
   const { handleServerError } = useServerError();
@@ -32,22 +30,16 @@ function AddNewBoardForm({ setBoards, setActiveModal }: IAddNewBoardFormProps) {
   const createBoard = async (boardData: IBoard) => {
     try {
       if (!boardData) throw new Error("Error board creation");
-      setLoading(true);
       const response = await boardApi.create(boardData);
       const { board, message } = response.data;
       setBoards((prev) => [...prev, board]);
       setAlertState(message, "success");
     } catch (error) {
       setAlertState(handleServerError(error), "error");
-    } finally {
-      setLoading(false);
     }
   };
 
-  const submitForm = (
-    values: IFormValues,
-    { resetForm }: FormikHelpers<IFormValues>,
-  ) => {
+  const submitForm = (values: IFormValues) => {
     const newBoardData = {
       name: values.name,
       description: values.description,
@@ -57,31 +49,46 @@ function AddNewBoardForm({ setBoards, setActiveModal }: IAddNewBoardFormProps) {
     };
 
     createBoard(newBoardData);
-    resetForm();
     setActiveModal(false);
   };
 
   return (
     <div className="custom-form">
       <h2 className="custom-form__title">Create new board</h2>
-      <Formik initialValues={formInitialValues} onSubmit={submitForm}>
-        {() => (
-          <Form className="custom-form__container">
-            <CustomField name="name" label="Name" type="text" />
-            <CustomField name="description" label="Description" type="text" />
-            <ColorSelector
-              activeColor={acitveColor}
-              setActiveColor={setActiveColor}
-              colors={colors}
-            />
-            <div className="custom-form__control">
-              <button className="btn btn-blue" type="submit" disabled={loading}>
-                Create
-              </button>
-            </div>
-          </Form>
-        )}
-      </Formik>
+      <Form
+        className="custom-form__container"
+        layout="vertical"
+        onFinish={submitForm}
+      >
+        <Form.Item<IFormValues>
+          label="Name"
+          name="name"
+          validateFirst
+          required={false}
+          rules={boardNameValidation}
+        >
+          <Input placeholder="Name" />
+        </Form.Item>
+        <Form.Item<IFormValues>
+          label="Description"
+          name="description"
+          validateFirst
+          required={false}
+          rules={boardDescriptionValidation}
+        >
+          <Input placeholder="Description" />
+        </Form.Item>
+        <ColorSelector
+          activeColor={acitveColor}
+          setActiveColor={setActiveColor}
+          colors={colors}
+        />
+        <div className="custom-form__control">
+          <Button htmlType="submit" type="primary" size="large">
+            Create
+          </Button>
+        </div>
+      </Form>
     </div>
   );
 }
