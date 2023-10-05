@@ -11,7 +11,6 @@ import NewTaskCard from "./NewTaskCard";
 import AddNewTaskForm from "./AddNewTaskForm";
 import ConfirmForm from "./ConfirmForm";
 import DropdownMenu from "./DropdownMenu";
-import CustomField from "./CustomField";
 import EditTaskForm from "./EditTaskForm";
 import EditBoardForm from "./EditBoardForm";
 import Loading from "./Loading";
@@ -34,7 +33,6 @@ export {
   AddNewTaskForm,
   ConfirmForm,
   DropdownMenu,
-  CustomField,
   EditTaskForm,
   Loading,
   TagsList,

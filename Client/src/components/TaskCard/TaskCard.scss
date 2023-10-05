@@ -25,14 +25,14 @@
     display: flex;
   }
 
-  &__description{
+  &__description {
     margin-top: 5px;
     color: $dark-gray;
     font-weight: 100;
   }
 
-  &__deadline{
-    margin-top: 20px;
+  &__deadline {
+    margin-top: 10px;
     font-weight: 100;
   }
 }

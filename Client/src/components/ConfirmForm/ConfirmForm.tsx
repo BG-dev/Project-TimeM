@@ -1,5 +1,6 @@
 import React from "react";
 import "./ConfirmForm.scss";
+import { Button } from "antd";
 
 interface IConfirmFormProps {
   text: string;
@@ -17,20 +18,12 @@ function ConfirmForm({ text, confirmHandler, setActive }: IConfirmFormProps) {
     <div className="confirm-form">
       <span className="confirm-form__text">{text}</span>
       <div className="confirm-form__control">
-        <button
-          onClick={handleClickAction}
-          type="button"
-          className="btn btn-blue"
-        >
+        <Button type="primary" onClick={handleClickAction}>
           Yes
-        </button>
-        <button
-          onClick={() => setActive(false)}
-          type="button"
-          className="btn btn-red"
-        >
+        </Button>
+        <Button type="primary" danger onClick={() => setActive(false)}>
           No
-        </button>
+        </Button>
       </div>
     </div>
   );

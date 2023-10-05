@@ -16,7 +16,7 @@ import {
   taskDescriptionValidation,
   taskTitleValidation,
 } from "../../utils/validations";
-import { dateFormat } from "../../utils/dateFormats";
+import { fullDateFormat } from "../../utils/dateFormats";
 
 interface IEditTaskFormProps {
   setActiveModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -118,7 +118,7 @@ function EditTaskForm({ setActiveModal, task, section }: IEditTaskFormProps) {
           validateFirst
           required={false}
         >
-          <DatePicker format={dateFormat} />
+          <DatePicker format={fullDateFormat} />
         </Form.Item>
         <TagsList tags={tags} setTags={setTags} />
         <div className="custom-form__control">

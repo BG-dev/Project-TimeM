@@ -1,8 +1,8 @@
 import React, { useState } from "react";
+import dayjs from "dayjs";
 import DropdownMenu from "../DropdownMenu/DropdownMenu";
 import { ConfirmForm, EditTaskForm, Modal, TagsList } from "..";
 import taskApi from "../../api/taskApi";
-import "./TaskCard.scss";
 import { setBoard } from "../../redux/features/boardSlice";
 import ITask from "../../types/task";
 import ISection from "../../types/section";
@@ -11,6 +11,8 @@ import IBoard from "../../types/board";
 import IDragAndDropMethods from "../../types/dnd";
 import { useAlert } from "../../hooks/alert.hook";
 import { useServerError } from "../../hooks/serverError.hook";
+import { monthDayDateFormat } from "../../utils/dateFormats";
+import "./TaskCard.scss";
 
 interface ITaskCardProps {
   task: ITask;
@@ -104,9 +106,13 @@ function TaskCard({ task, section, dragAndDropMethods }: ITaskCardProps) {
               <DropdownMenu options={options} />
             </div>
             <div className="task__content">
-              <p className="task__id">{task.id}</p>
+              {/* <p className="task__id">{task.id}</p> */}
               <p className="task__description">{task.description}</p>
-              <p className="task__deadline">{task.deadline}</p>
+              {task.deadline && (
+                <p className="task__deadline">
+                  {dayjs(task.deadline).format(monthDayDateFormat)}
+                </p>
+              )}
               <TagsList tags={task.tags} isRead />
             </div>
           </div>

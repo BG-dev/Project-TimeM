@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useDate } from "../../hooks/date.hook";
-
-import "./BoardCard.scss";
+import dayjs from "dayjs";
 import IBoard from "../../types/board";
+import { dayMonthDateFormat } from "../../utils/dateFormats";
+import "./BoardCard.scss";
 
 interface IBoardCardProps {
   board: IBoard;
@@ -11,7 +11,6 @@ interface IBoardCardProps {
 
 function BoardCard({ board }: IBoardCardProps) {
   const color = board.color.value;
-  const date = useDate(board.createdAt);
 
   return (
     board && (
@@ -29,7 +28,9 @@ function BoardCard({ board }: IBoardCardProps) {
                   <div className="board-card__avatar" />
                   <p className="text">{board.authorName}</p>
                 </div>
-                <p className="board-card__date text">{date}</p>
+                <p className="board-card__date text">
+                  {dayjs(board.createdAt).format(dayMonthDateFormat)}
+                </p>
               </div>
             </div>
           </div>
