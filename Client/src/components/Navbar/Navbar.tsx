@@ -53,7 +53,7 @@ function Navbar() {
                 </NavLink>
               </li>
               <li className="menu__link">
-                <NavLink to="/profile">
+                <NavLink to={`/user/${user.id}`}>
                   <i className="bx bxs-user-circle icon" />
                   <span className="menu__link-text text">Profile</span>
                 </NavLink>

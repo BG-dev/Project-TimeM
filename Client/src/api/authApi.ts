@@ -3,6 +3,10 @@ import axiosClient from "./axiosClient";
 
 const BASE_URL = "/api/auth";
 
+interface IGetOneResponse {
+  user: IUser;
+}
+
 interface ILoginResponse {
   token: string;
   message: string;
@@ -18,6 +22,7 @@ interface ISignupResponse {
 }
 
 const authApi = {
+  getOne: (id: string) => axiosClient.get<IGetOneResponse>(`/users/${id}`),
   login: (data: IUser) =>
     axiosClient.post<ILoginResponse>(`${BASE_URL}/login`, data),
   signup: (data: IUser) =>

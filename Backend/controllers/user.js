@@ -1,6 +1,17 @@
 const bcrypt = require("bcrypt");
 const User = require("../models/User");
 
+exports.getOne = async (req, res) => {
+    const id = req.params.id;
+
+    try {
+        const user = await User.findById(id);
+        return res.status(200).send({ user });
+    } catch (err) {
+        return res.status(500).send({ error: err });
+    }
+};
+
 exports.register = async (req, res) => {
     const { username, email, password } = req.body;
     try {

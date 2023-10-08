@@ -1,35 +1,51 @@
-import React from "react";
-import { Empty } from "antd";
-// import { ProfileCard } from "../../components";
-// import { useAppSelector } from "../../redux/hooks";
-// import IUser from "../../types/user";
-
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { Button } from "antd";
+import IUser from "../../types/user";
 import "./ProfilePage.scss";
+import authApi from "../../api/authApi";
+import { Loading } from "../../components";
+import { useAppSelector } from "../../redux/hooks";
 
 function ProfilePage() {
-  // const user: IUser | null = useAppSelector((state) => state.user.value);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  // const [loading, setLoading] = useState<boolean>(false);
+  const { id } = useParams();
+  const [loading, setLoading] = useState<boolean>(false);
+  const currentUser: IUser | null = useAppSelector((state) => state.user.value);
+  const [user, setUser] = useState<IUser | null>(null);
 
-  // useEffect(() => {
-  //   async function getUser() {
-  //     setLoading(true);
-  //     try {
-  //       // if (user?.id) {
-  //       //     const response = await authApi.getOne(user.id);
-  //       // }
-  //     } catch (error) {
-  //       console.log(error);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   }
-  //   getUser();
-  // }, []);
+  useEffect(() => {
+    async function getUser() {
+      setLoading(true);
+      try {
+        if (!id) return;
+        const response = await authApi.getOne(id);
+        setUser(response.data.user);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    getUser();
+  }, [id]);
 
-  return (
+  return loading ? (
+    <Loading />
+  ) : (
     <div className="profile">
-      <Empty />
+      <div className="profile__header" />
+      <div className="profile__content">
+        <div className="profile__info">
+          {/* <img src="" alt="avatar" className="profile__info-avatar" /> */}
+          <div className="profile__info-avatar" />
+          <p className="profile__info-username">{user?.username}</p>
+          <p className="profile__info-position">Full-stack dev</p>
+          <p className="profile__info-email">{user?.email}</p>
+        </div>
+        <div className="profile__actions">
+          {currentUser?.id !== id && <Button>Send contact request</Button>}
+        </div>
+      </div>
     </div>
   );
 }

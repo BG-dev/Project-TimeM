@@ -21,7 +21,7 @@ function App() {
       </Route>
       <Route path="/" element={<AppLayout />} errorElement={<ErrorPage />}>
         <Route index element={<HomePage />} />
-        <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/user/:id" element={<ProfilePage />} />
         <Route path="/boards" element={<BoardsPage />} />
         <Route path="/contacts" element={<ContactsPage />} />
         <Route path="/board/:id" element={<BoardPage />} />

@@ -20,4 +20,6 @@ const router = express.Router();
 //   }
 // });
 
+router.get("/:id", verifyJWT, userController.getOne);
+
 module.exports = router;
