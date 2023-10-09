@@ -47,10 +47,13 @@ function Navbar() {
           <div className="menu">
             <ul className="menu__links">
               <li className="menu__link">
-                <NavLink to="/">
-                  <i className="bx bxs-home icon" />
-                  <span className="menu__link-text text">Home</span>
-                </NavLink>
+                <button
+                  onClick={() => setIsLogoutModalActive(true)}
+                  type="button"
+                >
+                  <i className="bx bxs-bell icon" />
+                  <span className="menu__link-text text">Notifications</span>
+                </button>
               </li>
               <li className="menu__link">
                 <NavLink to={`/user/${user.id}`}>

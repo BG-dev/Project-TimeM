@@ -17,9 +17,9 @@ const userSchema = new Schema(
             type: String,
             required: true,
         },
-        role:{
+        role: {
             type: String,
-            default: "user"
+            default: "user",
         },
         contacts: [{ type: mongoose.SchemaTypes.ObjectId, ref: "User" }],
         boards: [

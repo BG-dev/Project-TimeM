@@ -6,12 +6,15 @@ import "./ProfilePage.scss";
 import authApi from "../../api/authApi";
 import { Loading } from "../../components";
 import { useAppSelector } from "../../redux/hooks";
+import userApi from "../../api/userApi";
+import { useAlert } from "../../hooks/alert.hook";
 
 function ProfilePage() {
   const { id } = useParams();
   const [loading, setLoading] = useState<boolean>(false);
   const currentUser: IUser | null = useAppSelector((state) => state.user.value);
   const [user, setUser] = useState<IUser | null>(null);
+  const { setAlertState } = useAlert();
 
   useEffect(() => {
     async function getUser() {
@@ -29,6 +32,19 @@ function ProfilePage() {
     getUser();
   }, [id]);
 
+  const sendRequestHandler = async () => {
+    if (!id) return;
+    try {
+      const requestData = {
+        recipientId: id,
+      };
+      const { message } = (await userApi.sendRequest(requestData)).data;
+      setAlertState(message, "info");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return loading ? (
     <Loading />
   ) : (
@@ -43,7 +59,12 @@ function ProfilePage() {
           <p className="profile__info-email">{user?.email}</p>
         </div>
         <div className="profile__actions">
-          {currentUser?.id !== id && <Button>Send contact request</Button>}
+          {currentUser?.id !== id && (
+            <Button onClick={sendRequestHandler}>Send contact request</Button>
+          )}
+          <Button danger onClick={sendRequestHandler}>
+            Delete from contacts
+          </Button>
         </div>
       </div>
     </div>

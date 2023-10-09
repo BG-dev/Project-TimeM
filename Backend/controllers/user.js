@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt");
 const User = require("../models/User");
+const ContactRequest = require("../models/ContactRequest");
 
 exports.getOne = async (req, res) => {
     const id = req.params.id;
@@ -7,6 +8,91 @@ exports.getOne = async (req, res) => {
     try {
         const user = await User.findById(id);
         return res.status(200).send({ user });
+    } catch (err) {
+        return res.status(500).send({ error: err });
+    }
+};
+
+exports.getContacts = async (req, res) => {
+    try {
+        const contacts = (
+            await User.findById(req.user.id)
+                .select("contacts")
+                .populate("contacts", "_id username")
+        ).contacts;
+        return res.status(200).send({ contacts });
+    } catch (err) {
+        console.log(err);
+        return res.status(500).send({ error: err });
+    }
+};
+
+exports.getRequests = async (req, res) => {
+    try {
+        const requests = await ContactRequest.find({
+            recipient: req.user.id,
+        }).populate("sender");
+        console.log(requests);
+        return res.status(200).send({ requests });
+    } catch (err) {
+        return res.status(500).send({ error: err });
+    }
+};
+
+exports.sendRequest = async (req, res) => {
+    const { recipientId } = req.body;
+    const contactRequestData = {
+        sender: req.user.id,
+        recipient: recipientId,
+    };
+    try {
+        await ContactRequest.create(contactRequestData);
+        return res.status(200).send({ message: "The request has been sent" });
+    } catch (err) {
+        return res.status(500).send({ error: err });
+    }
+};
+
+exports.acceptRequest = async (req, res) => {
+    const { requestId } = req.body;
+    try {
+        const contactRequest = await ContactRequest.findById(requestId);
+        await User.findByIdAndUpdate(
+            contactRequest.sender,
+            {
+                $push: {
+                    contacts: contactRequest.recipient,
+                },
+            },
+            {
+                upsert: true,
+            }
+        );
+        await User.findByIdAndUpdate(
+            contactRequest.recipient,
+            {
+                $push: {
+                    contacts: contactRequest.sender,
+                },
+            },
+            {
+                upsert: true,
+            }
+        );
+        await ContactRequest.findByIdAndDelete(requestId);
+        return res
+            .status(200)
+            .send({ message: "The request has been accepted" });
+    } catch (err) {
+        return res.status(500).send({ error: err });
+    }
+};
+
+exports.denyRequest = async (req, res) => {
+    const { requestId } = req.body;
+    try {
+        await ContactRequest.findByIdAndDelete(requestId);
+        return res.status(200).send({ message: "The request has been denied" });
     } catch (err) {
         return res.status(500).send({ error: err });
     }
