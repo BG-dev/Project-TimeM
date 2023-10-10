@@ -2,18 +2,18 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Button } from "antd";
 import IUser from "../../types/user";
-import "./ProfilePage.scss";
-import authApi from "../../api/authApi";
 import { Loading } from "../../components";
 import { useAppSelector } from "../../redux/hooks";
 import userApi from "../../api/userApi";
 import { useAlert } from "../../hooks/alert.hook";
+import "./ProfilePage.scss";
 
 function ProfilePage() {
   const { id } = useParams();
   const [loading, setLoading] = useState<boolean>(false);
-  const currentUser: IUser | null = useAppSelector((state) => state.user.value);
   const [user, setUser] = useState<IUser | null>(null);
+  const [isUserContact, setIsUserContact] = useState<boolean>(false);
+  const currentUser: IUser | null = useAppSelector((state) => state.user.value);
   const { setAlertState } = useAlert();
 
   useEffect(() => {
@@ -21,7 +21,7 @@ function ProfilePage() {
       setLoading(true);
       try {
         if (!id) return;
-        const response = await authApi.getOne(id);
+        const response = await userApi.getOne(id);
         setUser(response.data.user);
       } catch (error) {
         console.log(error);
@@ -29,7 +29,26 @@ function ProfilePage() {
         setLoading(false);
       }
     }
+
     getUser();
+
+    async function getIsUserContact() {
+      setLoading(true);
+      try {
+        if (!id) return;
+        const userData = {
+          userId: id,
+        };
+        const { isContact } = (await userApi.isContact(userData)).data;
+
+        setIsUserContact(isContact);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    if (currentUser?.id !== id) getIsUserContact();
   }, [id]);
 
   const sendRequestHandler = async () => {
@@ -59,12 +78,14 @@ function ProfilePage() {
           <p className="profile__info-email">{user?.email}</p>
         </div>
         <div className="profile__actions">
-          {currentUser?.id !== id && (
+          {currentUser?.id !== id && !isUserContact && (
             <Button onClick={sendRequestHandler}>Send contact request</Button>
           )}
-          <Button danger onClick={sendRequestHandler}>
-            Delete from contacts
-          </Button>
+          {isUserContact && (
+            <Button danger onClick={sendRequestHandler}>
+              Delete from contacts
+            </Button>
+          )}
         </div>
       </div>
     </div>

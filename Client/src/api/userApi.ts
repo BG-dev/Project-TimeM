@@ -6,12 +6,20 @@ interface IGetOneResponse {
   user: IUser;
 }
 
+interface IGetAllResponse {
+  users: IUser[];
+}
+
 interface IGetContactsResponse {
   contacts: IUser[];
 }
 
 interface IGetRequestsResponse {
   requests: IContactRequest[];
+}
+
+interface IIsContactResponse {
+  isContact: boolean;
 }
 
 interface ISendRequestResponse {
@@ -28,8 +36,14 @@ interface IDenyRequestsResponse {
 
 const userApi = {
   getOne: (id: string) => axiosClient.get<IGetOneResponse>(`/users/${id}`),
+  getAll: (search: string) =>
+    axiosClient.get<IGetAllResponse>(`/users/search`, {
+      params: { search },
+    }),
   getContacts: () => axiosClient.get<IGetContactsResponse>("/users/contacts"),
   getRequests: () => axiosClient.get<IGetRequestsResponse>("/users/requests"),
+  isContact: (data: { userId: string }) =>
+    axiosClient.post<IIsContactResponse>("/users/is-contact", data),
   sendRequest: (data: { recipientId: string }) =>
     axiosClient.post<ISendRequestResponse>("/users/request", data),
   acceptRequest: (data: { requestId: string }) =>

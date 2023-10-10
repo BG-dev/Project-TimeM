@@ -21,7 +21,7 @@ exports.create = async (req, res) => {
             {
                 $push: {
                     boards: board._id,
-                },
+                }, 
             },
             {
                 upsert: true,

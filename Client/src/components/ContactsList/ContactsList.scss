@@ -1,0 +1,27 @@
+.contacts__list {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  width: 100%;
+  padding-top: 20px;
+}
+
+.contact-card {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  background-color: #f5f9fb;
+  padding: 20px;
+  border-radius: 20px;
+
+  &__avatar {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background-color: black;
+  }
+
+  &__username {
+    font-size: 32px;
+  }
+}

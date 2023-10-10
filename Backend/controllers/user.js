@@ -4,10 +4,21 @@ const ContactRequest = require("../models/ContactRequest");
 
 exports.getOne = async (req, res) => {
     const id = req.params.id;
-
     try {
         const user = await User.findById(id);
         return res.status(200).send({ user });
+    } catch (err) {
+        return res.status(500).send({ error: err });
+    }
+};
+
+exports.getAll = async (req, res) => {
+    const search = req.query.search;
+    try {
+        const users = await User.find({
+            username: { $regex: search, $options: "i" },
+        });
+        return res.status(200).send({ users });
     } catch (err) {
         return res.status(500).send({ error: err });
     }
@@ -27,12 +38,23 @@ exports.getContacts = async (req, res) => {
     }
 };
 
+exports.isContact = async (req, res) => {
+    const { userId } = req.body;
+    try {
+        const user = await User.findById(req.user.id);
+        const isContact = user.contacts.indexOf(userId) > -1;
+        return res.status(200).send({ isContact });
+    } catch (err) {
+        console.log(err);
+        return res.status(500).send({ error: err });
+    }
+};
+
 exports.getRequests = async (req, res) => {
     try {
         const requests = await ContactRequest.find({
             recipient: req.user.id,
         }).populate("sender");
-        console.log(requests);
         return res.status(200).send({ requests });
     } catch (err) {
         return res.status(500).send({ error: err });

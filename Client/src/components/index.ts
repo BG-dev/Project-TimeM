@@ -18,6 +18,9 @@ import TagsList from "./TagsList";
 import AddTagButton from "./AddTagButton";
 import Tag from "./Tag";
 import ProfileCard from "./ProfileCard";
+import ContactsList from "./ContactsList";
+import RequestsList from "./RequestsList";
+import SearchContacts from "./SearchContacts.tsx";
 
 export {
   Navbar,
@@ -40,4 +43,7 @@ export {
   Tag,
   ProfileCard,
   EditBoardForm,
+  ContactsList,
+  RequestsList,
+  SearchContacts,
 };

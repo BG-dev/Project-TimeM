@@ -1,0 +1,29 @@
+.request-card {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  background-color: #f5f9fb;
+  padding: 20px;
+  border-radius: 20px;
+
+  &__avatar {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background-color: black;
+  }
+
+  &__text {
+    font-size: 20px;
+  }
+
+  &__username {
+    font-size: 32px;
+    margin-bottom: 10px;
+  }
+
+  &__actions {
+    display: flex;
+    gap: 20px;
+  }
+}
