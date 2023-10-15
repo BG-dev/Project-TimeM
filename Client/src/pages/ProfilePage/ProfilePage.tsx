@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "antd";
 import IUser from "../../types/user";
 import { Loading } from "../../components";
@@ -14,6 +14,7 @@ function ProfilePage() {
   const [user, setUser] = useState<IUser | null>(null);
   const [isUserContact, setIsUserContact] = useState<boolean>(false);
   const currentUser: IUser | null = useAppSelector((state) => state.user.value);
+  const navigate = useNavigate();
   const { setAlertState } = useAlert();
 
   useEffect(() => {
@@ -64,6 +65,17 @@ function ProfilePage() {
     }
   };
 
+  const deleteContactHandler = async () => {
+    if (!id) return;
+    try {
+      const { message } = (await userApi.deleteContact(id)).data;
+      navigate("/contacts");
+      setAlertState(message, "info");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return loading ? (
     <Loading />
   ) : (
@@ -82,7 +94,7 @@ function ProfilePage() {
             <Button onClick={sendRequestHandler}>Send contact request</Button>
           )}
           {isUserContact && (
-            <Button danger onClick={sendRequestHandler}>
+            <Button danger onClick={deleteContactHandler}>
               Delete from contacts
             </Button>
           )}

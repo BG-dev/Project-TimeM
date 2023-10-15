@@ -22,6 +22,10 @@ interface IIsContactResponse {
   isContact: boolean;
 }
 
+interface IDeleteContactResponse {
+  message: string;
+}
+
 interface ISendRequestResponse {
   message: string;
 }
@@ -44,6 +48,8 @@ const userApi = {
   getRequests: () => axiosClient.get<IGetRequestsResponse>("/users/requests"),
   isContact: (data: { userId: string }) =>
     axiosClient.post<IIsContactResponse>("/users/is-contact", data),
+  deleteContact: (id: string) =>
+    axiosClient.delete<IDeleteContactResponse>(`/users/contact/${id}`),
   sendRequest: (data: { recipientId: string }) =>
     axiosClient.post<ISendRequestResponse>("/users/request", data),
   acceptRequest: (data: { requestId: string }) =>

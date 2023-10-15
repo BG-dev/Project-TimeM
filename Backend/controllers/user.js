@@ -51,6 +51,27 @@ exports.isContact = async (req, res) => {
     }
 };
 
+exports.deleteContact = async (req, res) => {
+    const id = req.params.id;
+    try {
+        await User.findByIdAndUpdate(
+            req.user.id,
+            { $pull: { contacts: id } },
+            {}
+        );
+        await User.findByIdAndUpdate(
+            id,
+            { $pull: { contacts: req.user.id } },
+            {}
+        );
+        return res.status(200).send({
+            message: "The user has been successfully deleted from contacts",
+        });
+    } catch (err) {
+        return res.status(500).send({ error: err });
+    }
+};
+
 exports.getRequests = async (req, res) => {
     try {
         const requests = await ContactRequest.find({
