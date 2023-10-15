@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "./AddNewBoardForm.scss";
 import { Button, Form, Input } from "antd";
 import { ColorSelector } from "..";
 import colors from "../../service/colors";
@@ -11,6 +10,7 @@ import {
   boardDescriptionValidation,
   boardNameValidation,
 } from "../../utils/validations";
+import "./AddBoardForm.scss";
 
 interface IAddBoardFormProps {
   setBoards: React.Dispatch<React.SetStateAction<IBoard[]>>;

@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { Tabs, TabsProps } from "antd";
-import { ContactsList, RequestsList, SearchContacts } from "../../components";
+import {
+  ContactsList,
+  ContactRequestList,
+  ContactSearch,
+} from "../../components";
 import "./ContactsPage.scss";
 
 const items: TabsProps["items"] = [
@@ -26,9 +30,9 @@ function ContactsPage() {
   let content = <ContactsList />;
 
   if (currentTab === "requests") {
-    content = <RequestsList />;
+    content = <ContactRequestList />;
   } else if (currentTab === "search") {
-    content = <SearchContacts />;
+    content = <ContactSearch />;
   }
 
   const onChangeTabs = (key: string) => {

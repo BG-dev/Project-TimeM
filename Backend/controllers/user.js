@@ -16,6 +16,7 @@ exports.getAll = async (req, res) => {
     const search = req.query.search;
     try {
         const users = await User.find({
+            _id: { $ne: req.user.id, $nin: req.user.contacts },
             username: { $regex: search, $options: "i" },
         });
         return res.status(200).send({ users });

@@ -1,4 +1,3 @@
-const Board = require("../models/Board");
 const Task = require("../models/Task");
 const Section = require("../models/Section");
 

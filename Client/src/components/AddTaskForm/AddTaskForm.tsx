@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "./AddNewTaskForm.scss";
 import { Button, DatePicker, Form, Input } from "antd";
 import dayjs from "dayjs";
 import { TagsList } from "..";
@@ -17,6 +16,7 @@ import {
   taskTitleValidation,
 } from "../../utils/validations";
 import { fullDateFormat } from "../../utils/dateFormats";
+import "./AddTaskForm.scss";
 
 interface IAddTaskFormProps {
   setActiveModal: React.Dispatch<React.SetStateAction<boolean>>;

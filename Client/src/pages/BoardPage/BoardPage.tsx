@@ -6,7 +6,7 @@ import "./BoardPage.scss";
 import {
   Section,
   Modal,
-  AddNewTaskForm,
+  AddTaskForm,
   ConfirmForm,
   EditBoardForm,
   Loading,
@@ -235,7 +235,7 @@ function BoardPage() {
         />
       </Modal>
       <Modal active={isModalActive} setActive={setIsModalActive}>
-        <AddNewTaskForm
+        <AddTaskForm
           setActiveModal={setIsModalActive}
           section={newTaskSection}
         />
