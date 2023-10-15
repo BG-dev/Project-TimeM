@@ -5,9 +5,9 @@ import { NavLink } from "react-router-dom";
 import IUser from "../../types/user";
 import userApi from "../../api/userApi";
 import Loading from "../Loading";
-import "./SearchContacts.scss";
+import "./ContactSearch.scss";
 
-function SearchContacts() {
+function ContactSearch() {
   const [users, setUsers] = useState<IUser[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -57,4 +57,4 @@ function SearchContacts() {
   );
 }
 
-export default SearchContacts;
+export default ContactSearch;

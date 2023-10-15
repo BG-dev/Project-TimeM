@@ -1,26 +1,26 @@
 import BoardCard from "./BoardCard";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
-import NewBoardCard from "./NewBoardCard";
 import Modal from "./Modal";
-import AddNewBoardForm from "./AddNewBoardForm";
+import AddBoardForm from "./AddBoardForm";
+import EditBoardForm from "./EditBoardForm";
+import AddTaskForm from "./AddTaskForm";
+import EditTaskForm from "./EditTaskForm";
 import ColorSelector from "./ColorSelector";
+import AddTagButton from "./AddTagButton";
+import NewBoardCard from "./NewBoardCard";
+import NewTaskCard from "./NewTaskCard";
 import Section from "./Section";
 import TaskCard from "./TaskCard";
-import NewTaskCard from "./NewTaskCard";
-import AddNewTaskForm from "./AddNewTaskForm";
 import ConfirmForm from "./ConfirmForm";
 import DropdownMenu from "./DropdownMenu";
-import EditTaskForm from "./EditTaskForm";
-import EditBoardForm from "./EditBoardForm";
 import Loading from "./Loading";
 import TagsList from "./TagsList";
-import AddTagButton from "./AddTagButton";
 import Tag from "./Tag";
 import ProfileCard from "./ProfileCard";
 import ContactsList from "./ContactsList";
-import RequestsList from "./RequestsList";
-import SearchContacts from "./SearchContacts.tsx";
+import ContactRequestList from "./ContactRequestList";
+import ContactSearch from "./ContactSearch.tsx";
 
 export {
   Navbar,
@@ -28,12 +28,12 @@ export {
   Footer,
   NewBoardCard,
   Modal,
-  AddNewBoardForm,
+  AddBoardForm,
   ColorSelector,
   Section,
   TaskCard,
   NewTaskCard,
-  AddNewTaskForm,
+  AddTaskForm,
   ConfirmForm,
   DropdownMenu,
   EditTaskForm,
@@ -44,6 +44,6 @@ export {
   ProfileCard,
   EditBoardForm,
   ContactsList,
-  RequestsList,
-  SearchContacts,
+  ContactRequestList,
+  ContactSearch,
 };

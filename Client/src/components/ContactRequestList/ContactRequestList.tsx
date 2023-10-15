@@ -4,9 +4,9 @@ import IContactRequest from "../../types/contactRequest";
 import { useAlert } from "../../hooks/alert.hook";
 import userApi from "../../api/userApi";
 import Loading from "../Loading";
-import "./RequestsList.scss";
+import "./ContactRequestList.scss";
 
-function RequestsList() {
+function ContactRequestList() {
   const [requests, setRequests] = useState<IContactRequest[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const { setAlertState } = useAlert();
@@ -91,4 +91,4 @@ function RequestsList() {
   );
 }
 
-export default RequestsList;
+export default ContactRequestList;

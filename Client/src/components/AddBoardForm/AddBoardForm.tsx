@@ -12,7 +12,7 @@ import {
   boardNameValidation,
 } from "../../utils/validations";
 
-interface IAddNewBoardFormProps {
+interface IAddBoardFormProps {
   setBoards: React.Dispatch<React.SetStateAction<IBoard[]>>;
   setActiveModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -22,7 +22,7 @@ interface IFormValues {
   description: string;
 }
 
-function AddNewBoardForm({ setBoards, setActiveModal }: IAddNewBoardFormProps) {
+function AddBoardForm({ setBoards, setActiveModal }: IAddBoardFormProps) {
   const [acitveColor, setActiveColor] = useState<number>(0);
   const { setAlertState } = useAlert();
   const { handleServerError } = useServerError();
@@ -93,4 +93,4 @@ function AddNewBoardForm({ setBoards, setActiveModal }: IAddNewBoardFormProps) {
   );
 }
 
-export default AddNewBoardForm;
+export default AddBoardForm;

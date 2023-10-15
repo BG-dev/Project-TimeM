@@ -22,8 +22,7 @@ function ColorSelector({
         {colors &&
           colors.map((color, index) => (
             <li
-              // eslint-disable-next-line react/no-array-index-key
-              key={`${index}-${color.name}`}
+              key={color.name}
               style={{ backgroundColor: color.value }}
               className={`selector__color ${
                 index === activeColor ? "active" : ""

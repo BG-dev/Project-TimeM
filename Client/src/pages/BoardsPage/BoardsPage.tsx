@@ -3,7 +3,7 @@ import {
   BoardCard,
   NewBoardCard,
   Modal,
-  AddNewBoardForm,
+  AddBoardForm,
   Loading,
 } from "../../components";
 import boardApi from "../../api/boardApi";
@@ -12,7 +12,6 @@ import IBoard from "../../types/board";
 
 function BoardsPage() {
   const [isModalActive, setIsModalActive] = useState<boolean>(false);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [loading, setLoading] = useState<boolean>(false);
   const [boards, setBoards] = useState<IBoard[]>([]);
 
@@ -37,10 +36,7 @@ function BoardsPage() {
   ) : (
     <>
       <Modal active={isModalActive} setActive={setIsModalActive}>
-        <AddNewBoardForm
-          setBoards={setBoards}
-          setActiveModal={setIsModalActive}
-        />
+        <AddBoardForm setBoards={setBoards} setActiveModal={setIsModalActive} />
       </Modal>
       <div className="boards">
         <ul className="boards__list">

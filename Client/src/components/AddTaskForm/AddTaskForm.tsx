@@ -18,7 +18,7 @@ import {
 } from "../../utils/validations";
 import { fullDateFormat } from "../../utils/dateFormats";
 
-interface IAddNewTaskFormProps {
+interface IAddTaskFormProps {
   setActiveModal: React.Dispatch<React.SetStateAction<boolean>>;
   section: ISection | null;
 }
@@ -29,7 +29,7 @@ interface IFormValues {
   deadline?: number;
 }
 
-function AddNewTaskForm({ setActiveModal, section }: IAddNewTaskFormProps) {
+function AddTaskForm({ setActiveModal, section }: IAddTaskFormProps) {
   const dispatch = useAppDispatch();
   const [tags, setTags] = useState<ITag[]>([]);
   const board: IBoard | null = useAppSelector((state) => state.board.value);
@@ -122,4 +122,4 @@ function AddNewTaskForm({ setActiveModal, section }: IAddNewTaskFormProps) {
   );
 }
 
-export default AddNewTaskForm;
+export default AddTaskForm;

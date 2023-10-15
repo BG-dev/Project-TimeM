@@ -9,7 +9,7 @@ interface IConfirmFormProps {
 }
 
 function ConfirmForm({ text, confirmHandler, setActive }: IConfirmFormProps) {
-  const handleClickAction = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     setActive(false);
     confirmHandler(e);
   };
@@ -18,7 +18,7 @@ function ConfirmForm({ text, confirmHandler, setActive }: IConfirmFormProps) {
     <div className="confirm-form">
       <span className="confirm-form__text">{text}</span>
       <div className="confirm-form__control">
-        <Button type="primary" onClick={handleClickAction}>
+        <Button type="primary" onClick={handleClick}>
           Yes
         </Button>
         <Button type="primary" danger onClick={() => setActive(false)}>
