@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import dayjs from "dayjs";
-import DropdownMenu from "../DropdownMenu/DropdownMenu";
+import { Button, Dropdown } from "antd";
+import {
+  DeleteOutlined,
+  EditOutlined,
+  EllipsisOutlined,
+} from "@ant-design/icons";
 import { ConfirmForm, EditTaskForm, Modal, TagsList } from "..";
 import taskApi from "../../api/taskApi";
 import { setBoard } from "../../redux/features/boardSlice";
@@ -58,16 +63,19 @@ function TaskCard({ task, section, dragAndDropMethods }: ITaskCardProps) {
     setIsEditModalActive(true);
   };
 
-  const options = [
+  const items = [
     {
-      text: "Edit",
-      action: editTask,
-      icon: "bx-edit",
+      label: "Edit",
+      key: "1",
+      icon: <EditOutlined />,
+      onClick: () => editTask(),
     },
     {
-      text: "Remove",
-      action: openDeleteModal,
-      icon: "bx-trash",
+      label: "Remove",
+      key: "2",
+      icon: <DeleteOutlined />,
+      danger: true,
+      onClick: () => openDeleteModal(),
     },
   ];
 
@@ -103,10 +111,11 @@ function TaskCard({ task, section, dragAndDropMethods }: ITaskCardProps) {
           >
             <div className="task__top">
               <span className="task__title">{task.title}</span>
-              <DropdownMenu options={options} />
+              <Dropdown trigger={["click"]} menu={{ items }}>
+                <Button type="text" icon={<EllipsisOutlined />} size="large" />
+              </Dropdown>
             </div>
             <div className="task__content">
-              {/* <p className="task__id">{task.id}</p> */}
               <p className="task__description">{task.description}</p>
               {task.deadline && (
                 <p className="task__deadline">

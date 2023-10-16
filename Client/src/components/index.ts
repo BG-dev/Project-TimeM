@@ -13,7 +13,6 @@ import NewTaskCard from "./NewTaskCard";
 import Section from "./Section";
 import TaskCard from "./TaskCard";
 import ConfirmForm from "./ConfirmForm";
-import DropdownMenu from "./DropdownMenu";
 import Loading from "./Loading";
 import TagsList from "./TagsList";
 import Tag from "./Tag";
@@ -35,7 +34,6 @@ export {
   NewTaskCard,
   AddTaskForm,
   ConfirmForm,
-  DropdownMenu,
   EditTaskForm,
   Loading,
   TagsList,

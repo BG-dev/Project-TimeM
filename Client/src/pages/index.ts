@@ -6,6 +6,7 @@ import ContactsPage from "./ContactsPage";
 import BoardPage from "./BoardPage";
 import LoginPage from "./LoginPage";
 import SignupPage from "./SignupPage";
+import SettingsPage from "./SettingsPage";
 
 export {
   ErrorPage,
@@ -16,4 +17,5 @@ export {
   BoardPage,
   LoginPage,
   SignupPage,
+  SettingsPage,
 };

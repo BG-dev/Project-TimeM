@@ -10,6 +10,7 @@ import {
   ContactsPage,
   BoardPage,
   ErrorPage,
+  SettingsPage,
 } from "./pages";
 
 function App() {
@@ -25,7 +26,7 @@ function App() {
         <Route path="/boards" element={<BoardsPage />} />
         <Route path="/contacts" element={<ContactsPage />} />
         <Route path="/board/:id" element={<BoardPage />} />
-        <Route path="/settings" element={<ProfilePage />} />
+        <Route path="/settings" element={<SettingsPage />} />
       </Route>
     </Routes>
   );
