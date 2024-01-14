@@ -1,7 +1,8 @@
-import React from "react";
-import "./TagsList.scss";
-import { AddTagButton, Tag } from "..";
-import ITag from "../../types/tag";
+import React from 'react';
+import AddTagButton from '../AddTagButton';
+import Tag from '../Tag';
+import ITag from '../../types/tag';
+import './TagsList.scss';
 
 interface ITagsListProps {
   tags: ITag[];

@@ -1,16 +1,16 @@
-import React, { useState } from "react";
-import { Button, Form, Input } from "antd";
-import { ColorSelector } from "..";
-import colors from "../../service/colors";
-import boardApi from "../../api/boardApi";
-import IBoard from "../../types/board";
-import { useAlert } from "../../hooks/alert.hook";
-import { useServerError } from "../../hooks/serverError.hook";
+import React, { useState } from 'react';
+import { Button, Form, Input } from 'antd';
+import colors from '../../service/colors';
+import boardApi from '../../api/boardApi';
+import IBoard from '../../types/board';
+import useAlert from '../../hooks/alert.hook';
+import useServerError from '../../hooks/serverError.hook';
 import {
   boardDescriptionValidation,
   boardNameValidation,
-} from "../../utils/validations";
-import "./AddBoardForm.scss";
+} from '../../utils/validations';
+import './AddBoardForm.scss';
+import ColorSelector from '../ColorSelector';
 
 interface IAddBoardFormProps {
   setBoards: React.Dispatch<React.SetStateAction<IBoard[]>>;
@@ -23,19 +23,20 @@ interface IFormValues {
 }
 
 function AddBoardForm({ setBoards, setActiveModal }: IAddBoardFormProps) {
-  const [acitveColor, setActiveColor] = useState<number>(0);
+  const [activeColor, setActiveColor] = useState<number>(0);
   const { setAlertState } = useAlert();
+
   const { handleServerError } = useServerError();
 
   const createBoard = async (boardData: IBoard) => {
     try {
-      if (!boardData) throw new Error("Error board creation");
+      if (!boardData) throw new Error('Error board creation');
       const response = await boardApi.create(boardData);
       const { board, message } = response.data;
       setBoards((prev) => [...prev, board]);
-      setAlertState(message, "success");
+      setAlertState(message, 'success');
     } catch (error) {
-      setAlertState(handleServerError(error), "error");
+      setAlertState(handleServerError(error), 'error');
     }
   };
 
@@ -44,7 +45,7 @@ function AddBoardForm({ setBoards, setActiveModal }: IAddBoardFormProps) {
       name: values.name,
       description: values.description,
       color: {
-        ...colors[acitveColor],
+        ...colors[activeColor],
       },
     };
 
@@ -79,7 +80,7 @@ function AddBoardForm({ setBoards, setActiveModal }: IAddBoardFormProps) {
           <Input placeholder="Description" />
         </Form.Item>
         <ColorSelector
-          activeColor={acitveColor}
+          activeColor={activeColor}
           setActiveColor={setActiveColor}
           colors={colors}
         />

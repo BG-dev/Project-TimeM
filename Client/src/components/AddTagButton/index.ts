@@ -1,3 +1,3 @@
-import AddTagButton from "./AddTagButton";
+import AddTagButton from './AddTagButton';
 
 export default AddTagButton;

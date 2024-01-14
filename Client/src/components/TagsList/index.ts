@@ -1,3 +1,3 @@
-import TagsList from "./TagsList";
+import TagsList from './TagsList';
 
 export default TagsList;

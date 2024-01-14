@@ -1,7 +1,7 @@
-import React, { useState, useRef, useEffect } from "react";
-import "./AddTagButton.scss";
-import { colors } from "../../service/tagColors";
-import ITag from "../../types/tag";
+import React, { useState, useRef, useEffect } from 'react';
+import './AddTagButton.scss';
+import colors from '../../service/tagColors';
+import ITag from '../../types/tag';
 
 const MIN_TEXT_LENGTH = 0;
 const MAX_TEXT_LENGTH = 15;
@@ -13,8 +13,8 @@ interface IAddTagButtonProps {
 
 function AddTagButton({ tags, setTags }: IAddTagButtonProps) {
   const [isEditable, setIsEditable] = useState<boolean>(false);
-  const [tagValue, setTagValue] = useState<string>("");
-  const [tagColor, setTagColor] = useState<string>("");
+  const [tagValue, setTagValue] = useState<string>('');
+  const [tagColor, setTagColor] = useState<string>('');
   const ref = useRef<HTMLInputElement>(null);
 
   const getRandomColor = () => {
@@ -41,10 +41,10 @@ function AddTagButton({ tags, setTags }: IAddTagButtonProps) {
 
   useEffect(() => {
     setNewTagColor();
-  }, [tags]);
+  }, []);
 
   const addTag = (text: string) => {
-    if (text === "" || setTags === undefined) return;
+    if (text === '' || setTags === undefined) return;
 
     const tag = { text, color: tagColor };
     if (text.length > MIN_TEXT_LENGTH && text.length <= MAX_TEXT_LENGTH) {
@@ -59,7 +59,7 @@ function AddTagButton({ tags, setTags }: IAddTagButtonProps) {
 
   const stopEditing = () => {
     setIsEditable(false);
-    setTagValue("");
+    setTagValue('');
   };
 
   const handleChangeTag = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -71,7 +71,7 @@ function AddTagButton({ tags, setTags }: IAddTagButtonProps) {
   };
 
   const handleSaveInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key !== "Enter") return;
+    if (e.key !== 'Enter') return;
     const text = e.currentTarget.value;
     stopEditing();
     addTag(text);

@@ -1,4 +1,4 @@
-import ITask from "./task";
+import ITask from './task';
 
 export default interface ISection {
   id: string;

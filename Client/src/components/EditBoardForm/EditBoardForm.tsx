@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from "react";
-import "./EditBoardForm.scss";
-import { Button, Form, Input } from "antd";
-import { ColorSelector } from "..";
-import colors from "../../service/colors";
-import boardApi from "../../api/boardApi";
-import { setBoard } from "../../redux/features/boardSlice";
-import IBoard from "../../types/board";
-import { useAppDispatch } from "../../redux/hooks";
-import { useAlert } from "../../hooks/alert.hook";
-import { useServerError } from "../../hooks/serverError.hook";
+import React, { useEffect, useState } from 'react';
+import './EditBoardForm.scss';
+import { Button, Form, Input } from 'antd';
+import ColorSelector from '../ColorSelector';
+import colors from '../../service/colors';
+import boardApi from '../../api/boardApi';
+import { setBoard } from '../../redux/features/boardSlice';
+import IBoard from '../../types/board';
+import { useAppDispatch } from '../../redux/hooks';
+import useAlert from '../../hooks/alert.hook';
+import useServerError from '../../hooks/serverError.hook';
 import {
   boardDescriptionValidation,
   boardNameValidation,
-} from "../../utils/validations";
+} from '../../utils/validations';
 
 interface IEditBoardFormProps {
   setActiveModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -37,10 +37,10 @@ function EditBoardForm({ setActiveModal, board }: IEditBoardFormProps) {
         const { message } = (await boardApi.update(board.id, boardData)).data;
         const { board: updatedBoard } = (await boardApi.getOne(board.id)).data;
         dispatch(setBoard(updatedBoard));
-        setAlertState(message, "success");
+        setAlertState(message, 'success');
       }
     } catch (error) {
-      setAlertState(handleServerError(error), "error");
+      setAlertState(handleServerError(error), 'error');
     }
   };
 

@@ -1,6 +1,6 @@
-import React from "react";
-import "./Loading.scss";
-import { Spin } from "antd";
+import React from 'react';
+import './Loading.scss';
+import { Spin } from 'antd';
 
 function Loading() {
   return (

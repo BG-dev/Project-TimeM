@@ -1,9 +1,9 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import dayjs from "dayjs";
-import IBoard from "../../types/board";
-import { dayMonthDateFormat } from "../../utils/dateFormats";
-import "./BoardCard.scss";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import dayjs from 'dayjs';
+import IBoard from '../../types/board';
+import { dayMonthDateFormat } from '../../utils/dateFormats';
+import './BoardCard.scss';
 
 interface IBoardCardProps {
   board: IBoard;

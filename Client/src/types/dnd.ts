@@ -1,5 +1,5 @@
-import ISection from "./section";
-import ITask from "./task";
+import ISection from './section';
+import ITask from './task';
 
 export default interface IDragAndDropMethods {
   onDragEndHandler: () => void;

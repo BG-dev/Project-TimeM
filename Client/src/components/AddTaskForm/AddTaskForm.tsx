@@ -1,22 +1,22 @@
-import React, { useState } from "react";
-import { Button, DatePicker, Form, Input } from "antd";
-import dayjs from "dayjs";
-import { TagsList } from "..";
-import { setBoard } from "../../redux/features/boardSlice";
-import taskApi from "../../api/taskApi";
-import ISection from "../../types/section";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import ITag from "../../types/tag";
-import ITask from "../../types/task";
-import IBoard from "../../types/board";
-import { useAlert } from "../../hooks/alert.hook";
-import { useServerError } from "../../hooks/serverError.hook";
+import React, { useState } from 'react';
+import { Button, DatePicker, Form, Input } from 'antd';
+import dayjs from 'dayjs';
+import { setBoard } from '../../redux/features/boardSlice';
+import taskApi from '../../api/taskApi';
+import ISection from '../../types/section';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import ITag from '../../types/tag';
+import ITask from '../../types/task';
+import IBoard from '../../types/board';
+import useAlert from '../../hooks/alert.hook';
+import useServerError from '../../hooks/serverError.hook';
 import {
   taskDescriptionValidation,
   taskTitleValidation,
-} from "../../utils/validations";
-import { fullDateFormat } from "../../utils/dateFormats";
-import "./AddTaskForm.scss";
+} from '../../utils/validations';
+import { fullDateFormat } from '../../utils/dateFormats';
+import TagsList from '../TagsList';
+import './AddTaskForm.scss';
 
 interface IAddTaskFormProps {
   setActiveModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -55,9 +55,9 @@ function AddTaskForm({ setActiveModal, section }: IAddTaskFormProps) {
       const response = await taskApi.create(taskData);
       const { task, message } = response.data;
       addTask(task);
-      setAlertState(message, "success");
+      setAlertState(message, 'success');
     } catch (error) {
-      setAlertState(handleServerError(error), "error");
+      setAlertState(handleServerError(error), 'error');
     }
   };
 

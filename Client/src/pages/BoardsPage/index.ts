@@ -1,3 +1,3 @@
-import BoardsPage from "./BoardsPage";
+import BoardsPage from './BoardsPage';
 
 export default BoardsPage;

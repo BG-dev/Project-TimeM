@@ -1,17 +1,17 @@
-import React, { useState } from "react";
-import { Input } from "antd";
-import { SearchProps } from "antd/es/input";
-import { NavLink } from "react-router-dom";
-import IUser from "../../types/user";
-import userApi from "../../api/userApi";
-import Loading from "../Loading";
-import "./ContactSearch.scss";
+import React, { useState } from 'react';
+import { Input } from 'antd';
+import { SearchProps } from 'antd/es/input';
+import { NavLink } from 'react-router-dom';
+import IUser from '../../types/user';
+import userApi from '../../api/userApi';
+import Loading from '../Loading';
+import './ContactSearch.scss';
 
 function ContactSearch() {
   const [users, setUsers] = useState<IUser[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const onSearchHandler: SearchProps["onSearch"] = async (value) => {
+  const onSearchHandler: SearchProps['onSearch'] = async (value) => {
     setLoading(true);
     const search = value;
     try {

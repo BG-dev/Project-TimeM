@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import {
   BoardCard,
   NewBoardCard,
   Modal,
   AddBoardForm,
   Loading,
-} from "../../components";
-import boardApi from "../../api/boardApi";
-import "./BoardsPage.scss";
-import IBoard from "../../types/board";
+} from '../../components';
+import boardApi from '../../api/boardApi';
+import IBoard from '../../types/board';
+import './BoardsPage.scss';
 
 function BoardsPage() {
   const [isModalActive, setIsModalActive] = useState<boolean>(false);

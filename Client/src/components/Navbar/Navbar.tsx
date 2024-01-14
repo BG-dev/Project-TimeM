@@ -1,9 +1,10 @@
-import React, { useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
-import { ConfirmForm, Modal } from "..";
-import "./Navbar.scss";
-import { useAppSelector } from "../../redux/hooks";
-import IUser from "../../types/user";
+import React, { useState } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
+import ConfirmForm from '../ConfirmForm';
+import Modal from '../Modal';
+import { useAppSelector } from '../../redux/hooks';
+import IUser from '../../types/user';
+import './Navbar.scss';
 
 function Navbar() {
   const navigate = useNavigate();
@@ -14,13 +15,13 @@ function Navbar() {
 
   const logoutHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    localStorage.removeItem("token");
-    navigate("/login");
+    localStorage.removeItem('token');
+    navigate('/login');
   };
 
   return (
     user && (
-      <nav className={`nav ${isOpenNavbar ? "" : "close"}`}>
+      <nav className={`nav ${isOpenNavbar ? '' : 'close'}`}>
         <Modal active={isLogoutModalActive} setActive={setIsLogoutModalActive}>
           <ConfirmForm
             text="Do you want to logout?"

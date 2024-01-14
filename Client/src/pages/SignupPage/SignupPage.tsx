@@ -1,17 +1,17 @@
-import React from "react";
-import { NavLink, useNavigate } from "react-router-dom";
-import { Button, Form, Input, Space } from "antd";
-import "./SignupPage.scss";
-import authApi from "../../api/authApi";
-import IUser from "../../types/user";
-import { useAlert } from "../../hooks/alert.hook";
-import { useServerError } from "../../hooks/serverError.hook";
+import React from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { Button, Form, Input, Space } from 'antd';
+import './SignupPage.scss';
+import authApi from '../../api/authApi';
+import IUser from '../../types/user';
+import useAlert from '../../hooks/alert.hook';
+import useServerError from '../../hooks/serverError.hook';
 import {
   confirmPasswordValidation,
   emailValidation,
   passwordValidation,
   usernameValidation,
-} from "../../utils/validations";
+} from '../../utils/validations';
 
 interface IFormValues {
   username: string;
@@ -29,10 +29,10 @@ function SignupPage() {
     try {
       const response = await authApi.signup(userData);
       const { message } = response.data;
-      setAlertState(message, "success");
-      navigate("/login");
+      setAlertState(message, 'success');
+      navigate('/login');
     } catch (error) {
-      setAlertState(handleServerError(error), "error");
+      setAlertState(handleServerError(error), 'error');
     }
   };
 
@@ -86,7 +86,7 @@ function SignupPage() {
           label="Confirm Password"
           name="confirmPassword"
           validateFirst
-          dependencies={["password"]}
+          dependencies={['password']}
           rules={confirmPasswordValidation}
           hasFeedback
         >

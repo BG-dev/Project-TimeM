@@ -1,31 +1,34 @@
-import React, { useState } from "react";
-import dayjs from "dayjs";
-import { Button, Dropdown } from "antd";
+import React, { useState } from 'react';
+import dayjs from 'dayjs';
+import { Button, Dropdown } from 'antd';
 import {
   DeleteOutlined,
   EditOutlined,
   EllipsisOutlined,
-} from "@ant-design/icons";
-import { ConfirmForm, EditTaskForm, Modal, TagsList } from "..";
-import taskApi from "../../api/taskApi";
-import { setBoard } from "../../redux/features/boardSlice";
-import ITask from "../../types/task";
-import ISection from "../../types/section";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import IBoard from "../../types/board";
-import IDragAndDropMethods from "../../types/dnd";
-import { useAlert } from "../../hooks/alert.hook";
-import { useServerError } from "../../hooks/serverError.hook";
-import { monthDayDateFormat } from "../../utils/dateFormats";
-import "./TaskCard.scss";
+} from '@ant-design/icons';
+import ConfirmForm from '../ConfirmForm';
+import Modal from '../Modal';
+import TagsList from '../TagsList';
+import EditTaskForm from '../EditTaskForm';
+import taskApi from '../../api/taskApi';
+import { setBoard } from '../../redux/features/boardSlice';
+import ITask from '../../types/task';
+import ISection from '../../types/section';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import IBoard from '../../types/board';
+import IDragAndDropMethods from '../../types/dnd';
+import useAlert from '../../hooks/alert.hook';
+import useServerError from '../../hooks/serverError.hook';
+import { monthDayDateFormat } from '../../utils/dateFormats';
+import './TaskCard.scss';
 
-interface ITaskCardProps {
+interface TaskCardProps {
   task: ITask;
   section: ISection;
   dragAndDropMethods: IDragAndDropMethods;
 }
 
-function TaskCard({ task, section, dragAndDropMethods }: ITaskCardProps) {
+function TaskCard({ task, section, dragAndDropMethods }: TaskCardProps) {
   const [isDeleteModalActive, setIsDeleteModalActive] =
     useState<boolean>(false);
   const [isEditModalActive, setIsEditModalActive] = useState<boolean>(false);
@@ -52,10 +55,10 @@ function TaskCard({ task, section, dragAndDropMethods }: ITaskCardProps) {
         );
         updatedSections[sectionIndex].tasks.splice(taskIndex, 1);
         dispatch(setBoard({ ...board, sections: [...updatedSections] }));
-        setAlertState(message, "info");
+        setAlertState(message, 'info');
       }
     } catch (error) {
-      setAlertState(handleServerError(error), "error");
+      setAlertState(handleServerError(error), 'error');
     }
   };
 
@@ -65,14 +68,14 @@ function TaskCard({ task, section, dragAndDropMethods }: ITaskCardProps) {
 
   const items = [
     {
-      label: "Edit",
-      key: "1",
+      label: 'Edit',
+      key: '1',
       icon: <EditOutlined />,
       onClick: () => editTask(),
     },
     {
-      label: "Remove",
-      key: "2",
+      label: 'Remove',
+      key: '2',
       icon: <DeleteOutlined />,
       danger: true,
       onClick: () => openDeleteModal(),
@@ -111,7 +114,7 @@ function TaskCard({ task, section, dragAndDropMethods }: ITaskCardProps) {
           >
             <div className="task__top">
               <span className="task__title">{task.title}</span>
-              <Dropdown trigger={["click"]} menu={{ items }}>
+              <Dropdown trigger={['click']} menu={{ items }}>
                 <Button type="text" icon={<EllipsisOutlined />} size="large" />
               </Dropdown>
             </div>

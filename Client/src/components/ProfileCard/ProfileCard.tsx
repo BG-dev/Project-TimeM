@@ -1,6 +1,6 @@
-import React from "react";
-import IUser from "../../types/user";
-import "./ProfileCard.scss";
+import React from 'react';
+import IUser from '../../types/user';
+import './ProfileCard.scss';
 
 interface IProfileCardProps {
   user: IUser;

@@ -1,6 +1,6 @@
-import React from "react";
-import "./NewTaskCard.scss";
-import ISection from "../../types/section";
+import React from 'react';
+import './NewTaskCard.scss';
+import ISection from '../../types/section';
 
 interface INewsTaskCardProps {
   setModalActive: React.Dispatch<React.SetStateAction<boolean>>;

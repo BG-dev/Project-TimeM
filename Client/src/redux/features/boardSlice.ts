@@ -1,5 +1,5 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import IBoard from "../../types/board";
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import IBoard from '../../types/board';
 
 interface IBoardState {
   value: IBoard | null;
@@ -8,11 +8,11 @@ interface IBoardState {
 const initialState: IBoardState = { value: null };
 
 export const boardSlice = createSlice({
-  name: "board",
+  name: 'board',
   initialState,
   reducers: {
     setBoard: (state, action: PayloadAction<IBoard>) => {
-      state.value = action.payload;
+      return { ...state, value: action.payload };
     },
   },
 });

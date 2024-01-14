@@ -1,3 +1,3 @@
-import ContactSearch from "./ContactSearch";
+import ContactSearch from './ContactSearch';
 
 export default ContactSearch;

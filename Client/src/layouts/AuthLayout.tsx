@@ -1,26 +1,27 @@
-import React, { useState, useEffect } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
-import { Alert } from "antd";
-import { useAuth } from "../hooks/auth.hook";
-import { Loading } from "../components";
+import React, { useState, useEffect, useCallback } from 'react';
+import { Outlet, useNavigate } from 'react-router-dom';
+import { Alert } from 'antd';
+import { Loading } from '../components';
+import useAuth from '../hooks/auth.hook';
+import useAlert from '../hooks/alert.hook';
 
-import "../scss/_auth.scss";
-import { useAlert } from "../hooks/alert.hook";
+import '../scss/_auth.scss';
 
 export default function AuthLayout() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const { text, type, visible } = useAlert();
 
-  useEffect(() => {
-    async function verify() {
-      const response = await useAuth();
+  const verify = useCallback(async () => {
+    const response = await useAuth();
 
-      if (!response || !response.isLoggedIn) setLoading(false);
-      else navigate("/");
-    }
+    if (!response || !response.isLoggedIn) setLoading(false);
+    else navigate('/');
+  }, []);
+
+  useEffect(() => {
     verify();
-  }, [navigate]);
+  }, [navigate, verify]);
 
   return loading ? (
     <Loading />

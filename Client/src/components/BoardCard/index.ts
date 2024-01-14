@@ -1,3 +1,3 @@
-import BoardCard from "./BoardCard";
+import BoardCard from './BoardCard';
 
 export default BoardCard;

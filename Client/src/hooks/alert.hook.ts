@@ -1,9 +1,9 @@
-import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { setAlert, setVisible } from "../redux/features/alertSlice";
+import { useAppDispatch, useAppSelector } from '../redux/hooks';
+import { setAlert, setVisible } from '../redux/features/alertSlice';
 
-type AlertType = "success" | "info" | "warning" | "error" | undefined;
+type AlertType = 'success' | 'info' | 'warning' | 'error' | undefined;
 
-export const useAlert = () => {
+const useAlert = () => {
   const dispatch = useAppDispatch();
   const { text, type, visible } = useAppSelector((state) => state.alert);
 
@@ -18,5 +18,12 @@ export const useAlert = () => {
     }, 4000);
   };
 
-  return { text, type, setAlertState, visible };
+  return {
+    text,
+    type,
+    setAlertState,
+    visible,
+  };
 };
+
+export default useAlert;

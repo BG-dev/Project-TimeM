@@ -1,3 +1,3 @@
-import NewTaskCard from "./NewTaskCard";
+import NewTaskCard from './NewTaskCard';
 
 export default NewTaskCard;

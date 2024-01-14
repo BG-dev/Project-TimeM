@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { Button } from "antd";
-import IContactRequest from "../../types/contactRequest";
-import { useAlert } from "../../hooks/alert.hook";
-import userApi from "../../api/userApi";
-import Loading from "../Loading";
-import "./ContactRequestList.scss";
+import React, { useEffect, useState } from 'react';
+import { Button } from 'antd';
+import IContactRequest from '../../types/contactRequest';
+import userApi from '../../api/userApi';
+import Loading from '../Loading';
+import useAlert from '../../hooks/alert.hook';
+import './ContactRequestList.scss';
 
 function ContactRequestList() {
   const [requests, setRequests] = useState<IContactRequest[]>([]);
@@ -39,7 +39,7 @@ function ContactRequestList() {
       };
       const { message } = (await userApi.acceptRequest(requestData)).data;
       removeContactRequest(id);
-      setAlertState(message, "info");
+      setAlertState(message, 'info');
     } catch (error) {
       console.log(error);
     }
@@ -53,7 +53,7 @@ function ContactRequestList() {
       };
       const { message } = (await userApi.denyRequest(requestData)).data;
       removeContactRequest(id);
-      setAlertState(message, "info");
+      setAlertState(message, 'info');
     } catch (error) {
       console.log(error);
     }

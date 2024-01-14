@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-import "./ColorSelector.scss";
+import './ColorSelector.scss';
 
 interface IColorSelectorProps {
   activeColor: number;
@@ -25,7 +25,7 @@ function ColorSelector({
               key={color.name}
               style={{ backgroundColor: color.value }}
               className={`selector__color ${
-                index === activeColor ? "active" : ""
+                index === activeColor ? 'active' : ''
               }`}
               onClick={() => setActiveColor(index)}
             />

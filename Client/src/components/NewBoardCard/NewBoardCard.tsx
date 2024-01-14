@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-import "./NewBoardCard.scss";
+import './NewBoardCard.scss';
 
 interface INewBoardCardProps {
   setActive: React.Dispatch<React.SetStateAction<boolean>>;

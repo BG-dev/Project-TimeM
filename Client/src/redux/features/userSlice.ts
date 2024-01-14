@@ -1,5 +1,5 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import IUser from "../../types/user";
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import IUser from '../../types/user';
 
 interface IUserState {
   value: IUser | null;
@@ -8,11 +8,11 @@ interface IUserState {
 const initialState: IUserState = { value: null };
 
 export const userSlice = createSlice({
-  name: "user",
+  name: 'user',
   initialState,
   reducers: {
     setUser: (state, action: PayloadAction<IUser>) => {
-      state.value = action.payload;
+      return { ...state, value: action.payload };
     },
   },
 });

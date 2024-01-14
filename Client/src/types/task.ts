@@ -1,4 +1,4 @@
-import ITag from "./tag";
+import ITag from './tag';
 
 export default interface ITask {
   id?: string;

@@ -1,6 +1,6 @@
-import React from "react";
-import ITag from "../../types/tag";
-import "./Tag.scss";
+import React from 'react';
+import ITag from '../../types/tag';
+import './Tag.scss';
 
 interface ITagProps {
   tag: ITag;

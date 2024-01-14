@@ -1,6 +1,6 @@
-import React, { ReactElement } from "react";
+import React, { ReactElement } from 'react';
 
-import "./Modal.scss";
+import './Modal.scss';
 
 interface IModalProps {
   active: boolean;
@@ -11,7 +11,7 @@ interface IModalProps {
 function Modal({ active, setActive, children }: IModalProps) {
   return (
     <div
-      className={active ? "modal active" : "modal"}
+      className={active ? 'modal active' : 'modal'}
       onClick={() => setActive(false)}
     >
       <div className="modal__content" onClick={(e) => e.stopPropagation()}>

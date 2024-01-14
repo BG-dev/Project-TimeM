@@ -1,3 +1,3 @@
-import ConfirmForm from "./ConfirmForm";
+import ConfirmForm from './ConfirmForm';
 
 export default ConfirmForm;

@@ -1,5 +1,5 @@
-import React from "react";
-import "./SettingsPage.scss";
+import React from 'react';
+import './SettingsPage.scss';
 
 function SettingsPage() {
   return (

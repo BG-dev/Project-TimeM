@@ -1,7 +1,7 @@
-import IUser from "../types/user";
-import axiosClient from "./axiosClient";
+import IUser from '../types/user';
+import axiosClient from './axiosClient';
 
-const BASE_URL = "/api/auth";
+const BASE_URL = '/api/auth';
 
 interface IGetOneResponse {
   user: IUser;

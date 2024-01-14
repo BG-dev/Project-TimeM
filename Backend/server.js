@@ -31,5 +31,6 @@ app.use("/sections", sectionRoutes);
 // app.use(sendError);
 
 app.listen(port, () => {
-    logger.info(`Server was started on port: ${port}`);
+    console.info(`Server was started on port: ${port}`);
+    // logger.info(`Server was started on port: ${port}`);
 });

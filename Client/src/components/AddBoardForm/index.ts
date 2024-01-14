@@ -1,3 +1,3 @@
-import AddBoardForm from "./AddBoardForm";
+import AddBoardForm from './AddBoardForm';
 
 export default AddBoardForm;

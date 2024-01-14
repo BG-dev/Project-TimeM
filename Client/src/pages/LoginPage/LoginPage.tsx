@@ -1,11 +1,11 @@
-import React from "react";
-import { NavLink, useNavigate } from "react-router-dom";
-import { Button, Form, Input, Space } from "antd";
-import authApi from "../../api/authApi";
-import IUser from "../../types/user";
-import { useAlert } from "../../hooks/alert.hook";
-import { useServerError } from "../../hooks/serverError.hook";
-import "./LoginPage.scss";
+import React from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { Button, Form, Input, Space } from 'antd';
+import authApi from '../../api/authApi';
+import IUser from '../../types/user';
+import useAlert from '../../hooks/alert.hook';
+import useServerError from '../../hooks/serverError.hook';
+import './LoginPage.scss';
 
 interface IFormValues {
   username: string;
@@ -21,11 +21,11 @@ function LoginPage() {
     try {
       const response = await authApi.login(userData);
       const { token, message } = response.data;
-      localStorage.setItem("token", token);
-      setAlertState(message, "success");
-      navigate("/");
+      localStorage.setItem('token', token);
+      setAlertState(message, 'success');
+      navigate('/');
     } catch (error) {
-      setAlertState(handleServerError(error), "error");
+      setAlertState(handleServerError(error), 'error');
     }
   };
 
@@ -57,7 +57,7 @@ function LoginPage() {
           <Button type="primary" size="large" htmlType="submit">
             Sign In
           </Button>
-          <Button type="primary" size="large" style={{ margin: "0 8px" }}>
+          <Button type="primary" size="large" style={{ margin: '0 8px' }}>
             <NavLink to="/signup">Create new account</NavLink>
           </Button>
           <NavLink to="/signup" className="auth__form-link">

@@ -1,4 +1,4 @@
-import ISection from "./section";
+import ISection from './section';
 
 export default interface IBoard {
   id?: string;

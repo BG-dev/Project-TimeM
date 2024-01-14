@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import { Button } from "antd";
-import { setBoard } from "../../redux/features/boardSlice";
-import "./BoardPage.scss";
+import React, { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { Button } from 'antd';
+import { setBoard } from '../../redux/features/boardSlice';
+import './BoardPage.scss';
 import {
   Section,
   Modal,
@@ -10,16 +10,16 @@ import {
   ConfirmForm,
   EditBoardForm,
   Loading,
-} from "../../components";
-import boardApi from "../../api/boardApi";
-import taskApi from "../../api/taskApi";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import ISection from "../../types/section";
-import ITask from "../../types/task";
-import IBoard from "../../types/board";
-import IDragAndDropMethods from "../../types/dnd";
-import { useAlert } from "../../hooks/alert.hook";
-import { useServerError } from "../../hooks/serverError.hook";
+} from '../../components';
+import boardApi from '../../api/boardApi';
+import taskApi from '../../api/taskApi';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import ISection from '../../types/section';
+import ITask from '../../types/task';
+import IBoard from '../../types/board';
+import IDragAndDropMethods from '../../types/dnd';
+import useAlert from '../../hooks/alert.hook';
+import useServerError from '../../hooks/serverError.hook';
 
 function BoardPage() {
   const { id } = useParams();
@@ -168,36 +168,37 @@ function BoardPage() {
     onDropTaskHandler,
   };
 
-  async function deleteBoard(e: React.MouseEvent<HTMLButtonElement>) {
+  const deleteBoard = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (!id) return;
     try {
       const { message } = (await boardApi.delete(id)).data;
       setIsDeleteModalActive(false);
-      setAlertState(message, "info");
-      navigate("/boards");
+      setAlertState(message, 'info');
+      navigate('/boards');
     } catch (error) {
-      setAlertState(handleServerError(error), "error");
+      setAlertState(handleServerError(error), 'error');
     } finally {
       setLoading(false);
     }
-  }
+  };
+
+  const getBoard = async () => {
+    setLoading(true);
+    try {
+      if (!id) return;
+      const response = await boardApi.getOne(id);
+      const newBoard = response.data.board;
+      dispatch(setBoard(newBoard));
+    } catch (error) {
+      setAlertState(handleServerError(error), 'error');
+      navigate('/boards');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    async function getBoard() {
-      setLoading(true);
-      try {
-        if (!id) return;
-        const response = await boardApi.getOne(id);
-        const newBoard = response.data.board;
-        dispatch(setBoard(newBoard));
-      } catch (error) {
-        setAlertState(handleServerError(error), "error");
-        navigate("/boards");
-      } finally {
-        setLoading(false);
-      }
-    }
     getBoard();
   }, []);
 

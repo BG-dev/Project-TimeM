@@ -1,6 +1,6 @@
-import React from "react";
-import { Routes, Route } from "react-router-dom";
-import { AuthLayout, AppLayout } from "./layouts";
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+import { AuthLayout, AppLayout } from './layouts';
 import {
   LoginPage,
   SignupPage,
@@ -11,7 +11,7 @@ import {
   BoardPage,
   ErrorPage,
   SettingsPage,
-} from "./pages";
+} from './pages';
 
 function App() {
   return (

@@ -1,22 +1,22 @@
-import React, { useEffect, useState } from "react";
-import "./EditTaskForm.scss";
-import { Button, DatePicker, Form, Input } from "antd";
-import dayjs from "dayjs";
-import { TagsList } from "..";
-import taskApi from "../../api/taskApi";
-import { setBoard } from "../../redux/features/boardSlice";
-import ITask from "../../types/task";
-import ISection from "../../types/section";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import IBoard from "../../types/board";
-import ITag from "../../types/tag";
-import { useServerError } from "../../hooks/serverError.hook";
-import { useAlert } from "../../hooks/alert.hook";
+import React, { useEffect, useState } from 'react';
+import './EditTaskForm.scss';
+import { Button, DatePicker, Form, Input } from 'antd';
+import dayjs from 'dayjs';
+import taskApi from '../../api/taskApi';
+import { setBoard } from '../../redux/features/boardSlice';
+import ITask from '../../types/task';
+import ISection from '../../types/section';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import IBoard from '../../types/board';
+import ITag from '../../types/tag';
+import useServerError from '../../hooks/serverError.hook';
+import useAlert from '../../hooks/alert.hook';
+import TagsList from '../TagsList';
 import {
   taskDescriptionValidation,
   taskTitleValidation,
-} from "../../utils/validations";
-import { fullDateFormat } from "../../utils/dateFormats";
+} from '../../utils/validations';
+import { fullDateFormat } from '../../utils/dateFormats';
 
 interface IEditTaskFormProps {
   setActiveModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -62,10 +62,10 @@ function EditTaskForm({ setActiveModal, task, section }: IEditTaskFormProps) {
         const { message } = (await taskApi.update(task.id, taskData)).data;
         const { task: updatedTask } = (await taskApi.getOne(task.id)).data;
         updateTask(updatedTask);
-        setAlertState(message, "success");
+        setAlertState(message, 'success');
       }
     } catch (error) {
-      setAlertState(handleServerError(error), "error");
+      setAlertState(handleServerError(error), 'error');
     }
   };
 

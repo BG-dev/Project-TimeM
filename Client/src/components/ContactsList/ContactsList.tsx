@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
-import IUser from "../../types/user";
-import userApi from "../../api/userApi";
-import Loading from "../Loading";
-import "./ContactsList.scss";
+import React, { useEffect, useState } from 'react';
+import { NavLink } from 'react-router-dom';
+import IUser from '../../types/user';
+import userApi from '../../api/userApi';
+import Loading from '../Loading';
+import './ContactsList.scss';
 
 function ContactsList() {
   const [contacts, setContacts] = useState<IUser[]>([]);

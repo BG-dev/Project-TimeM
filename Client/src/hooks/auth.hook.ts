@@ -1,7 +1,7 @@
-import authApi from "../api/authApi";
+import authApi from '../api/authApi';
 
-export const useAuth = async () => {
-  const token = localStorage.getItem("token");
+const useAuth = async () => {
+  const token = localStorage.getItem('token');
   if (!token) return false;
 
   try {
@@ -12,3 +12,5 @@ export const useAuth = async () => {
     return false;
   }
 };
+
+export default useAuth;

@@ -1,9 +1,9 @@
-import React from "react";
-import NewTaskCard from "../NewTaskCard";
-import TaskCard from "../TaskCard";
-import "./Section.scss";
-import ISection from "../../types/section";
-import IDragAndDropMethods from "../../types/dnd";
+import React from 'react';
+import NewTaskCard from '../NewTaskCard';
+import TaskCard from '../TaskCard';
+import ISection from '../../types/section';
+import IDragAndDropMethods from '../../types/dnd';
+import './Section.scss';
 
 interface ISectionProps {
   section: ISection;

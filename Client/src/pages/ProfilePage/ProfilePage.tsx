@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { Button } from "antd";
-import IUser from "../../types/user";
-import { Loading } from "../../components";
-import { useAppSelector } from "../../redux/hooks";
-import userApi from "../../api/userApi";
-import { useAlert } from "../../hooks/alert.hook";
-import "./ProfilePage.scss";
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { Button } from 'antd';
+import IUser from '../../types/user';
+import { Loading } from '../../components';
+import { useAppSelector } from '../../redux/hooks';
+import userApi from '../../api/userApi';
+import useAlert from '../../hooks/alert.hook';
+import './ProfilePage.scss';
 
 function ProfilePage() {
   const { id } = useParams();
@@ -50,7 +50,7 @@ function ProfilePage() {
       }
     }
     if (currentUser?.id !== id) getIsUserContact();
-  }, [id]);
+  }, [id, currentUser?.id]);
 
   const sendRequestHandler = async () => {
     if (!id) return;
@@ -59,7 +59,7 @@ function ProfilePage() {
         recipientId: id,
       };
       const { message } = (await userApi.sendRequest(requestData)).data;
-      setAlertState(message, "info");
+      setAlertState(message, 'info');
     } catch (error) {
       console.log(error);
     }
@@ -69,8 +69,8 @@ function ProfilePage() {
     if (!id) return;
     try {
       const { message } = (await userApi.deleteContact(id)).data;
-      navigate("/contacts");
-      setAlertState(message, "info");
+      navigate('/contacts');
+      setAlertState(message, 'info');
     } catch (error) {
       console.log(error);
     }
