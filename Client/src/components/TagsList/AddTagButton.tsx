@@ -6,12 +6,12 @@ import ITag from '../../types/tag';
 const MIN_TEXT_LENGTH = 0;
 const MAX_TEXT_LENGTH = 15;
 
-interface IAddTagButtonProps {
+interface AddTagButtonProps {
   tags: ITag[];
   setTags?: React.Dispatch<React.SetStateAction<ITag[]>>;
 }
 
-function AddTagButton({ tags, setTags }: IAddTagButtonProps) {
+function AddTagButton({ tags, setTags }: AddTagButtonProps) {
   const [isEditable, setIsEditable] = useState<boolean>(false);
   const [tagValue, setTagValue] = useState<string>('');
   const [tagColor, setTagColor] = useState<string>('');
@@ -73,6 +73,7 @@ function AddTagButton({ tags, setTags }: IAddTagButtonProps) {
   const handleSaveInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key !== 'Enter') return;
     const text = e.currentTarget.value;
+    setNewTagColor();
     stopEditing();
     addTag(text);
   };

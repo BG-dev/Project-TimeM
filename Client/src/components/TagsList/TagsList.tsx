@@ -1,5 +1,5 @@
 import React from 'react';
-import AddTagButton from '../AddTagButton';
+import AddTagButton from './AddTagButton';
 import Tag from '../Tag';
 import ITag from '../../types/tag';
 import './TagsList.scss';
@@ -15,9 +15,8 @@ function TagsList({ tags, setTags, isRead }: ITagsListProps) {
     <>
       {!isRead && <p>Tags</p>}
       <ul className="tags-list">
-        {tags.map((tag, index) => (
-          // eslint-disable-next-line react/no-array-index-key
-          <Tag key={tag.text + index} tag={tag} />
+        {tags.map((tag) => (
+          <Tag key={tag.text} tag={tag} />
         ))}
         {!isRead && <AddTagButton tags={tags} setTags={setTags} />}
       </ul>

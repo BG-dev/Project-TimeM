@@ -31,7 +31,6 @@ function BoardPage() {
   const [isModalActive, setIsModalActive] = useState<boolean>(false);
   const [isDeleteModalActive, setIsDeleteModalActive] =
     useState<boolean>(false);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [loading, setLoading] = useState<boolean>(false);
   const [currentSection, setCurrentSection] = useState<ISection | null>(null);
   const [currentTask, setCurrentTask] = useState<ITask | null>(null);
