@@ -9,6 +9,8 @@ node_modules
 .env
 .json
 
+/backend/uploads
+
 # testing
 /coverage
 
