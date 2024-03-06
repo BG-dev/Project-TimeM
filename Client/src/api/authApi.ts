@@ -4,30 +4,28 @@ import axiosClient from './axiosClient';
 const BASE_URL = '/api/auth';
 
 interface IGetOneResponse {
-  user: IUser;
+    user: IUser;
 }
 
 interface ILoginResponse {
-  token: string;
-  message: string;
+    token: string;
+    message: string;
 }
 
 interface IVerifyResponse {
-  isLoggedIn: boolean;
-  user: IUser;
+    isLoggedIn: boolean;
+    user: IUser;
 }
 
 interface ISignupResponse {
-  message: string;
+    message: string;
 }
 
 const authApi = {
-  getOne: (id: string) => axiosClient.get<IGetOneResponse>(`/users/${id}`),
-  login: (data: IUser) =>
-    axiosClient.post<ILoginResponse>(`${BASE_URL}/login`, data),
-  signup: (data: IUser) =>
-    axiosClient.post<ISignupResponse>(`${BASE_URL}/register`, data),
-  verify: () => axiosClient.get<IVerifyResponse>(`${BASE_URL}/isAuthUser`),
+    getOne: (id: string) => axiosClient.get<IGetOneResponse>(`/users/${id}`),
+    login: (data: IUser) => axiosClient.post<ILoginResponse>(`${BASE_URL}/login`, data),
+    signup: (data: IUser) => axiosClient.post<ISignupResponse>(`${BASE_URL}/register`, data),
+    verify: () => axiosClient.get<IVerifyResponse>(`${BASE_URL}/isAuthUser`),
 };
 
 export default authApi;

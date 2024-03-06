@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 const { Schema, model } = mongoose;
-const { schemaOptions } = require("./modelOptions");
+const { schemaOptions } = require('./modelOptions');
 
 const boardSchema = new Schema(
     {
@@ -10,7 +10,7 @@ const boardSchema = new Schema(
         },
         description: {
             type: String,
-            default: "",
+            default: '',
         },
         authorName: {
             type: String,
@@ -25,7 +25,7 @@ const boardSchema = new Schema(
                 type: {
                     user: {
                         type: mongoose.SchemaTypes.ObjectId,
-                        ref: "User",
+                        ref: 'User',
                     },
                     role: String,
                 },
@@ -33,9 +33,9 @@ const boardSchema = new Schema(
             },
         ],
     },
-    schemaOptions
+    schemaOptions,
 );
 
-const Board = model("Board", boardSchema);
+const Board = model('Board', boardSchema);
 
 module.exports = Board;

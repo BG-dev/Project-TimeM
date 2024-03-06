@@ -9,13 +9,13 @@ import SignupPage from './SignupPage';
 import SettingsPage from './SettingsPage';
 
 export {
-  ErrorPage,
-  ProfilePage,
-  HomePage,
-  BoardsPage,
-  ContactsPage,
-  BoardPage,
-  LoginPage,
-  SignupPage,
-  SettingsPage,
+    ErrorPage,
+    ProfilePage,
+    HomePage,
+    BoardsPage,
+    ContactsPage,
+    BoardPage,
+    LoginPage,
+    SignupPage,
+    SettingsPage,
 };

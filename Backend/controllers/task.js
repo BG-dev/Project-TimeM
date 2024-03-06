@@ -1,4 +1,4 @@
-const Task = require("../models/Task");
+const Task = require('../models/Task');
 
 exports.create = async (req, res) => {
     try {
@@ -12,7 +12,7 @@ exports.create = async (req, res) => {
         const task = await Task.create(taskData);
         res.status(201).send({
             task,
-            message: "The task was successfully created",
+            message: 'The task was successfully created',
         });
     } catch (error) {
         res.status(400).send({ error });
@@ -35,7 +35,7 @@ exports.update = async (req, res) => {
         const task = await Task.findByIdAndUpdate(id, req.body);
         res.status(200).send({
             task,
-            message: "The task was successfully updated",
+            message: 'The task was successfully updated',
         });
     } catch (error) {
         res.status(400).send({ error });
@@ -57,7 +57,7 @@ exports.updatePosition = async (req, res) => {
                 $set: { sectionId: destinationSection._id, position: index },
             });
         });
-        res.status(200).send({ message: "Task successfully updated" });
+        res.status(200).send({ message: 'Task successfully updated' });
     } catch (error) {
         res.status(400).send({ error });
     }
@@ -68,15 +68,13 @@ exports.delete = async (req, res) => {
     try {
         const task = await Task.findById(id);
         await Task.findByIdAndDelete(id);
-        const tasks = await Task.find({ sectionId: task.sectionId }).sort(
-            "position"
-        );
+        const tasks = await Task.find({ sectionId: task.sectionId }).sort('position');
         for (const key in tasks) {
             await Task.findByIdAndUpdate(tasks[key]._id, {
                 $set: { position: key },
             });
         }
-        res.status(200).send({ message: "Task has been deleted" });
+        res.status(200).send({ message: 'Task has been deleted' });
     } catch (error) {
         res.status(400).send({ error });
     }

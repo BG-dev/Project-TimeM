@@ -4,11 +4,11 @@ import boardReducer from './features/boardSlice';
 import alertReducer from './features/alertSlice';
 
 const store = configureStore({
-  reducer: {
-    user: userReducer,
-    board: boardReducer,
-    alert: alertReducer,
-  },
+    reducer: {
+        user: userReducer,
+        board: boardReducer,
+        alert: alertReducer,
+    },
 });
 
 export default store;

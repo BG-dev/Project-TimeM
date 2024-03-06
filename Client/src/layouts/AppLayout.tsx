@@ -10,46 +10,44 @@ import { setUser } from '../redux/features/userSlice';
 import WelcomeLayer from '../components/WelcomeLayer';
 
 export default function AppLayout() {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const location = useLocation();
-  const [loading, setLoading] = useState(true);
-  const [isHomePage, setIsHomePage] = useState(false);
-  const { text, type, visible } = useAlert();
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const location = useLocation();
+    const [loading, setLoading] = useState(true);
+    const [isHomePage, setIsHomePage] = useState(false);
+    const { text, type, visible } = useAlert();
 
-  useEffect(() => {
-    async function verify() {
-      const response = await useAuth();
-      if (!response || !response.isLoggedIn) navigate('/login');
-      else {
-        dispatch(setUser(response.user));
-        setLoading(false);
-      }
-    }
-    verify();
+    useEffect(() => {
+        async function verify() {
+            const response = await useAuth();
+            if (!response || !response.isLoggedIn) navigate('/login');
+            else {
+                dispatch(setUser(response.user));
+                setLoading(false);
+            }
+        }
+        verify();
 
-    if (location.pathname === '/') {
-      setIsHomePage(true);
-    } else {
-      setIsHomePage(false);
-    }
-  }, [navigate]);
+        if (location.pathname === '/') {
+            setIsHomePage(true);
+        } else {
+            setIsHomePage(false);
+        }
+    }, [navigate]);
 
-  return loading ? (
-    <Loading />
-  ) : (
-    <>
-      {/* {isHomePage && <WelcomeLayer />} */}
-      <Navbar />
-      <div className="container">
-        <div className="content">
-          <Outlet />
-          {visible && (
-            <Alert className="alert" message={text} type={type} showIcon />
-          )}
-        </div>
-        {/* <Footer /> */}
-      </div>
-    </>
-  );
+    return loading ? (
+        <Loading />
+    ) : (
+        <>
+            {/* {isHomePage && <WelcomeLayer />} */}
+            <Navbar />
+            <div className="container">
+                <div className="content">
+                    <Outlet />
+                    {visible && <Alert className="alert" message={text} type={type} showIcon />}
+                </div>
+                {/* <Footer /> */}
+            </div>
+        </>
+    );
 }

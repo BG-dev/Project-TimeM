@@ -1,21 +1,21 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 const { Schema, model } = mongoose;
-const { schemaOptions } = require("./modelOptions");
+const { schemaOptions } = require('./modelOptions');
 
 const contactRequestSchema = new Schema(
     {
         sender: {
             type: mongoose.Schema.ObjectId,
-            ref: "User",
+            ref: 'User',
         },
         recipient: {
             type: mongoose.Schema.ObjectId,
-            ref: "User",
+            ref: 'User',
         },
     },
-    schemaOptions
+    schemaOptions,
 );
 
-const ContactRequest = model("ContactRequest", contactRequestSchema);
+const ContactRequest = model('ContactRequest', contactRequestSchema);
 
 module.exports = ContactRequest;

@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 const { Schema, model } = mongoose;
-const { schemaOptions } = require("./modelOptions");
+const { schemaOptions } = require('./modelOptions');
 
 const sectionSchema = new Schema(
     {
@@ -14,12 +14,12 @@ const sectionSchema = new Schema(
         },
         boardId: {
             type: mongoose.SchemaTypes.ObjectId,
-            ref: "Board",
+            ref: 'Board',
         },
     },
-    schemaOptions
+    schemaOptions,
 );
 
-const Section = model("Section", sectionSchema);
+const Section = model('Section', sectionSchema);
 
 module.exports = Section;

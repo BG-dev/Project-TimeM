@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 const { Schema, model } = mongoose;
-const { schemaOptions } = require("./modelOptions");
+const { schemaOptions } = require('./modelOptions');
 
 const taskSchema = new Schema(
     {
@@ -28,12 +28,12 @@ const taskSchema = new Schema(
         },
         sectionId: {
             type: mongoose.SchemaTypes.ObjectId,
-            ref: "Section",
+            ref: 'Section',
         },
     },
-    schemaOptions
+    schemaOptions,
 );
 
-const Task = model("Task", taskSchema);
+const Task = model('Task', taskSchema);
 
 module.exports = Task;

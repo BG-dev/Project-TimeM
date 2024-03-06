@@ -1,15 +1,15 @@
-const express = require("express");
-const dotenv = require("dotenv");
-const helmet = require("helmet");
-const mongoose = require("mongoose");
-const bodyparser = require("body-parser");
-const boardRoutes = require("./routes/board");
-const userRoutes = require("./routes/user");
-const sectionRoutes = require("./routes/section");
-const taskRoutes = require("./routes/task");
-const authRoutes = require("./routes/auth");
-const logger = require("./middlewares/logger");
-const { logError, sendError } = require("./middlewares/errorHandler");
+const express = require('express');
+const dotenv = require('dotenv');
+const helmet = require('helmet');
+const mongoose = require('mongoose');
+const bodyparser = require('body-parser');
+const boardRoutes = require('./routes/board');
+const userRoutes = require('./routes/user');
+const sectionRoutes = require('./routes/section');
+const taskRoutes = require('./routes/task');
+const authRoutes = require('./routes/auth');
+const logger = require('./middlewares/logger');
+const { logError, sendError } = require('./middlewares/errorHandler');
 
 dotenv.config();
 
@@ -21,11 +21,11 @@ app.use(bodyparser.urlencoded({ extended: false }));
 app.use(bodyparser.json());
 app.use(helmet());
 
-app.use("/boards", boardRoutes);
-app.use("/tasks", taskRoutes);
-app.use("/api/auth", authRoutes);
-app.use("/users", userRoutes);
-app.use("/sections", sectionRoutes);
+app.use('/boards', boardRoutes);
+app.use('/tasks', taskRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/users', userRoutes);
+app.use('/sections', sectionRoutes);
 
 // app.use(logError);
 // app.use(sendError);

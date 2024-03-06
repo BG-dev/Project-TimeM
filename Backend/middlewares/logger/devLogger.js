@@ -1,19 +1,17 @@
 const { createLogger, format, transports, log } = require('winston');
 
-function buildDevLogger(){
+function buildDevLogger() {
     const logFormat = format.printf(({ level, message }) => {
         return `${level}: ${message}`;
-      });
-    
+    });
+
     const logger = createLogger({
         level: 'http',
         format: logFormat,
-        transports: [
-          new transports.Console()
-        ],
-      });
+        transports: [new transports.Console()],
+    });
 
-    return logger
+    return logger;
 }
 
-module.exports = buildDevLogger
+module.exports = buildDevLogger;
