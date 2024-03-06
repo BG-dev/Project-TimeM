@@ -1,11 +1,12 @@
-const bcrypt = require("bcrypt");
-const User = require("../models/User");
-const ContactRequest = require("../models/ContactRequest");
+const bcrypt = require('bcrypt');
+const User = require('../models/User');
+const ContactRequest = require('../models/ContactRequest');
 
 exports.addAvatar = async (req, res) => {
-    console.log("mem")
-    return res.status(200).send({message: "Avatar was added"})
-}
+    console.log('File: ', req.file);
+    await User.findByIdAndUpdate('64fe30b7288586ed04bc7c4f', { avatar: req.file.filename }, {});
+    return res.status(200).send({ message: 'Avatar was added' });
+};
 
 exports.getOne = async (req, res) => {
     const id = req.params.id;
@@ -22,7 +23,7 @@ exports.getAll = async (req, res) => {
     try {
         const users = await User.find({
             _id: { $ne: req.user.id, $nin: req.user.contacts },
-            username: { $regex: search, $options: "i" },
+            username: { $regex: search, $options: 'i' },
         });
         return res.status(200).send({ users });
     } catch (err) {
@@ -33,9 +34,7 @@ exports.getAll = async (req, res) => {
 exports.getContacts = async (req, res) => {
     try {
         const contacts = (
-            await User.findById(req.user.id)
-                .select("contacts")
-                .populate("contacts", "_id username")
+            await User.findById(req.user.id).select('contacts').populate('contacts', '_id username')
         ).contacts;
         return res.status(200).send({ contacts });
     } catch (err) {
@@ -59,18 +58,10 @@ exports.isContact = async (req, res) => {
 exports.deleteContact = async (req, res) => {
     const id = req.params.id;
     try {
-        await User.findByIdAndUpdate(
-            req.user.id,
-            { $pull: { contacts: id } },
-            {}
-        );
-        await User.findByIdAndUpdate(
-            id,
-            { $pull: { contacts: req.user.id } },
-            {}
-        );
+        await User.findByIdAndUpdate(req.user.id, { $pull: { contacts: id } }, {});
+        await User.findByIdAndUpdate(id, { $pull: { contacts: req.user.id } }, {});
         return res.status(200).send({
-            message: "The user has been successfully deleted from contacts",
+            message: 'The user has been successfully deleted from contacts',
         });
     } catch (err) {
         return res.status(500).send({ error: err });
@@ -81,7 +72,7 @@ exports.getRequests = async (req, res) => {
     try {
         const requests = await ContactRequest.find({
             recipient: req.user.id,
-        }).populate("sender");
+        }).populate('sender');
         return res.status(200).send({ requests });
     } catch (err) {
         return res.status(500).send({ error: err });
@@ -96,7 +87,7 @@ exports.sendRequest = async (req, res) => {
     };
     try {
         await ContactRequest.create(contactRequestData);
-        return res.status(200).send({ message: "The request has been sent" });
+        return res.status(200).send({ message: 'The request has been sent' });
     } catch (err) {
         return res.status(500).send({ error: err });
     }
@@ -115,7 +106,7 @@ exports.acceptRequest = async (req, res) => {
             },
             {
                 upsert: true,
-            }
+            },
         );
         await User.findByIdAndUpdate(
             contactRequest.recipient,
@@ -126,12 +117,10 @@ exports.acceptRequest = async (req, res) => {
             },
             {
                 upsert: true,
-            }
+            },
         );
         await ContactRequest.findByIdAndDelete(requestId);
-        return res
-            .status(200)
-            .send({ message: "The request has been accepted" });
+        return res.status(200).send({ message: 'The request has been accepted' });
     } catch (err) {
         return res.status(500).send({ error: err });
     }
@@ -141,7 +130,7 @@ exports.denyRequest = async (req, res) => {
     const { requestId } = req.body;
     try {
         await ContactRequest.findByIdAndDelete(requestId);
-        return res.status(200).send({ message: "The request has been denied" });
+        return res.status(200).send({ message: 'The request has been denied' });
     } catch (err) {
         return res.status(500).send({ error: err });
     }
@@ -155,7 +144,7 @@ exports.register = async (req, res) => {
 
         if (isExistsEmail || isExistsUsername)
             return res.status(400).send({
-                message: "Username or email is already in use",
+                message: 'Username or email is already in use',
             });
 
         const hashedPassword = await bcrypt.hash(password, 12);
@@ -177,23 +166,15 @@ exports.register = async (req, res) => {
 exports.login = async (req, res) => {
     const { username, password } = req.body;
     try {
-        const user = await User.findOne({ username }).select("password");
-        if (!user)
-            return res
-                .status(401)
-                .json({ message: "Invalid username or password" });
+        const user = await User.findOne({ username }).select('password');
+        if (!user) return res.status(401).json({ message: 'Invalid username or password' });
 
         const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch)
-            return res
-                .status(401)
-                .json({ message: "Invalid username or password" });
+        if (!isMatch) return res.status(401).json({ message: 'Invalid username or password' });
 
         const token = user.generateAuthToken();
 
-        return res
-            .status(200)
-            .send({ message: "The user has successfully logged in", token });
+        return res.status(200).send({ message: 'The user has successfully logged in', token });
     } catch (err) {
         return res.status(500).send({ message: err });
     }

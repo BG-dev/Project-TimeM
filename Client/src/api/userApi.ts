@@ -44,6 +44,7 @@ const userApi = {
         axiosClient.get<IGetAllResponse>('/users/search', {
             params: { search },
         }),
+    getAvatar: (filename: string) => axiosClient.get<string>(`users/images/avatars/${filename}`),
     getContacts: () => axiosClient.get<IGetContactsResponse>('/users/contacts'),
     getRequests: () => axiosClient.get<IGetRequestsResponse>('/users/requests'),
     isContact: (data: { userId: string }) =>

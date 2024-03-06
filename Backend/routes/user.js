@@ -11,12 +11,13 @@ const storage = multer.diskStorage({
         cb(null, 'uploads/avatars/');
     },
     filename: (req, file, cb) => {
-        cb(null, Date.now() + '-' + file.originalname + path.extname(file.originalname));
+        cb(null, Date.now() + '-' + file.originalname);
     },
 });
 
 const upload = multer({ storage: storage });
 
+router.use('/images', express.static('uploads'));
 router.get('/contacts', verifyJWT, userController.getContacts);
 router.get('/requests', verifyJWT, userController.getRequests);
 router.get('/search', verifyJWT, userController.getAll);

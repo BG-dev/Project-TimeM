@@ -1,153 +1,153 @@
-@import "../../scss/variables";
+@import '../../scss/variables';
 
 .nav {
-  position: fixed;
-  width: 240px;
-  background-color: #f2f6f9;
-  height: 100vh;
-  padding: 10px 14px;
-  transition: all 0.5s ease;
-  border-right: 1px solid $gray;
-  z-index: 100;
+    position: fixed;
+    width: 240px;
+    background-color: #f2f6f9;
+    height: 100vh;
+    padding: 10px 14px;
+    transition: all 0.5s ease;
+    border-right: 1px solid $gray;
+    z-index: 100;
 
-  .toggle {
-    position: absolute;
-    top: 30px;
-    right: -15px;
-    height: 30px;
-    width: 30px;
-    background-color: $blue;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 23px;
-    transition: all 0.3s ease;
-    cursor: pointer;
-
-    &:hover {
-      background-color: darken($color: $blue, $amount: 7%);
-    }
-  }
-
-  &__logo {
-    h2 {
-      color: $dark-gray;
-      font-weight: 200;
-      font-size: 40px;
-      transition: all 0.3s ease;
-    }
-  }
-
-  .text {
-    font-weight: 200;
-    font-size: 21px;
-    font-weight: normal;
-    white-space: nowrap;
-  }
-
-  .icon {
-    font-size: 27px;
-    min-width: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .icon,
-  .text {
-    color: $dark-gray;
-    transition: all 0.2s ease;
-  }
-
-  .image {
-    width: 30px;
-    height: 30px;
-  }
-
-  .user {
-    display: flex;
-    align-items: center;
-    height: 50px;
-    margin-top: 10px;
-
-    &__avatar {
-      min-width: 50px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    &__image {
-      background-color: #000000;
-      border-radius: 50%;
-      height: 35px;
-      width: 35px;
-    }
-  }
-
-  .menu-bar {
-    height: calc(100% - 100px);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-
-  .menu {
-    margin-top: 20px;
-
-    &__link {
-      height: 50px;
-      margin-top: 10px;
-      list-style: none;
-      display: flex;
-      align-items: center;
-
-      a,
-      button {
-        height: 100%;
-        width: 100%;
+    .toggle {
+        position: absolute;
+        top: 30px;
+        right: -15px;
+        height: 30px;
+        width: 30px;
+        background-color: $blue;
+        border-radius: 50%;
         display: flex;
         align-items: center;
-        border-radius: 6px;
-        transition: all 0.2s ease;
+        justify-content: center;
+        font-size: 23px;
+        transition: all 0.3s ease;
+        cursor: pointer;
 
         &:hover {
-          background-color: $blue;
-
-          .icon,
-          .text {
-            color: #ffffff;
-          }
+            background-color: darken($color: $blue, $amount: 7%);
         }
-      }
-
-      button {
-        background-color: #f2f6f9;
-        border: none;
-      }
     }
-  }
 
-  .bottom-content {
-    margin-bottom: 20px;
-  }
+    &__logo {
+        h2 {
+            color: $dark-gray;
+            font-weight: 200;
+            font-size: 40px;
+            transition: all 0.3s ease;
+        }
+    }
+
+    .text {
+        font-weight: 200;
+        font-size: 21px;
+        font-weight: normal;
+        white-space: nowrap;
+    }
+
+    .icon {
+        font-size: 27px;
+        min-width: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .icon,
+    .text {
+        color: $dark-gray;
+        transition: all 0.2s ease;
+    }
+
+    .image {
+        width: 30px;
+        height: 30px;
+    }
+
+    .user {
+        display: flex;
+        align-items: center;
+        height: 50px;
+        margin-top: 10px;
+        gap: 10px;
+
+        &__avatar {
+            min-width: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        &__image {
+            border-radius: 50%;
+            height: 35px;
+            width: 35px;
+        }
+    }
+
+    .menu-bar {
+        height: calc(100% - 100px);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .menu {
+        margin-top: 20px;
+
+        &__link {
+            height: 50px;
+            margin-top: 10px;
+            list-style: none;
+            display: flex;
+            align-items: center;
+
+            a,
+            button {
+                height: 100%;
+                width: 100%;
+                display: flex;
+                align-items: center;
+                border-radius: 6px;
+                transition: all 0.2s ease;
+
+                &:hover {
+                    background-color: $blue;
+
+                    .icon,
+                    .text {
+                        color: #ffffff;
+                    }
+                }
+            }
+
+            button {
+                background-color: #f2f6f9;
+                border: none;
+            }
+        }
+    }
+
+    .bottom-content {
+        margin-bottom: 20px;
+    }
 }
 
 .nav.close {
-  width: 80px;
+    width: 80px;
 
-  .text {
-    opacity: 0;
-    pointer-events: none;
-  }
+    .text {
+        opacity: 0;
+        pointer-events: none;
+    }
 
-  h2 {
-    opacity: 0;
-    pointer-events: none;
-  }
+    h2 {
+        opacity: 0;
+        pointer-events: none;
+    }
 
-  .toggle {
-    transform: rotate(180deg);
-  }
+    .toggle {
+        transform: rotate(180deg);
+    }
 }

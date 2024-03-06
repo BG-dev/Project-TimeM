@@ -1,16 +1,30 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import ConfirmForm from '../ConfirmForm';
 import Modal from '../Modal';
 import { useAppSelector } from '../../redux/hooks';
 import IUser from '../../types/user';
 import './Navbar.scss';
+import { getAvatarUrl } from '../../utils/fileUtil';
 
 function Navbar() {
     const navigate = useNavigate();
     const user: IUser | null = useAppSelector((state) => state.user.value);
     const [isOpenNavbar, setIsOpenNavbar] = useState<boolean>(true);
+    const [imageData, setImageData] = useState<string>('');
     const [isLogoutModalActive, setIsLogoutModalActive] = useState<boolean>(false);
+
+    useEffect(() => {
+        // async function getAvatar() {
+        //     const response = await userApi.getAvatar(user?.avatar as string);
+        //     const imageBlob: Blob = new Blob([response.data]);
+        //     const imageUrl = URL.createObjectURL(imageBlob);
+        //     setImageData(imageUrl);
+        // }
+        // getAvatar();
+        const imgUrl = getAvatarUrl(user?.avatar as string);
+        setImageData(imgUrl);
+    }, [user]);
 
     const logoutHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
@@ -40,6 +54,7 @@ function Navbar() {
                 <div className="user">
                     <div className="image user__avatar">
                         <div className="user__image image" />
+                        <img src={imageData} className="user__image image" alt="Avatar" />
                     </div>
                     <span className="user__username text">{user.username}</span>
                 </div>
