@@ -1,6 +1,7 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const helmet = require('helmet');
+const morgan = require('morgan');
 const mongoose = require('mongoose');
 const bodyparser = require('body-parser');
 const boardRoutes = require('./routes/board');
@@ -19,6 +20,7 @@ mongoose.connect(process.env.MONGO_URL);
 
 app.use(bodyparser.urlencoded({ extended: false }));
 app.use(bodyparser.json());
+app.use(morgan('dev'));
 app.use(helmet());
 
 app.use('/boards', boardRoutes);
