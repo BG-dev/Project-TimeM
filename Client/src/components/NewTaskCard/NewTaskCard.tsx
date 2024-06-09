@@ -15,8 +15,7 @@ function NewTaskCard({ setModalActive, setNewTaskSection, section }: INewsTaskCa
             onClick={() => {
                 setModalActive(true);
                 setNewTaskSection(section);
-            }}
-        >
+            }}>
             <div className="wrapper">
                 <i className="bx bx-plus-circle icon" />
                 <span className="text">Add Task</span>

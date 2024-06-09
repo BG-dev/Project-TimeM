@@ -23,8 +23,7 @@ function Section({
             <div
                 onDragOver={(e) => dragAndDropMethods.onDragOverHandler(e)}
                 onDrop={(e) => dragAndDropMethods.onDropTaskHandler(e, section)}
-                className="section"
-            >
+                className="section">
                 <div className="section__header">
                     <span className="section__title">{section.status}</span>
                     <span className="section__tasks-count">

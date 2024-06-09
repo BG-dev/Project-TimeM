@@ -103,8 +103,7 @@ function TaskCard({ task, section, dragAndDropMethods }: TaskCardProps) {
                         onDragStart={() => dragAndDropMethods.onDragStartHandler(section, task)}
                         onDragEnd={() => dragAndDropMethods.onDragEndHandler()}
                         onDrop={(e) => dragAndDropMethods.onDropHandler(e, section, task)}
-                        className="task"
-                    >
+                        className="task">
                         <div className="task__top">
                             <span className="task__title">{task.title}</span>
                             <Dropdown trigger={['click']} menu={{ items }}>

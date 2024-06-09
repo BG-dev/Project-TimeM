@@ -82,8 +82,7 @@ function AddTagButton({ tags, setTags }: AddTagButtonProps) {
         <li
             className="add-tag"
             style={{ backgroundColor: `#${tagColor}` }}
-            onClick={handleClickButton}
-        >
+            onClick={handleClickButton}>
             {isEditable ? (
                 <input
                     type="text"

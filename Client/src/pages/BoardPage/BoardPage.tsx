@@ -198,16 +198,14 @@ function BoardPage() {
                     <Button
                         type="primary"
                         size="large"
-                        onClick={() => setIsEditBoardModalActive((prev) => !prev)}
-                    >
+                        onClick={() => setIsEditBoardModalActive((prev) => !prev)}>
                         Edit
                     </Button>
                     <Button
                         type="primary"
                         size="large"
                         danger
-                        onClick={() => setIsDeleteModalActive((prev) => !prev)}
-                    >
+                        onClick={() => setIsDeleteModalActive((prev) => !prev)}>
                         Delete
                     </Button>
                 </div>

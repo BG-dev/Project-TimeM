@@ -80,15 +80,13 @@ function AddTaskForm({ setActiveModal, section }: IAddTaskFormProps) {
                 initialValues={{
                     deadline: dayjs(),
                 }}
-                onFinish={submitForm}
-            >
+                onFinish={submitForm}>
                 <Form.Item<IFormValues>
                     label="Title"
                     name="title"
                     validateFirst
                     required={false}
-                    rules={taskTitleValidation}
-                >
+                    rules={taskTitleValidation}>
                     <Input placeholder="Name" />
                 </Form.Item>
                 <Form.Item<IFormValues>
@@ -96,16 +94,14 @@ function AddTaskForm({ setActiveModal, section }: IAddTaskFormProps) {
                     name="description"
                     validateFirst
                     required={false}
-                    rules={taskDescriptionValidation}
-                >
+                    rules={taskDescriptionValidation}>
                     <Input placeholder="Name" />
                 </Form.Item>
                 <Form.Item<IFormValues>
                     label="Deadline"
                     name="deadline"
                     validateFirst
-                    required={false}
-                >
+                    required={false}>
                     <DatePicker format={fullDateFormat} />
                 </Form.Item>
                 <TagsList tags={tags} setTags={setTags} />

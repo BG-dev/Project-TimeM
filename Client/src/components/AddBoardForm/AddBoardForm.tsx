@@ -59,8 +59,7 @@ function AddBoardForm({ setBoards, setActiveModal }: IAddBoardFormProps) {
                     name="name"
                     validateFirst
                     required={false}
-                    rules={boardNameValidation}
-                >
+                    rules={boardNameValidation}>
                     <Input placeholder="Name" />
                 </Form.Item>
                 <Form.Item<IFormValues>
@@ -68,8 +67,7 @@ function AddBoardForm({ setBoards, setActiveModal }: IAddBoardFormProps) {
                     name="description"
                     validateFirst
                     required={false}
-                    rules={boardDescriptionValidation}
-                >
+                    rules={boardDescriptionValidation}>
                     <Input placeholder="Description" />
                 </Form.Item>
                 <ColorSelector

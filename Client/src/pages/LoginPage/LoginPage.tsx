@@ -45,8 +45,7 @@ function LoginPage() {
                 className="login-form"
                 layout="vertical"
                 style={{ minWidth: 500 }}
-                onFinish={submitForm}
-            >
+                onFinish={submitForm}>
                 <Form.Item<IFormValues> label="Username" name="username" validateFirst>
                     <Input placeholder="Username" />
                 </Form.Item>

@@ -54,16 +54,14 @@ function SettingsPage() {
                     action="/users/avatar"
                     beforeUpload={beforeUploadImage}
                     onChange={handleChange}
-                    onPreview={handlePreview}
-                >
+                    onPreview={handlePreview}>
                     {imageFileList.length === 0 ? uploadButton : null}
                 </Upload>
                 <Modal
                     open={previewOpen}
                     title={previewTitle}
                     footer={null}
-                    onCancel={handleCancel}
-                >
+                    onCancel={handleCancel}>
                     <img src={previewImage} alt="Avatar preview" style={{ width: '100%' }} />
                 </Modal>
 

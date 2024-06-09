@@ -53,15 +53,13 @@ function SignupPage() {
                 layout="vertical"
                 style={{ maxWidth: 600, minWidth: 500 }}
                 className="signup-form"
-                onFinish={submitForm}
-            >
+                onFinish={submitForm}>
                 <Form.Item<IFormValues>
                     label="Username"
                     name="username"
                     validateFirst
                     rules={usernameValidation}
-                    hasFeedback
-                >
+                    hasFeedback>
                     <Input placeholder="Username" />
                 </Form.Item>
                 <Form.Item<IFormValues>
@@ -69,8 +67,7 @@ function SignupPage() {
                     name="email"
                     validateFirst
                     rules={emailValidation}
-                    hasFeedback
-                >
+                    hasFeedback>
                     <Input placeholder="Email" />
                 </Form.Item>
                 <Form.Item<IFormValues>
@@ -78,8 +75,7 @@ function SignupPage() {
                     name="password"
                     validateFirst
                     rules={passwordValidation}
-                    hasFeedback
-                >
+                    hasFeedback>
                     <Input.Password placeholder="Password" />
                 </Form.Item>
                 <Form.Item<IFormValues>
@@ -88,8 +84,7 @@ function SignupPage() {
                     validateFirst
                     dependencies={['password']}
                     rules={confirmPasswordValidation}
-                    hasFeedback
-                >
+                    hasFeedback>
                     <Input.Password placeholder="Confirm Password" />
                 </Form.Item>
                 <Space size="middle">

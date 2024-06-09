@@ -69,15 +69,13 @@ function EditBoardForm({ setActiveModal, board }: IEditBoardFormProps) {
                         name: board.name,
                         description: board.description,
                     }}
-                    onFinish={submitForm}
-                >
+                    onFinish={submitForm}>
                     <Form.Item<IFormValues>
                         label="Name"
                         name="name"
                         validateFirst
                         required={false}
-                        rules={boardNameValidation}
-                    >
+                        rules={boardNameValidation}>
                         <Input placeholder="Name" />
                     </Form.Item>
                     <Form.Item<IFormValues>
@@ -85,8 +83,7 @@ function EditBoardForm({ setActiveModal, board }: IEditBoardFormProps) {
                         name="description"
                         validateFirst
                         required={false}
-                        rules={boardDescriptionValidation}
-                    >
+                        rules={boardDescriptionValidation}>
                         <Input placeholder="Description" />
                     </Form.Item>
                     <ColorSelector

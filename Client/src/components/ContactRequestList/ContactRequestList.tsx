@@ -73,8 +73,7 @@ function ContactRequestList() {
                             <div className="request-card__actions">
                                 <Button
                                     type="primary"
-                                    onClick={() => acceptRequestHandler(request.id)}
-                                >
+                                    onClick={() => acceptRequestHandler(request.id)}>
                                     Accept
                                 </Button>
                                 <Button danger onClick={() => denyRequestHandler(request.id)}>

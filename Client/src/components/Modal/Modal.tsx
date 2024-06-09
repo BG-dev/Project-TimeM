@@ -15,8 +15,7 @@ function Modal({ active, setActive, children }: IModalProps) {
                 <button
                     className="btn btn-icon close-icon"
                     type="button"
-                    onClick={() => setActive(false)}
-                >
+                    onClick={() => setActive(false)}>
                     <i className="bx bx-x icon " />
                 </button>
                 {children}
